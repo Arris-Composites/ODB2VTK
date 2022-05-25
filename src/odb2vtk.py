@@ -1,13 +1,8 @@
 '''
-Robert H. Moore - Arris Composites, 2021
 Yang Shen - Arris Composites, 2022
+Robert H. Moore - Arris Composites, 2021
 --------------------------------------------------------------------------------
-The script is to convert the data from Abaqus output database format 
-to vtk file format for parallel visualization
-Python script performs the following three major steps: 
-	1) reading Abaqus output file according to the architecture of ODB; 
-	2) data decomposition for parallel visualization; 
-	3) writing VTK for Paraview.
+The script is to convert Abaqus ODB file to VTU file for ParaView/VTK.
 '''
 
 import utilities
@@ -71,7 +66,7 @@ def ABAQUS_VTK_CELL_MAP(abaqusElementType):
 		return None
 
 def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
-	# output convention: (vtkType, abaqusComponentLabels, position)
+	# output convention: (vtkType, abaqusComponentLabels, abaqusPosition)
 
 	# TODO: assuming fldOutput.locations always have a size of 1. 
 	# in the future maybe extend this to handle more than one locations
@@ -80,7 +75,7 @@ def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
 	abaqusPosition = fldOutput.locations[0].position
 
 	vtkType = None
-	position = None
+	# position = None
 
 	if abaqusDataType == SCALAR:
 		vtkType = 'Scalars'
@@ -103,18 +98,6 @@ def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
 	else:
 		vtkType = 'Tensors'
 
-	# we need to convert INTEGRATION_POINT to NODAL
-	# as we can only visualize the data per cell or per node
-	# what Abaqus does is that it extrapolates stress/strain values from integration points to
-	# nodes and average them.
-	# we will do the same thing here.
-
-	# if abaqusPosition == NODAL:
-	# 	position = NODAL
-	# else:
-	# 	position = CENTROID
-
-	# return (vtkType, abaqusComponentLabels, position)
 	return (vtkType, abaqusComponentLabels, abaqusPosition)
 
 ###########################################################
@@ -125,8 +108,8 @@ class ODB2VTK:
 		self.odbFileNameNoExt = self.odbFileName.split(".")[0]
 		self.odbPath = os.path.dirname(fileFullName)
 
-		# private variables
 		self.odb = utilities.ReadableOdb(self.fileFullName)
+		# private variables
 		# nodes and elements map are nested dictionary
 		# {'instanceName': {'nodeLabel1': 0, 'nodeLabel1': 0, ...}, .....}
 		self._nodes_map = {}
@@ -218,7 +201,7 @@ class ODB2VTK:
 			# visualize the data based on the value at the centroid from Abaqus
 			vtkDataNew = (vtkData[0], vtkData[1], CENTROID)
 			bufferCellDataArray += self.WriteDataArrayWithSectionPoints(sectionPointMap, fldOutput, vtkDataNew, fldName + '_Centroid', celldata_map, "CellData")
-			# now we also want to store the values for each integration point
+			# we also want to store the values for each integration point
 			vtkDataNew = (vtkData[0], vtkData[1] * maxNumOfIntegrationPoint, vtkData[2])
 			bufferCellDataArray += self.WriteDataArrayWithSectionPoints(sectionPointMap, fldOutput, vtkDataNew, fldName + '_IntegrationPoints', celldata_map, "CellData")
 		# if vtkData[2] == CENTROID:
@@ -234,7 +217,7 @@ class ODB2VTK:
 			data_map[vtkData[0]].append(fldName)
 		else:
 			# meaning we have sectionPoint in the current fieldOutuput
-			# now we need to split the data
+			# we need to split the data
 			for description, sectionP in sectionPointMap.items():
 				subset = fldOutput.getSubset(sectionPoint=sectionP)
 				buffer += self.WriteDataArray(subset, vtkData, fldName+description, dataType)
@@ -262,21 +245,7 @@ class ODB2VTK:
 			subset = fldOutput.getSubset(region=self.odb.getInstance(instanceName))
 			subset = subset.getSubset(position=vtkData[2])
 			writer(subset.bulkDataBlocks, instanceName, dataArray)
-
-		# sio = StringIO.StringIO()
-		# np.savetxt(sio, dataArray)
-		# buffer += sio.getvalue()
-		# buffer += '\n'
-
-		# f = io.BytesIO()
-		# np.savetxt(f, dataArray)
-		# buffer += f.getvalue()
-		# buffer += '\n'
-
-		# buffer += np.array2string(dataArray.flatten(), precision=6, separator=' ',
-		# 					suppress_small=True)[1:-1]
-		# buffer += '\n'
-
+		# can we make this faster???
 		for data in dataArray:
 			for d in data:
 				buffer += '{0} '.format(d)
@@ -290,9 +259,6 @@ class ODB2VTK:
 		for block in bulkDataBlocks:
 			indices = [self._nodes_map[instanceName][label] for label in block.nodeLabels]
 			pointDataArray[indices] = block.data
-			# for i, label in enumerate(block.nodeLabels):
-			# 	pointDataArray[self._nodes_map[instanceName][label]] = block.data[i]
-
 
 	def WriteSortedCellData(self, bulkDataBlocks, instanceName, cellDataArray):
 		if bulkDataBlocks == None:
@@ -305,23 +271,17 @@ class ODB2VTK:
 				row, column = map(int, block.data.shape)
 				n = block.integrationPoints.max()
 				cellDataArray[indices, 0 : column * n] = block.data.reshape(row / n, column * n)
-				# for i, label in enumerate(block.elementLabels):
-				# 	# assuming integrationPoints are continuous per element
-				# 	offset = (block.block[i] - 1) * len(block.data[i])
-				# 	cellDataArray[self._elements_map[instanceName][label]][offset:offset+len(block.data[i])] = block.data[i]
 			else:
 				indices = [self._elements_map[instanceName][label] for label in block.elementLabels]
 				cellDataArray[indices] = block.data
-				# for i, label in enumerate(block.elementLabels):
-				# 	cellDataArray[self._elements_map[instanceName][label]] = block.data[i]
 
 	def WriteLocalCS(self, fldName, stepName, frameIdx, celldata_map):
+		# this function is to extract material orientation and write it as a vector data at cell.
 		buffer = '<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">' \
 					.format(fldName) + '\n'
 		fldOutput = self.odb.getFieldOutput(stepName, frameIdx, 'S')
 		tempSectionPoint = None
 		for instanceName in self._instance_names:
-			# get data block of the instance
 			subset = fldOutput.getSubset(region=self.odb.getInstance(instanceName))
 			subset = subset.getSubset(position=CENTROID) 
 			for block in subset.bulkDataBlocks:
@@ -340,8 +300,6 @@ class ODB2VTK:
 				if block.localCoordSystem != None:
 					indices = [self._elements_map[instanceName][label] for label in block.elementLabels]
 					cellDataArray[indices] = block.localCoordSystem
-					# for i, label in enumerate(block.elementLabels):
-					# 	cellDataArray[self._elements_map[instanceName][label]] = block.localCoordSystem[i]
 
 		for data in cellDataArray:
 			# note that localCoordSystem return here is quaternion
@@ -364,7 +322,6 @@ class ODB2VTK:
 		return buffer
 
 	def WriteVTUFile(self):
-		#create and open a VTK(.vtu) files
 		for stepName, frameList in self._step_frame_map.items():
 			for frameIdx in frameList:
 				# create a .vtu file
@@ -482,7 +439,7 @@ class ODB2VTK:
 					numOfDataArray += 1
 					if numOfDataPoint < len(historyOutputObj.data):
 						numOfDataPoint = len(historyOutputObj.data)
-		# reserver one more row for time 
+						
 		data = np.zeros((numOfDataPoint, numOfDataArray))
 		header = []
 		for stepName in self._step_frame_map.keys():
@@ -503,9 +460,10 @@ if __name__ == "__main__":
 	start_time = timeit.default_timer()
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--header", required=True, type=int, help="only extract header information (instance, step, frame) from odb")
-	parser.add_argument("--instance", help="selected instance names, separated by whitespace", nargs="*")
-	parser.add_argument("--step", help="selected step names and frames dictionary, in step1:1,2,3 step2:2,3,4", nargs="*")
+	parser.add_argument("--header", required=True, type=int, \
+				help="if 1, extract header information and generate a .json file. Otherwise, generate .vtu file")
+	parser.add_argument("--instance", help="selected instance names which are separated by whitespace, e.g. 'instanceName1' 'instanceName2'", nargs="*")
+	parser.add_argument("--step", help="selected step names and frames which are separated by whitespace, e.g., 'step1:1,2,3' 'step2:2,3,4'", nargs="*")
 	parser.add_argument("--odbFile", required=True, help="selected odb file (full path name)")
 	args = parser.parse_args()
 
