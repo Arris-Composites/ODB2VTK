@@ -13,7 +13,7 @@ This will open the odb file, extract instances, steps, and frames, and save them
 
 
 ## Design
-![alt text](http://url/to/img.png)
+![alt text](res/odb-overview-nls.png)
 
 ## Abaqus label to VTK index mapping
 Abaqus odb file uses different indexing system than VTK XML file. Each node and element in Abaqus has a label which is used to define their connectivity. A VTK XML file has index of nodes and elements starting from 0 whereas an odb file has label starting from 1. Addtionally, each instance in an odb file has their own labeling for both nodes and elements which means two different instances can have identical labels for their own nodes and elements. Therefore, we need to have some kind of hashmap to map a label in an odb file to an index in a VTK XML file. This is done via two private dictionares in the ODB2VTK class:
