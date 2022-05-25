@@ -11,24 +11,35 @@ abaqus python odb2vtk.py --help to see all the arguments.
 
 This will open the odb file, extract instances, steps, and frames, and save them into a JSON file in the save directory of the odb file.  
 
-![Figure 1](res/json_image.png)
+![Figure 1](res/json_image.PNG)
 
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" --step "Step-1:0,1" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 This will extract output data for instance "Part-1" at "Step-1" with frame number 0 and 1.
 To convert multiple instances and steps. Use whitespace to separate the arguments.
+
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-3:0,1,2,3,4,5" "Step-3:0,1,2,3" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 To utilize multiprocessing in Python, another script 'multiprocess.py' is provided to spawn 'Abaqus python' call in parallel.
+
 `python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-3:0,1,2,3,4,5" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 What this essentially does is to spawn a 'Abaqus python' call for each frame like the following in parallel.
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-1:0" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-3:0" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-3:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-3:3" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-3:4" --odbFile <my_odb_file_path>/my_odb_file.odb`
+
 `abaqus python --header 0 --instance "Part-1" "Part-2" --step "Step-3:5" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 ## Design
