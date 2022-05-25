@@ -2,7 +2,8 @@
 Yang Shen - Arris Composites, 2022
 Robert H. Moore - Arris Composites, 2021
 --------------------------------------------------------------------------------
-The script is to convert Abaqus ODB file to VTU file for ParaView/VTK.
+The script is to convert the data from Abaqus output database format 
+to vtk file format for parallel visualization
 '''
 
 import utilities
@@ -19,7 +20,8 @@ import sys
 import json
 import argparse
 import timeit
-import StringIO
+import multiprocessing
+from multiprocessing import Pool
 
 
 # abaqus position
@@ -321,112 +323,117 @@ class ODB2VTK:
 		celldata_map['Vectors'].append(fldName)
 		return buffer
 
-	def WriteVTUFile(self):
+	def WriteVTUFiles(self):
 		for stepName, frameList in self._step_frame_map.items():
 			for frameIdx in frameList:
-				# create a .vtu file
-				vtkFile = open (self.odbPath + '\\' + self.odbFileNameNoExt + '_' + stepName + '_' + str(frameIdx) +'.vtu','w')
-				print("writing " + vtkFile.name)
+				self.WriteVTUFile([stepName, frameIdx])
 
-				# start writing the buffer
-				buffer = '<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian">'+'\n'
-				cellConnectivityBuffer = ''
-				cellOffsetBuffer = ''
-				cellTypeBuffer = ''
-				offset = 0
-				buffer += '<UnstructuredGrid>'+'\n'
-				buffer += '<Piece NumberOfPoints="{0}" NumberOfCells="{1}">'.format(self._nodesNum, self._cellsNum) + '\n'
-				buffer += '<Points>'+'\n'
-				buffer += '<DataArray type="Float64" NumberOfComponents="3" format="ascii">'+'\n'
-				for instanceName in self._instance_names:
-					# write nodes
-					for node in self.odb.getNodes(instanceName):
-						coord = node.coordinates
-						buffer += '{0} {1} {2}'.format(coord[0], coord[1], coord[2]) + '\n'
-					# let's write cell connectivity, offset, and type into a different buffer which will be used later
-					for cell in self.odb.getElements(instanceName):
-						## connectivity
-						for nodeLabel in cell.connectivity:
-							cellConnectivityBuffer += '{0} '.format(self._nodes_map[instanceName][nodeLabel])
-						cellConnectivityBuffer += '\n'
-						## offset
-						offset += len(cell.connectivity)
-						cellOffsetBuffer += '{0} '.format(offset) + '\n'
-						## type
-						cellTypeBuffer += '{0} '.format(ABAQUS_VTK_CELL_MAP(cell.type)) + '\n'
-				buffer += '</DataArray>'+'\n'
-				buffer += '</Points>'+'\n'
+	def WriteVTUFile(self, args):
+		stepName = args[0]
+		frameIdx = args[1]
+		# create a .vtu file
+		vtkFile = open (self.odbPath + '\\' + self.odbFileNameNoExt + '_' + stepName + '_' + str(frameIdx) +'.vtu','w')
+		print("writing " + vtkFile.name)
 
-				# write field data
-				print("    writing field data")
-				pointdata_map = {'Tensors': [], 'Vectors': [], 'Scalars': []}
-				celldata_map = {'Tensors': [], 'Vectors': [], 'Scalars': []}
-				bufferPointDataArray = ''
-				bufferCellDataArray = ''
-				for fldName, _ in self.odb.getFieldOutputs(stepName, frameIdx):
-					pBuffer, cBuffer = self.WriteFieldOutputData(fldName, stepName, frameIdx, pointdata_map, celldata_map)
-					bufferPointDataArray += pBuffer
-					bufferCellDataArray += cBuffer
+		# start writing the buffer
+		buffer = '<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian">'+'\n'
+		cellConnectivityBuffer = ''
+		cellOffsetBuffer = ''
+		cellTypeBuffer = ''
+		offset = 0
+		buffer += '<UnstructuredGrid>'+'\n'
+		buffer += '<Piece NumberOfPoints="{0}" NumberOfCells="{1}">'.format(self._nodesNum, self._cellsNum) + '\n'
+		buffer += '<Points>'+'\n'
+		buffer += '<DataArray type="Float64" NumberOfComponents="3" format="ascii">'+'\n'
+		for instanceName in self._instance_names:
+			# write nodes
+			for node in self.odb.getNodes(instanceName):
+				coord = node.coordinates
+				buffer += '{0} {1} {2}'.format(coord[0], coord[1], coord[2]) + '\n'
+			# let's write cell connectivity, offset, and type into a different buffer which will be used later
+			for cell in self.odb.getElements(instanceName):
+				## connectivity
+				for nodeLabel in cell.connectivity:
+					cellConnectivityBuffer += '{0} '.format(self._nodes_map[instanceName][nodeLabel])
+				cellConnectivityBuffer += '\n'
+				## offset
+				offset += len(cell.connectivity)
+				cellOffsetBuffer += '{0} '.format(offset) + '\n'
+				## type
+				cellTypeBuffer += '{0} '.format(ABAQUS_VTK_CELL_MAP(cell.type)) + '\n'
+		buffer += '</DataArray>'+'\n'
+		buffer += '</Points>'+'\n'
 
-				# add material local coordinate CS
-				bufferCellDataArray += self.WriteLocalCS(MATERIAL_ORIENTATION, stepName, frameIdx, celldata_map)
+		# write field data
+		print("    writing field data")
+		pointdata_map = {'Tensors': [], 'Vectors': [], 'Scalars': []}
+		celldata_map = {'Tensors': [], 'Vectors': [], 'Scalars': []}
+		bufferPointDataArray = ''
+		bufferCellDataArray = ''
+		for fldName, _ in self.odb.getFieldOutputs(stepName, frameIdx):
+			pBuffer, cBuffer = self.WriteFieldOutputData(fldName, stepName, frameIdx, pointdata_map, celldata_map)
+			bufferPointDataArray += pBuffer
+			bufferCellDataArray += cBuffer
 
-				# pointdata - e.g., U, RF
-				# <PointData>
-				print("    writing PointData")
-				buffer += '<PointData '
-				for dataArrayField, fldNames in pointdata_map.items():
-					if len(fldNames) != 0:
-						buffer += dataArrayField + '='
-						buffer += '"\'{0}\''.format(fldNames[0])
-						for i in range(1, len(fldNames)):
-							buffer += ',\'{0}\''.format(fldNames[i])
-						buffer += '" '
-				buffer += '>' + '\n'
-				# <DataArray>
-				buffer += bufferPointDataArray
-				buffer += '</PointData>' + '\n'
+		# add material local coordinate CS
+		bufferCellDataArray += self.WriteLocalCS(MATERIAL_ORIENTATION, stepName, frameIdx, celldata_map)
 
-				#celldata - e.g., S, E
-				# <CellData>
-				print("    writing CellData")
-				buffer += '<CellData '
-				for dataArrayField, fldNames in celldata_map.items():
-					if len(fldNames) != 0:
-						buffer += dataArrayField + '='
-						buffer += '"\'{0}\''.format(fldNames[0])
-						for i in range(1, len(fldNames)):
-							buffer += ',\'{0}\''.format(fldNames[i])
-						buffer += '" '
-				buffer += '>' + '\n'
-				# <DataArray>
-				buffer += bufferCellDataArray
-				buffer += '</CellData>' + '\n'				
+		# pointdata - e.g., U, RF
+		# <PointData>
+		print("    writing PointData")
+		buffer += '<PointData '
+		for dataArrayField, fldNames in pointdata_map.items():
+			if len(fldNames) != 0:
+				buffer += dataArrayField + '='
+				buffer += '"\'{0}\''.format(fldNames[0])
+				for i in range(1, len(fldNames)):
+					buffer += ',\'{0}\''.format(fldNames[i])
+				buffer += '" '
+		buffer += '>' + '\n'
+		# <DataArray>
+		buffer += bufferPointDataArray
+		buffer += '</PointData>' + '\n'
 
-				# write cells
-				print("    writing cell connectivity, offsets, and types")
-				buffer += '<Cells>' + '\n'
-				buffer += '<DataArray type="Int64" Name="connectivity" format="ascii">' + '\n'
-				buffer += cellConnectivityBuffer
-				buffer += '</DataArray>'+'\n'
+		#celldata - e.g., S, E
+		# <CellData>
+		print("    writing CellData")
+		buffer += '<CellData '
+		for dataArrayField, fldNames in celldata_map.items():
+			if len(fldNames) != 0:
+				buffer += dataArrayField + '='
+				buffer += '"\'{0}\''.format(fldNames[0])
+				for i in range(1, len(fldNames)):
+					buffer += ',\'{0}\''.format(fldNames[i])
+				buffer += '" '
+		buffer += '>' + '\n'
+		# <DataArray>
+		buffer += bufferCellDataArray
+		buffer += '</CellData>' + '\n'				
 
-				buffer += '<DataArray type="Int64" Name="offsets" format="ascii">' + '\n'
-				buffer += cellOffsetBuffer
-				buffer += '</DataArray>'+'\n'
+		# write cells
+		print("    writing cell connectivity, offsets, and types")
+		buffer += '<Cells>' + '\n'
+		buffer += '<DataArray type="Int64" Name="connectivity" format="ascii">' + '\n'
+		buffer += cellConnectivityBuffer
+		buffer += '</DataArray>'+'\n'
 
-				buffer += '<DataArray type="Int64" Name="types" format="ascii">' + '\n'
-				buffer += cellTypeBuffer
-				buffer += '</DataArray>'+'\n'
-				buffer += '</Cells>' + '\n'
-				
-				buffer += '</Piece>' + '\n'
-				buffer += '</UnstructuredGrid>' + '\n'
-				buffer += '</VTKFile>'
+		buffer += '<DataArray type="Int64" Name="offsets" format="ascii">' + '\n'
+		buffer += cellOffsetBuffer
+		buffer += '</DataArray>'+'\n'
 
-				print("Complete.")
-				vtkFile.write(buffer)
-				vtkFile.close()
-	
+		buffer += '<DataArray type="Int64" Name="types" format="ascii">' + '\n'
+		buffer += cellTypeBuffer
+		buffer += '</DataArray>'+'\n'
+		buffer += '</Cells>' + '\n'
+		
+		buffer += '</Piece>' + '\n'
+		buffer += '</UnstructuredGrid>' + '\n'
+		buffer += '</VTKFile>'
+
+		print("Complete.")
+		vtkFile.write(buffer)
+		vtkFile.close()
+
 	def WriteCSVFILE(self):
 		# extract all the historyOutputs from Abaqus and save them into CSV file
 		# TODO: we are assuming all historyoutput types are SCALAR.
@@ -439,7 +446,7 @@ class ODB2VTK:
 					numOfDataArray += 1
 					if numOfDataPoint < len(historyOutputObj.data):
 						numOfDataPoint = len(historyOutputObj.data)
-						
+
 		data = np.zeros((numOfDataPoint, numOfDataArray))
 		header = []
 		for stepName in self._step_frame_map.keys():
@@ -464,6 +471,7 @@ if __name__ == "__main__":
 				help="if 1, extract header information and generate a .json file. Otherwise, generate .vtu file")
 	parser.add_argument("--instance", help="selected instance names which are separated by whitespace, e.g. 'instanceName1' 'instanceName2'", nargs="*")
 	parser.add_argument("--step", help="selected step names and frames which are separated by whitespace, e.g., 'step1:1,2,3' 'step2:2,3,4'", nargs="*")
+	parser.add_argument("--writeHistory", type=int, help="if 1, write history output.")
 	parser.add_argument("--odbFile", required=True, help="selected odb file (full path name)")
 	args = parser.parse_args()
 
@@ -495,7 +503,8 @@ if __name__ == "__main__":
 			step_frame_dict[split[0]].append(int(i))
 	odb2vtk.readArgs(args.instance, step_frame_dict)
 	odb2vtk.ConstructMap()
-	odb2vtk.WriteVTUFile()
-	odb2vtk.WriteCSVFILE()
+	odb2vtk.WriteVTUFiles()
+	if args.writeHistory:
+		odb2vtk.WriteCSVFILE()
 
 	print("--- %s seconds ---" % (timeit.default_timer() - start_time))
