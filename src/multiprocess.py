@@ -18,7 +18,7 @@
 # SOFTWARE.
 # ========================================================================*/
 
-# Contributors: Yang Shen.
+# Contributors: Yang Shen
 # Command line tool to spawn 'abaqus python' call in parallel
 
 import multiprocessing
