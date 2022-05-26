@@ -1,3 +1,28 @@
+# /*=========================================================================
+#    Program: ODB2VTK
+#    Module:  multiprocess.py
+#    Copyright (c) Arris Composites Inc.
+#    All rights reserved.
+#
+#    Arris Composites Inc.
+#    710 Bancroft Way
+#    Berkeley, CA 94710
+#    USA
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# ========================================================================*/
+
+
 import multiprocessing
 import subprocess
 import argparse
@@ -49,8 +74,6 @@ if __name__ == "__main__":
         cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step "{3}"'
                     .format(script_dir, args.odbFile, instances, step))
 
-    # for i in cmd:
-    #     print(i)
     count = multiprocessing.cpu_count()
     pool = multiprocessing.Pool(processes=count)
     pool.map(spawn, cmd)

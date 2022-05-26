@@ -1,13 +1,28 @@
-"""Utilities for batch reading odb files
+# /*=========================================================================
+#    Program: ODB2VTK
+#    Module:  utilities.py
+#    Copyright (c) Arris Composites Inc.
+#    All rights reserved.
+#
+#    Arris Composites Inc.
+#    710 Bancroft Way
+#    Berkeley, CA 94710
+#    USA
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# ========================================================================*/
 
-    Requirements
-    ------------
-    Abaqus/Python
 
-    Use Cases
-    ---------
-    - report results of FE analysis
-"""
 import odbAccess
 
 class ReadableOdb(object):
