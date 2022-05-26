@@ -110,7 +110,7 @@ In ODB2VTK class, there is a method WriteLocalCS to write material orientation. 
 ODB2VTK also extracts all the historyOutput in the odb file and write them into a CSV file which can be opened by ParaView to have a line chart view.
 
 ## Naming convention 
-You can find the pattern for output file in the WriteVTUFile method. As different frames will produce different results. The output file name must include frame number to avoid name clash. The current setting is to append "_stepName_frameNumber" at the end of odb file.
+You can find the pattern for output file in the WriteVTUFile method. As different frames will produce different results, the output file name must include frame number to avoid name clash. The current setting is to append "_stepName_frameNumber" at the end of odb file.
 
 ## Resources
 Abaqus Scripting Reference Manual
