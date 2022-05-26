@@ -44,7 +44,8 @@ What this essentially does is to spawn a 'Abaqus python' call for each frame lik
 ## Design
 
 ### Generality
-Abaqus ODB file has the following tree structure. For generality, we want to give end-users the freedom to specify which instance, which step, and which frame in the step to be converted. It is not uncommon to have a large ODB file with many instances, steps and frames but we only want to convert a few of them. ODB2VTK is also designed to be extendable. New element can be easily added to the source code with only two lines of code. ODB2VTK is designed to extract every fieldOutput exists in the ODB file.
+Abaqus ODB file has the following tree structure. For generality, we want to give end-users the freedom to specify which instance, which step, and which frame in the step to be converted. It is not uncommon to have a large ODB file with many instances, steps and frames but we only want to convert a few of them. ODB2VTK can handle the output at integration points and section points (this will be addressed in detail in the following section). ODB2VTK is also designed to be extendable. New element can be easily added to the source code with only two lines of code. 
+
 ![Figure 2](res/odb-overview-nls.png)
 
 ### Performance
