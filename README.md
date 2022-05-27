@@ -30,17 +30,25 @@ What this essentially does is to spawn a 'Abaqus python' call for each frame lik
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
+
 The last command will generate a .pvd file which groups all previous .vtu files. 
--- root 
-	-- Job-1.odb
 
--- root 
-	-- Job-1.odb
-	-- Job-1
-		-- Job-1.pvd
-		-- Step-1_1.vtu
-		-- Step-3_2.vtu
+Suppose the odb directory looks like this
+```
+project
+│   Job-1.odb  
+```
+After `python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile ./Job-1.odb` has been executed, we will get
 
+```
+project
+│   Job-1.odb   
+│
+└───Job-1
+│   │   Job-1.pvd
+│   │   Step-1_1.vtu
+│   │   Step-3_2.vtu
+```
 
 ## Design
 
