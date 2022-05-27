@@ -80,6 +80,7 @@ def ABAQUS_VTK_CELL_MAP(abaqusElementType):
 	elif 'R3D4' in abaqusElementType:
 		return 9
 	else:
+		sys.exit("{0} element type not found".format(abaqusElementType))
 		return None
 
 def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
