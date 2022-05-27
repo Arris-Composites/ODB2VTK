@@ -41,6 +41,7 @@ if __name__ == "__main__":
     parser.add_argument("--step", help="selected step names and frames which are separated by whitespace, e.g., 'step1:1,2,3' 'step2:2,3,4'", nargs="*")
     parser.add_argument("--writeHistory", type=int, help="if 1, write history output.")
     parser.add_argument("--odbFile", required=True, help="selected odb file (full path name)")
+    parser.add_argument("--suffix", default='', type=str, help="string appended to the file")
     
     args = parser.parse_args()
 
@@ -72,11 +73,11 @@ if __name__ == "__main__":
 
     cmd = []
     for step in step_frame_dict:
-        cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step "{3}"'
-                    .format(script_dir, args.odbFile, instances, step))
+        cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step "{3}" --suffix {4}'
+                    .format(script_dir, args.odbFile, instances, step, args.suffix))
     # append one mroe command to generate PVD file
-    cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step {3} --writePVD 1'
-                .format(script_dir, args.odbFile, instances, steps))
+    cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step {3} --writePVD 1 --suffix {4}'
+                .format(script_dir, args.odbFile, instances, steps, args.suffix))
 
     count = multiprocessing.cpu_count()
     pool = multiprocessing.Pool(processes=count)
