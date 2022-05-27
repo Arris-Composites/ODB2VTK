@@ -31,9 +31,7 @@ class ReadableOdb(object):
         return odbAccess.openOdb(odb, readOnly)
 
     def getFrames(self, stepName):
-        """Get list of frames, because odb sequences do not allow slicing
-        """
-        return list(self._odb.steps[stepName].frames)
+        return self._odb.steps[stepName].frames
 
     def getFrame(self, stepName, frameNum):
         return self.getFrames(stepName)[frameNum]
