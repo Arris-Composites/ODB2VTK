@@ -21,28 +21,26 @@ To convert multiple instances and steps, use whitespace to separate the argument
 
 To utilize multiprocessing in Python, another script 'multiprocess.py' is provided to spawn 'Abaqus python' call in parallel.
 
-`python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-3:0,1,2,3,4,5" --odbFile <my_odb_file_path>/my_odb_file.odb`
+`python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 What this essentially does is to spawn a 'Abaqus python' call for each frame like the following in parallel.
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:0" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:3" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:4" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:5" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-3:0,1,2,3,4,5" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
+`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
 The last command will generate a .pvd file which groups all previous .vtu files. 
+-- root 
+	-- Job-1.odb
+
+-- root 
+	-- Job-1.odb
+	-- Job-1
+		-- Job-1.pvd
+		-- Step-1_1.vtu
+		-- Step-3_2.vtu
+
 
 ## Design
 

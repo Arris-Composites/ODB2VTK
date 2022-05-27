@@ -134,7 +134,7 @@ class ODB2VTK:
 		self._nodesNum = 0
 		self._cellsNum = 0
 
-	def extractHeader(self):
+	def ExtractHeader(self):
 		dictJson = {"instances": [], "steps": []}
 
 		print("Scan instances...")
@@ -158,7 +158,7 @@ class ODB2VTK:
 	
 	# instanceNames = ['names', 'names']
 	# stepFrameDict = {'stepname': [0, 1, 2, 3], 'stepname': [0,1,2]}
-	def readArgs(self, instanceNames, stepsFramesDict):
+	def ReadArgs(self, instanceNames, stepsFramesDict):
 		self._instance_names = instanceNames
 		self._step_frame_map = stepsFramesDict
 
@@ -439,13 +439,9 @@ class ODB2VTK:
 		buffer += '</Piece>' + '\n'
 		buffer += '</UnstructuredGrid>' + '\n'
 		buffer += '</VTKFile>'
-
 		print("Complete.")
-
-		# create directory to place all the vtu file from the same odb file
-		if not os.path.exists(self.odbPath + '\\' + self.odbFileNameNoExt):
-			os.mkdir(self.odbPath + '\\' + self.odbFileNameNoExt)
-		with open("{0}".format(self.odbPath + '\\' + self.odbFileNameNoExt + '\\' + stepName + '_' + str(frameIdx) +'.vtu'), 'w') as f:
+		
+		with open("{0}".format(self.GetExportFileName(stepName + '_' + str(frameIdx)) +'.vtu'), 'w') as f:
 			f.write(buffer)
 			print("writing " + f.name)
 
@@ -462,7 +458,7 @@ class ODB2VTK:
 		buffer += '</Collection>' + '\n'
 		buffer += '</VTKFile>'
 
-		with open("{0}".format(self.odbPath + '\\' + self.odbFileNameNoExt + '\\' + self.odbFileNameNoExt + '.pvd'), 'w') as f:
+		with open("{0}".format(self.GetExportFileName(self.odbFileNameNoExt) + '.pvd'), 'w') as f:
 			f.write(buffer)
 			print("{0} file completed.".format(f.name))
 
@@ -488,11 +484,15 @@ class ODB2VTK:
 					header.append(name)
 					for i, d in enumerate(historyOutputObj.data):
 						data[i][j] = d[1]
-		
-		with open(self.odbPath + '\\' + self.odbFileNameNoExt + '.csv', 'w') as f:
+
+		with open("{0}".format(self.GetExportFileName(self.odbFileNameNoExt) + '.csv'), 'w') as f:
 			np.savetxt(f, np.array([header]), '%s', ',')
 			np.savetxt(f, data, '%f', ',')
-			
+
+	def GetExportFileName(self, filName):
+		if not os.path.exists(self.odbPath + '\\' + self.odbFileNameNoExt):
+			os.mkdir(self.odbPath + '\\' + self.odbFileNameNoExt)
+		return self.odbPath + '\\' + self.odbFileNameNoExt + '\\' + filName
 
 if __name__ == "__main__":
 
@@ -517,7 +517,7 @@ if __name__ == "__main__":
 	odb2vtk = ODB2VTK(args.odbFile)
 	# if --header is on, ignore all others and extract header information
 	if args.header:
-		odb2vtk.extractHeader()
+		odb2vtk.ExtractHeader()
 		sys.exit("{0} generated".format(os.path.join(odb2vtk.odbPath, odb2vtk.odbFileNameNoExt)))
 
 	if not args.instance:
@@ -534,7 +534,7 @@ if __name__ == "__main__":
 		step_frame_dict[split[0]] = []
 		for i in split[1].split(','):
 			step_frame_dict[split[0]].append(int(i))
-	odb2vtk.readArgs(args.instance, step_frame_dict)
+	odb2vtk.ReadArgs(args.instance, step_frame_dict)
 	if args.writePVD:
 		odb2vtk.WritePVDFile()
 		sys.exit()
