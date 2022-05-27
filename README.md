@@ -41,6 +41,9 @@ What this essentially does is to spawn a 'Abaqus python' call for each frame lik
 
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:5" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
+`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-3:0,1,2,3,4,5" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
+The last command will generate a .pvd file which groups all previous .vtu files. 
+
 ## Design
 
 ### Generality
@@ -111,10 +114,7 @@ Another scenario when a element has more than one data array is that the element
 In ODB2VTK class, there is a method WriteLocalCS to write material orientation. This is just a custom output written into VTK. Since we are dealing with anisotropic materials, we would like to visualize it in ParaView. You can use the same pattern to write other custom output from ODB file.
 
 ## History output
-ODB2VTK also extracts all the historyOutput in the odb file and write them into a CSV file which can be opened by ParaView to have a line chart view.
-
-## Naming convention 
-You can find the pattern for output file in the WriteVTUFile method. As different frames will produce different results, the output file name must include frame number to avoid name clash. The current setting is to append "_stepName_frameNumber" at the end of odb file.
+ODB2VTK also extracts (using argument "--writeHistory 1") all the historyOutput in the odb file and write them into a CSV file which can be opened by ParaView to have a line chart view. 
 
 ## Resources
 Abaqus Scripting Reference Manual
