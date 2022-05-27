@@ -117,10 +117,10 @@ def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
 
 ###########################################################
 class ODB2VTK:
-	def __init__(self, fileFullName):
+	def __init__(self, fileFullName, suffix):
 		self.fileFullName = fileFullName
 		self.odbFileName = os.path.basename(fileFullName)
-		self.odbFileNameNoExt = self.odbFileName.split(".")[0]
+		self.odbFileNameNoExt = self.odbFileName.split(".")[0] + suffix
 		self.odbPath = os.path.dirname(fileFullName)
 
 		self.odb = utilities.ReadableOdb(self.fileFullName)
@@ -440,7 +440,7 @@ class ODB2VTK:
 		buffer += '</UnstructuredGrid>' + '\n'
 		buffer += '</VTKFile>'
 		print("Complete.")
-		
+
 		with open("{0}".format(self.GetExportFileName(stepName + '_' + str(frameIdx)) +'.vtu'), 'w') as f:
 			f.write(buffer)
 			print("writing " + f.name)
@@ -506,6 +506,7 @@ if __name__ == "__main__":
 	parser.add_argument("--writeHistory", default=0, type=int, help="if 1, write history output.")
 	parser.add_argument("--odbFile", required=True, help="selected odb file (full path name)")
 	parser.add_argument("--writePVD", default=0, type=int, help="if 1 write a pvd file")
+	parser.add_argument("--suffix", default='', type=str, help="string appended to the file")
 	args = parser.parse_args()
 
 	# check odbfile
@@ -514,7 +515,7 @@ if __name__ == "__main__":
 	if not os.path.exists(args.odbFile):
 		sys.exit("{0} doesn't exist".format(args.odbFile))
 	
-	odb2vtk = ODB2VTK(args.odbFile)
+	odb2vtk = ODB2VTK(args.odbFile, args.suffix)
 	# if --header is on, ignore all others and extract header information
 	if args.header:
 		odb2vtk.ExtractHeader()
