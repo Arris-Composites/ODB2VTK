@@ -26,18 +26,13 @@ import utilities
 #import necessary modules to handle Abaqus output database, files and string
 import numpy as np
 from odbAccess import *
-from textRepr import *
 from string import *
 from time import *
 import os
-import io
 import sys
 import json
 import argparse
 import timeit
-import multiprocessing
-from multiprocessing import Pool
-
 
 # abaqus position
 from abaqusConstants import NODAL, INTEGRATION_POINT, ELEMENT_NODAL, CENTROID
@@ -75,6 +70,8 @@ def ABAQUS_VTK_CELL_MAP(abaqusElementType):
 		return 23	
 	elif 'S9' in abaqusElementType:
 		return 28
+	elif 'B31' in abaqusElementType:
+		return 3
 	elif 'R3D3' in abaqusElementType:
 		return 5
 	elif 'R3D4' in abaqusElementType:
@@ -347,12 +344,9 @@ class ODB2VTK:
 	def WriteVTUFile(self, args):
 		stepName = args[0]
 		frameIdx = args[1]
-		# create a .vtu file
-		vtkFile = open (self.odbPath + '\\' + self.odbFileNameNoExt + '_' + stepName + '_' + str(frameIdx) +'.vtu','w')
-		print("writing " + vtkFile.name)
 
 		# start writing the buffer
-		buffer = '<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian">'+'\n'
+		buffer = '<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">'+'\n'
 		cellConnectivityBuffer = ''
 		cellOffsetBuffer = ''
 		cellTypeBuffer = ''
@@ -447,13 +441,35 @@ class ODB2VTK:
 		buffer += '</VTKFile>'
 
 		print("Complete.")
-		vtkFile.write(buffer)
-		vtkFile.close()
+
+		# create directory to place all the vtu file from the same odb file
+		if not os.path.exists(self.odbPath + '\\' + self.odbFileNameNoExt):
+			os.mkdir(self.odbPath + '\\' + self.odbFileNameNoExt)
+		with open("{0}".format(self.odbPath + '\\' + self.odbFileNameNoExt + '\\' + stepName + '_' + str(frameIdx) +'.vtu'), 'w') as f:
+			f.write(buffer)
+			print("writing " + f.name)
+
+	def WritePVDFile(self):
+		buffer = '<VTKFile type="Collection" version="1.0" byte_order="LittleEndian" header_type="UInt64">' + '\n'
+		buffer += '<Collection>' + '\n'
+		partId = 0
+		for stepName, frameList in self._step_frame_map.items():
+			for frameIdx in frameList:
+				fileName = stepName + '_' + str(frameIdx) +'.vtu'
+				buffer += '<DataSet timestep="{0}" part="{1}" file="{2}"/>' \
+							.format(self.odb.getFrame(stepName, frameIdx).frameValue, partId, fileName) + '\n'
+				partId += 1
+		buffer += '</Collection>' + '\n'
+		buffer += '</VTKFile>'
+
+		with open("{0}".format(self.odbPath + '\\' + self.odbFileNameNoExt + '\\' + self.odbFileNameNoExt + '.pvd'), 'w') as f:
+			f.write(buffer)
+			print("{0} file completed.".format(f.name))
 
 	def WriteCSVFILE(self):
 		# extract all the historyOutputs from Abaqus and save them into CSV file
 		# TODO: we are assuming all historyoutput types are SCALAR.
-		# Need to include other types as well in the future.
+		# Need to include other types in the future.
 		numOfDataArray = 0
 		numOfDataPoint = 0
 		for stepName in self._step_frame_map.keys():
@@ -487,8 +503,9 @@ if __name__ == "__main__":
 				help="if 1, extract header information and generate a .json file. Otherwise, generate .vtu file")
 	parser.add_argument("--instance", help="selected instance names which are separated by whitespace, e.g. 'instanceName1' 'instanceName2'", nargs="*")
 	parser.add_argument("--step", help="selected step names and frames which are separated by whitespace, e.g., 'step1:1,2,3' 'step2:2,3,4'", nargs="*")
-	parser.add_argument("--writeHistory", type=int, help="if 1, write history output.")
+	parser.add_argument("--writeHistory", default=0, type=int, help="if 1, write history output.")
 	parser.add_argument("--odbFile", required=True, help="selected odb file (full path name)")
+	parser.add_argument("--writePVD", default=0, type=int, help="if 1 write a pvd file")
 	args = parser.parse_args()
 
 	# check odbfile
@@ -518,6 +535,10 @@ if __name__ == "__main__":
 		for i in split[1].split(','):
 			step_frame_dict[split[0]].append(int(i))
 	odb2vtk.readArgs(args.instance, step_frame_dict)
+	if args.writePVD:
+		odb2vtk.WritePVDFile()
+		sys.exit()
+
 	odb2vtk.ConstructMap()
 	odb2vtk.WriteVTUFiles()
 	if args.writeHistory:
