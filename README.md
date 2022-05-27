@@ -49,6 +49,7 @@ project
 │   │   Step-1_1.vtu
 │   │   Step-3_2.vtu
 ```
+If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
 
 ## Design
 
