@@ -536,13 +536,14 @@ if __name__ == "__main__":
 		for i in split[1].split(','):
 			step_frame_dict[split[0]].append(int(i))
 	odb2vtk.ReadArgs(args.instance, step_frame_dict)
+	if args.writeHistory:
+		odb2vtk.WriteCSVFILE()
 	if args.writePVD:
 		odb2vtk.WritePVDFile()
 		sys.exit()
 
 	odb2vtk.ConstructMap()
 	odb2vtk.WriteVTUFiles()
-	if args.writeHistory:
-		odb2vtk.WriteCSVFILE()
+
 
 	print("--- %s seconds ---" % (timeit.default_timer() - start_time))
