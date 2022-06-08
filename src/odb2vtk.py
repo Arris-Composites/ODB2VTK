@@ -314,7 +314,7 @@ class ODB2VTK:
 			for block in subset.bulkDataBlocks:
 				if block.localCoordSystem != None:
 					indices = [self._elements_map[instanceName][label] for label in block.elementLabels]
-					cellDataArray[indices] = block.localCoordSystem
+					cellDataArray[indices, :len(block.localCoordSystem[0])] = block.localCoordSystem
 
 		for data in cellDataArray:
 			# note that localCoordSystem return here is quaternion
