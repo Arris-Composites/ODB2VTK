@@ -1,4 +1,4 @@
-![[abaqusCAE 1.png|35]]![[U+2192.svg.png|50]]![[ParaView_Logo.png|45]]
+![[res/Pasted image 20220719214431.png|30]]![[res/Pasted image 20220719214506.png|50]]![[res/Pasted image 20220719214404.png|40]]
 # Abaqus output database to VTK converter
 
 ## Introduction
@@ -11,7 +11,7 @@ implementation to generate .vtu files for visualization in ParaView.
 ODB2VTK is a command line tool which uses Abaqus Python. So Abaqus must be installed to use this tool.
 `abaqus python odb2vtk.py --header 1 --odbFile <my_odb_file_path>/my_odb_file.odb`
 This will open the odb file, extract instances, steps, and frames, and save them into a JSON file in the same directory of the odb file.  
-![[Pasted image 20220719182140.png]]
+![[res/Pasted image 20220719214612.png]]
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" --step "Step-1:0,1" --odbFile <my_odb_file_path>/my_odb_file.odb`
 With 0 passed to header, it will write vtu data for instance "Part-1" at "Step-1" with frame number 0 and 1.
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-2:0,1,2,3,4,5" "Step-3:0,1,2,3" --odbFile <my_odb_file_path>/my_odb_file.odb`
@@ -50,7 +50,7 @@ If you are converting different instances from the odb with the same step and fr
 ### Generality
 
 Abaqus ODB file has the following tree structure[^1]. For generality, we want to give end-users the freedom to specify which instance, which step, and which frame in the step to be converted. It is not uncommon to have a large ODB file with many instances, steps and frames but we only want to extract a few of them. ODB2VTK can handle the output at integration points and section points (this will be addressed in detail in the following section). ODB2VTK is also designed to be extendable. New element can be easily added to the source code with only two lines of code.
-![[Pasted image 20220719193323.png]]
+![[res/Pasted image 20220719214645.png]]
 
 ### Performance
 
