@@ -71,14 +71,22 @@ if __name__ == "__main__":
     for inst in args.instance:
         instances += '"{0}"'.format(inst) + ' '
 
+
     cmd = []
     for step in step_frame_dict:
-        cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step "{3}" --suffix {4}'
-                    .format(script_dir, args.odbFile, instances, step, args.suffix))
+        if (args.suffix == ''):
+            cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step "{3}"'
+                        .format(script_dir, args.odbFile, instances, step))          
+        else:
+            cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step "{3}" --suffix {4}'
+                        .format(script_dir, args.odbFile, instances, step, args.suffix))
     # append one mroe command to generate PVD file
-    cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step {3} --writePVD 1 --suffix {4}'
-                .format(script_dir, args.odbFile, instances, steps, args.suffix))
-
+    if (args.suffix == ''):
+        cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step {3} --writePVD 1'
+                    .format(script_dir, args.odbFile, instances, steps))
+    else:
+        cmd.append('abaqus python {0}/odb2vtk.py --header 0 --odbFile {1} --instance {2} --step {3} --writePVD 1 --suffix {4}'
+            .format(script_dir, args.odbFile, instances, steps, args.suffix))
     count = multiprocessing.cpu_count()
     pool = multiprocessing.Pool(processes=count)
     pool.map(spawn, cmd)
