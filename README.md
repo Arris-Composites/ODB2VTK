@@ -1,18 +1,20 @@
 ![abaqusCAE](res/abaqusCAE.png)![U+2192.svg](res/U+2192.svg.png)![ParaView_Logo](res/ParaView_Logo.png)
+
 # Abaqus output database to VTK converter
 
 ## Introduction
 
-Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project is a Python 
+Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project is a Python
 implementation to generate .vtu files for visualization in ParaView.
 
 ## Usage
 
+![](res/odb2vtk_tutorial.gif)
 ODB2VTK is a command line tool which uses Abaqus Python. So Abaqus must be installed to use this tool.
 
 `abaqus python odb2vtk.py --header 1 --odbFile <my_odb_file_path>/my_odb_file.odb`
 
-This will open the odb file, extract instances, steps, and frames, and save them into a JSON file in the same directory of the odb file.  
+This will open the odb file, extract instances, steps, and frames, and save them into a JSON file in the same directory of the odb file.
 
 ![json_header](res/json_header.png)
 
@@ -34,7 +36,7 @@ The above command utilizes multiprocessing in Python to spawn multiple abaqus py
 
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
 
-The last command will generate a .pvd file. 
+The last command will generate a .pvd file.
 Suppose the odb directory looks like this
 
 ```
@@ -44,7 +46,9 @@ project
 │───Job-1.odb  
 
 ```
+
 After `python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile ./Job-1.odb` has been executed, we will get
+
 ```
 
 project
@@ -57,5 +61,4 @@ project
 
 ```
 
-If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash. 
-
+If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
