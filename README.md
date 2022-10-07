@@ -5,10 +5,10 @@
 ## Introduction
 
 Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project is a Python
-implementation to generate .vtu files for visualization in ParaView. This work is inspired by [Liujie](https://github.com/Liujie-SYSU/odb2vtk). And all other similar work doesn't satisfy my needs since I need converter which is more general and extensible. So I ended up implement my own version of it. This converter will:
+implementation to generate .vtu files for visualization in ParaView. This work is inspired by [Liujie](https://github.com/Liujie-SYSU/odb2vtk). And all other similar work doesn't satisfy my needs since I need a converter which is more general and extensible. So I ended up implement my own version of it. This converter will:
 
 1. Convert all the field outputs which exist in the ODB file.
-2. Convert data at integrations points / section points.
+2. Convert data at integrations points / section points and material orientation.
 3. Map Abaqus element to VTK cell at your will.
 
 ## Usage
