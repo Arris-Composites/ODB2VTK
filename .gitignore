@@ -1,4 +1,6 @@
 *.pyc
+*.sln
+*.rpy
 
 # User-specific files
 *.rsuser
