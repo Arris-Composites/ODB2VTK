@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 namespace GLOBAL {
 	/// <summary>
@@ -153,11 +154,11 @@ void odb2vtk::ExtractHeader()
 	}
 }
 
-void odb2vtk::ReadArgs(const std::vector<std::string>& instance_names,
-	const std::map<std::string, std::vector<int>>& step_frame_map)
+void odb2vtk::ReadArgs(const std::vector<std::string>& instanceNames,
+	const std::map<std::string, std::vector<int>>& stepFrameMap)
 {
-	m_instanceNames = instance_names;
-	m_stepFrameMap = step_frame_map;
+	m_instanceNames = instanceNames;
+	m_stepFrameMap = stepFrameMap;
 }
 
 void odb2vtk::WriteCSVFile()
@@ -228,7 +229,7 @@ void odb2vtk::WriteFieldOutputData(
 		// purpose of this loop is to iterate over fieldouput from all the instance 
 		// and check to see if we can find any section points
 		std::vector<odb_SectionPoint> sectionPoints;
-		int maxNumIntegrationPoints = 0;
+		int maxNumIntegrationPoints = 1;
 		for (const auto& inst_name : m_instanceNames)
 		{
 			auto inst = m_odb->rootAssembly().instances().constGet(inst_name.c_str());
@@ -277,7 +278,7 @@ void odb2vtk::WriteFieldOutputData(
 				fldOutput,
 				odb_Enum::odb_ResultPositionEnum::CENTROID,
 				fldOutput.name() + "_Centroid",
-				maxNumIntegrationPoints,
+				1,
 				GLOBAL::OutputDataType::CellData,
 				o_CelldataMap,
 				o_bufferCelldataArray);
@@ -351,7 +352,9 @@ void odb2vtk::WriteDataArray(
 	}
 	o_buffer += " format=\"ascii\">\n";
 	
-	
+	// use scientific formatting
+	std::stringstream s;
+	s << std::scientific;
 	if (outputDatatype == GLOBAL::OutputDataType::PointData)
 	{
 		double* data = new double[m_nodesNum * componentsSize];
@@ -366,9 +369,11 @@ void odb2vtk::WriteDataArray(
 		{
 			for (int j = 0; j < componentsSize; j++)
 			{
-				o_buffer += std::to_string(data[j + componentsSize * i]) + " ";
+				//o_buffer += std::to_string(data[j + componentsSize * i]) + " ";
+				s << data[j + componentsSize * i] << " ";
 			}
-			o_buffer += "\n";
+			s << "\n";
+			//o_buffer += "\n";
 		}
 		delete[] data;
 	}
@@ -386,12 +391,16 @@ void odb2vtk::WriteDataArray(
 		{
 			for (int j = 0; j < componentsSize * maxNumOfIntegrationPoints; j++)
 			{
-				o_buffer += std::to_string(data[j + componentsSize * maxNumOfIntegrationPoints * i]) + " ";
+				s << data[j + componentsSize * maxNumOfIntegrationPoints * i] << " ";
+				//o_buffer += std::to_string(data[j + componentsSize * maxNumOfIntegrationPoints * i]) + " ";
 			}
-			o_buffer += "\n";
+			s << "\n";
+			//o_buffer += "\n";
 		}
 		delete[] data;
 	}
+
+	o_buffer += s.str();
 	o_buffer += "</DataArray>";
 	o_buffer += "\n";
 }
@@ -439,11 +448,87 @@ void odb2vtk::WriteSortedCellData(const odb_SequenceFieldBulkData& blkDataBlock,
 			{
 				for (int comp = 0; comp < numComp; comp++)
 				{
-					o_data[cellLabelVtk * numComp * ip + comp] = data[j * numComp * ip + comp];
+					o_data[cellLabelVtk * numComp * numIP + ip * numComp + comp] = 
+						data[j * numComp * numIP + ip * numComp + comp];
 				}
 			}
 		}
 	}
+}
+
+void odb2vtk::WriteLocalCS(std::string fldName, 
+	const char* stepName, 
+	int frameIdx, 
+	std::map<std::string, std::vector<std::string>>& o_dataMap, 
+	std::string& o_buffer)
+{
+	o_buffer += "<DataArray type=\"Float32\" Name=\"" + 
+		fldName + "\"" + " NumberOfComponents=\"3\"" + " format=\"ascii\">\n";
+	// local orientation is retrived from "S" stress fieldoutput
+	auto fldOutput = m_odb->steps()[stepName].frames()[frameIdx].fieldOutputs().constGet("S");
+
+	float* data = new float[m_cellsNum * 3];
+	for (const auto& inst_name : m_instanceNames)
+	{
+		auto inst = m_odb->rootAssembly().instances()[inst_name.c_str()];
+		auto instStress = fldOutput
+			.getSubset(inst)
+			.getSubset(odb_Enum::odb_ResultPositionEnum::CENTROID);
+		for (int i = 0; i < instStress.bulkDataBlocks().size(); i++)
+		{
+			auto block = instStress.bulkDataBlocks()[i];
+			// local coordinate system is a quaternion.
+			// size is 4 x numElements
+			float* localCS = block.localCoordSystem();
+			if (localCS == nullptr)
+			{
+				for (int elem = 0; elem < block.numberOfElements(); elem++)
+				{
+					int abqIndex = block.elementLabels()[elem];
+					int vtkIndex = m_cellsMap[inst_name][abqIndex];
+					data[vtkIndex * 3] = 1; // default orientation if localCS is empty
+					data[vtkIndex * 3 + 1] = 0;
+					data[vtkIndex * 3 + 2] = 0;
+				}
+			}
+			else 
+			{
+				for (int elem = 0; elem < block.numberOfElements(); elem++)
+				{
+					int abqIndex = block.elementLabels()[elem];
+					int vtkIndex = m_cellsMap[inst_name][abqIndex];
+					float q1 = localCS[elem * 4];
+					float q2 = localCS[elem * 4 + 1];
+					float q3 = localCS[elem * 4 + 2];
+					float q4 = localCS[elem * 4 + 3]; // scalar term
+					data[vtkIndex * 3] = q4 * q4 + q1 * q1 - q2 * q2 - q3 * q3; 
+					data[vtkIndex * 3 + 1] = 2 * (q1 * q2 - q3 * q4);
+					data[vtkIndex * 3 + 2] = 2 * (q1 * q3 + q2 * q4);
+					//float x = q4 * q4 + q1 * q1 - q2 * q2 - q3 * q3;
+					//float y = 2 * (q1 * q2 - q3 * q4);
+					//float z = 2 * (q1 * q3 + q2 * q4);
+					//o_buffer += "\"" + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(z) + "\"";
+				}
+				//o_buffer += "\n";
+			}
+		}
+	}
+
+	for (int i = 0; i < m_cellsNum; i++)
+	{
+		o_buffer += std::to_string(data[i * 3]) + " " 
+			+ std::to_string(data[i * 3 + 1]) + " "
+			+ std::to_string(data[i * 3 + 2]);
+		o_buffer += "\n";
+	}
+
+	o_buffer += "</DataArray>";
+	o_buffer += "\n";
+
+	// add vectors for localCS in the XML header
+	o_dataMap["Vectors"].push_back(fldName);
+
+	delete[] data;
 }
 
 void odb2vtk::WriteVTUFiles()
@@ -522,24 +607,26 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx)
 			vtu << "</Points>" << "\n";
 
 			// write field data
-			std::map<std::string, std::vector<std::string>> pointdata_map, celldata_map;
-			pointdata_map["Tensors"] = std::vector<std::string>();
-			pointdata_map["Vectors"] = std::vector<std::string>();
-			pointdata_map["Scalars"] = std::vector<std::string>();
-			celldata_map["Tensors"] = std::vector<std::string>();
-			celldata_map["Vectors"] = std::vector<std::string>();
-			celldata_map["Scalars"] = std::vector<std::string>();
-			std::string buffer_pointdata_array, buffer_celldata_array;
+			std::map<std::string, std::vector<std::string>> pointdataMap, celldataMap;
+			pointdataMap["Tensors"] = std::vector<std::string>();
+			pointdataMap["Vectors"] = std::vector<std::string>();
+			pointdataMap["Scalars"] = std::vector<std::string>();
+			celldataMap["Tensors"] = std::vector<std::string>();
+			celldataMap["Vectors"] = std::vector<std::string>();
+			celldataMap["Scalars"] = std::vector<std::string>();
+			std::string bufferPointdataArray, bufferCelldataArray;
 			this->WriteFieldOutputData(stepName.c_str(), frameIdx, 
-				pointdata_map, celldata_map,
-				buffer_pointdata_array, buffer_celldata_array);
-			// prepare field data
+				pointdataMap, celldataMap,
+				bufferPointdataArray, bufferCelldataArray);
+			
+			// add localCS
+			this->WriteLocalCS("Material_Orientation", stepName.c_str(), frameIdx, celldataMap, bufferCelldataArray);
 			
 			// pointdata - e.g., U, RF
 			// write pointdata headers
 			std::cout << "write pointdata" << std::endl;
 			vtu << "<PointData";
-			for (const auto& item : pointdata_map)
+			for (const auto& item : pointdataMap)
 			{
 				if (item.second.size() != 0)
 				{
@@ -553,18 +640,18 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx)
 			}
 			vtu << ">" << "\n";
 			// write pointdata
-			vtu << buffer_pointdata_array;
+			vtu << bufferPointdataArray;
 			vtu << "</PointData>" << "\n";
 
 			// celldata - e.g., S, E
 			// write celldata header
 			std::cout << "write celldata" << std::endl;
 			vtu << "<CellData ";
-			for (const auto& item : celldata_map)
+			for (const auto& item : celldataMap)
 			{
 				if (item.second.size() != 0)
 				{
-					vtu << item.first << "=" << "\"" << item.second[0];
+					vtu << " " << item.first << "=" << "\"" << item.second[0];
 					for (int i = 1; i < item.second.size(); i++)
 					{
 						vtu << "," << item.second[i];
@@ -574,7 +661,7 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx)
 			}
 			vtu << ">" << "\n";
 			// write celldata
-			vtu << buffer_celldata_array;
+			vtu << bufferCelldataArray;
 			vtu << "</CellData>" << "\n";
 
 			// write cells
