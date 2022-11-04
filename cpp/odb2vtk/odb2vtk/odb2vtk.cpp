@@ -72,12 +72,6 @@ namespace GLOBAL {
 		return -1;
 	}
 
-	enum DType {
-		VTKTYPE, // VTK data type, e.g., Scalars, Vectors, Tensors
-		ABQCOMPONENTLABELS, // abaqus comoponent labels, such as Ux, Uy, Uz, we are exporting the same label from Abaqus to VTK
-		ABQPOSITION, // data position, such as CENTROID, NODAL, ELEMENTAL, and INTEGRATIONPOINT
-	};
-
 	enum OutputDataType {
 		PointData,
 		CellData,
@@ -448,7 +442,7 @@ void odb2vtk::WriteSortedCellData(const odb_SequenceFieldBulkData& blkDataBlock,
 			{
 				for (int comp = 0; comp < numComp; comp++)
 				{
-					o_data[cellLabelVtk * numComp * numIP + ip * numComp + comp] = 
+					o_data[cellLabelVtk * numComp * numIP + (INT64)ip * (INT64)numComp + comp] =
 						data[j * numComp * numIP + ip * numComp + comp];
 				}
 			}
