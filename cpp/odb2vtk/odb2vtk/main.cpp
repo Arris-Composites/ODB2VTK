@@ -166,7 +166,6 @@ int main(int argc, char* argv[]) {
 
     }
     catch (odb_BaseException& exc) {
-        std::cout << "odbBaseException caught\n";
         std::cout << "Abaqus error message: " << exc.UserReport().CStr() << std::endl;
     }
     catch (...) {
