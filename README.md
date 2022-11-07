@@ -11,7 +11,7 @@ implementation to generate .vtu files for visualization in ParaView. This work i
 2. Convert data at integrations points / section points and material orientation.
 3. Map Abaqus element to VTK cell at your will.
 
-## Usage
+## Usage Python
 
 ![](res/odb2vtk_tutorial.gif)
 ODB2VTK is a command line tool which uses Abaqus Python. So Abaqus must be installed to use this tool.
@@ -66,3 +66,17 @@ project
 ```
 
 If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
+
+## Usage C++
+
+To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio:
+
+1. Add the include directories
+   On my machine, they are:
+   C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\include
+   C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x
+2. Add the linker lib directories:
+   C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\lib
+3. Add static libs
+4. Add runtime DLL directory to PATH
+   C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\bin
