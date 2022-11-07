@@ -72,9 +72,14 @@ If you are converting different instances from the odb with the same step and fr
 To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio:
 
 1. Add the include directories
+
    On my machine, they are:
+
+   ```
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\include
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x
+   ```
+
 2. Add the linker lib directories:
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\lib
 3. Add static libs
