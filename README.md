@@ -70,18 +70,165 @@ If you are converting different instances from the odb with the same step and fr
 ## Usage C++
 
 To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio:
+These directories may look different on your machine depending on where Abaqus is installed. I will the directories on my machine as an example.
 
 1. Add the include directories
-
-   On my machine, they are:
-
    ```
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\include
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x
    ```
-
 2. Add the linker lib directories:
+   ```
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\lib
+   ```
 3. Add static libs
+
+   I simply copied all libs
+
+   ```
+   ABQDMP_Core.lib
+   ABQSMAAbuBasicUtils.lib
+   ABQSMAAbuGeom.lib
+   ABQSMAAspCommunications.lib
+   ABQSMAAspDiagExtractor.lib
+   ABQSMAAspExpKernelComm.lib
+   ABQSMAAspSupport.lib
+   ABQSMABasAlloc.lib
+   ABQSMABasCoreUtils.lib
+   ABQSMABasGenericsLib.lib
+   ABQSMABasPrfTrkLib.lib
+   ABQSMABasRtvUtility.lib
+   ABQSMABasShared.lib
+   ABQSMABasXmlDocument.lib
+   ABQSMABasXmlParser.lib
+   ABQSMABlaModule.lib
+   ABQSMACseModules.lib
+   ABQSMAEliBaseModule.lib
+   ABQSMAEliLicenseModule.lib
+   ABQSMAEliStaticModule.lib
+   ABQSMAElkCore.lib
+   ABQSMAFeoModules.lib
+   ABQSMAFsmShared.lib
+   ABQSMAISimInterface.lib
+   ABQSMAISrvInterface.lib
+   ABQSMAMsgCommModules.lib
+   ABQSMAMsgModules.lib
+   ABQSMAMtkApiMod.lib
+   ABQSMAMtxCoreModule.lib
+   ABQSMAObjSimObjectsMod.lib
+   ABQSMAOdbApi.lib
+   ABQSMAOdbAttrEO.lib
+   ABQSMAOdbCalcK.lib
+   ABQSMAOdbCore.lib
+   ABQSMAOdbCoreGeom.lib
+   ABQSMAOdbDdbOdb.lib
+   ABQSMARfmInterface.lib
+   ABQSMARomDiagEx.lib
+   ABQSMASglSharedLib.lib
+   ABQSMASglSimXmlFndLib.lib
+   ABQSMAShaDbIface-D.lib
+   ABQSMAShaDbIface.lib
+   ABQSMAShaShared-D.lib
+   ABQSMAShaShared.lib
+   ABQSMAShpCore.lib
+   ABQSMASimBCompress.lib
+   ABQSMASimBulkAPI.lib
+   ABQSMASimContainers.lib
+   ABQSMASimInterface.lib
+   ABQSMASimManifestSubcomp.lib
+   ABQSMASimPoolManager.lib
+   ABQSMASimS2fSubcomp.lib
+   ABQSMASimSerializerAPI.lib
+   ABQSMASrvBasic.lib
+   ABQSMASrvSimXmlConverters.lib
+   ABQSMASspUmaCore.lib
+   ABQSMAUsubsLib.lib
+   ABQSMAUzlZlib.lib
+   CATBBMagic.lib
+   CATComBase.lib
+   CATComDrvBB.lib
+   CATComHTTPEndPoint.lib
+   CATComServices.lib
+   CATComSidl.lib
+   CATComSidlFile.lib
+   CATLic.lib
+   CATLMjni.lib
+   CATP2PBaseUUID.lib
+   CATP2PCore.lib
+   CATPLMDispatcherItf.lib
+   CATPLMDispatcherSpecificItf.lib
+   CATScriptEngine.lib
+   CATSysAllocator.lib
+   CATSysCATIAAI.lib
+   CATSysCommunication.lib
+   CATSysDbSettings.lib
+   CATSysExternApp.lib
+   CATSysMainThreadMQ.lib
+   CATSysMotifDrv.lib
+   CATSysMultiThreading.lib
+   CATSysPreview.lib
+   CATSysProxy.lib
+   CATSysRunBrw.lib
+   CATSysTS.lib
+   CATSysTSObjectModeler.lib
+   CommunicationsUUID.lib
+   CSICommandBinder.lib
+   CSINodesLauncherSrc.lib
+   CSIQueuingDatabaseModule.lib
+   CSIQueuingModule.lib
+   CSIUtilities.lib
+   DSYApplicationMainArch.lib
+   DSYSysCnxExit.lib
+   DSYSysDlg.lib
+   DSYSysIRMSysAdapter.lib
+   DSYSysProgressHandler.lib
+   DSYSysWebService.lib
+   DSYSysWMIDriver.lib
+   EKCrypto.lib
+   EKPrivateArchive.lib
+   EKSSL.lib
+   ExperienceKernel.lib
+   explicitB-D.lib
+   explicitB.lib
+   explicitU-D.lib
+   explicitU-D_static.lib
+   explicitU.lib
+   explicitU_static.lib
+   HTTPArch.lib
+   InstArch.lib
+   JS0BASEILB.lib
+   JS0CRYPTEXIT.lib
+   JS0DLK.lib
+   JS0FM.lib
+   JS0GROUP.lib
+   JS0PCC.lib
+   JS0SMT.lib
+   jsmn.lib
+   mkl_core_dll.lib
+   mkl_intel_lp64_dll.lib
+   mkl_intel_thread_dll.lib
+   mkl_rt.lib
+   mkl_sequential_dll.lib
+   msmpi.lib
+   SecurityContext.lib
+   SMAAbuCodeGen.lib
+   SMAAspCodeGen.lib
+   SMABasCodeGen.lib
+   SMAFeaBackbone.lib
+   SMAShaCodeGen_DP.lib
+   SMAShaCodeGen_SP.lib
+   SMASimCodeGen.lib
+   standardB.lib
+   standardU.lib
+   standardU_static.lib
+   StringUtilities.lib
+   SysSqlite.lib
+   SystemTSUUID.lib
+   SystemUUID.lib
+   ```
+
 4. Add runtime DLL directory to PATH
+
+```
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\bin
+```
