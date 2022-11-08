@@ -70,7 +70,7 @@ If you are converting different instances from the odb with the same step and fr
 ## Usage C++
 
 To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio:
-These directories may look different on your machine depending on where Abaqus is installed. I will the directories on my machine as an example.
+These directories may look different on your machine depending on where Abaqus is installed. I will use the directories on my machine as an example.
 
 1. Add the include directories
    ```
