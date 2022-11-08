@@ -112,17 +112,40 @@ private:
 		int maxNumOfIntegrationPoints,
 		std::string& o_buffer);
 
+	/// <summary>
+	/// Write the point data for VTU file.
+	/// This data is sorted by the global index of node inside VTU.
+	/// </summary>
+	/// <param name="blkDataBlock"></param>
+	/// <param name="instanceName"></param>
+	/// <param name="components_size"></param>
+	/// <param name="o_data"></param>
 	void WriteSortedPointData(
 		const odb_SequenceFieldBulkData& blkDataBlock,
 		const std::string& instanceName,
 		const int& components_size,
 		double* o_data);
 
+	/// <summary>
+	/// Write the cell data for VTU file.
+	/// This data is sorted by the global index of cell inside VTU.
+	/// </summary>
+	/// <param name="blkDataBlock"></param>
+	/// <param name="instanceName"></param>
+	/// <param name="o_data"></param>
 	void WriteSortedCellData(
 		const odb_SequenceFieldBulkData& blkDataBlock,
 		const std::string& instanceName,
 		double* o_data);
 
+	/// <summary>
+	/// Write material orientation of each cel.
+	/// </summary>
+	/// <param name="fldName"></param>
+	/// <param name="stepName"></param>
+	/// <param name="frameIdx"></param>
+	/// <param name="o_dataMap"></param>
+	/// <param name="o_buffer"></param>
 	void WriteLocalCS(
 		std::string fldName,
 		const char* stepName,
