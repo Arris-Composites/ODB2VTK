@@ -232,3 +232,22 @@ These directories may look different on your machine depending on where Abaqus i
 ```
    C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\bin
 ```
+
+Once the project has been successfully built, you can run odb2vtk.exe
+
+```
+odb2vtk.exe --header 1 --odbFile C:/test/mixed_elements/collision.odb
+```
+
+This generates a header.json file.
+
+```
+odb2vtk.exe --header 0 --odbFile C:/test/mixed_elements/collision.odb --instance PART-1-1 PART-2-1 --step  Step-1:8 --writeHistory 0 -- writePVD 0
+```
+
+This generates collision_Step-1_8.vtu which represents the data at Step-1 and frame 8.
+
+## TODOS
+
+- [ ] implement writeHistory for C++ version.
+- [ ] implement writePVD for C++ version.

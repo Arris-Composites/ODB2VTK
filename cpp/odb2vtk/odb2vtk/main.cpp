@@ -61,12 +61,14 @@ int main(int argc, char* argv[]) {
         {
             args_map[ArgumentType::WRITEHISTORY] = std::vector<char*>();
             last = ArgumentType::WRITEHISTORY;
+            // TODO
             continue;
         }
         else if (strcmp(c, "--writePVD") == 0)
         {
             args_map[ArgumentType::WRITEPVD] = std::vector<char*>();
             last = ArgumentType::WRITEPVD;
+            // TODO
             continue;
         }
         args_map[last].push_back(c);
