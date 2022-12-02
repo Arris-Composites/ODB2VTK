@@ -4,8 +4,7 @@
 
 ## Introduction
 
-Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project is a Python
-implementation to generate .vtu files for visualization in ParaView. This work is inspired by [Liujie](https://github.com/Liujie-SYSU/odb2vtk). And all other similar work doesn't satisfy my needs since I need a converter which is more general and extensible. So I ended up implement my own version of it. This converter will:
+Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project provides a converter implemented in Python and C++. The C++ version is considerably faster than the Python version but it needs proper configuration to successfully build from the source. This work is inspired by [Liujie](https://github.com/Liujie-SYSU/odb2vtk). And all other similar work doesn't satisfy my needs since I need a converter which is more general and extensible. So I ended up implement my own version of it. This converter will:
 
 1. Convert all the field outputs which exist in the ODB file.
 2. Convert data at integrations points / section points and material orientation.
@@ -69,8 +68,8 @@ If you are converting different instances from the odb with the same step and fr
 
 ## Usage C++
 
-To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio:
-These directories may look different on your machine depending on where Abaqus is installed. I will use the directories on my machine as an example.
+Cpp folder has the source code for the C++ implemnetation.
+To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio (This may look different on your machine depending on where Abaqus is installed, but I will list my directories as an example.):
 
 1. Add the include directories
    ```
