@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-
-*.pyc
-=======
 *.pyc
 *.sln
->>>>>>> 1fd2959696d8909a70eda76a4a35771f4f26dae0
 *.rpy
 
 # User-specific files
@@ -34,3 +29,5 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
+cpp/build/
