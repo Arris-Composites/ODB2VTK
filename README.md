@@ -66,7 +66,7 @@ project
 
 If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
 
-## Usage C++
+## Build C++ Project by Visual Studio
 
 Cpp folder has the source code for the C++ implemnetation.
 To successully compile the C++ project using Abaqus public APIs, we need to do the following things in Visual Studio (This may look different on your machine depending on where Abaqus is installed, but I will list my directories as an example.):
@@ -245,6 +245,18 @@ odb2vtk.exe --header 0 --odbFile C:/test/mixed_elements/collision.odb --instance
 ```
 
 This generates collision_Step-1_8.vtu which represents the data at Step-1 and frame 8.
+
+## Build C++ Project by CMake
+
+Make sure the CMake option `AbqSDK_PRIVATE_INCLUDE_DIR` points to the correct location of Abaqus SDK when configuring the project using CMake. This option tells CMake where to find Abaqus SDK and configures proper linkage and includes.
+On my machine, it is
+
+```
+   C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x\win_b64\code\include
+   C:\Program Files\Dassault Systemes\SimulationServices\V6R2019x
+```
+
+Then, you can configure and build the project using CMake.
 
 ## TODOS
 
