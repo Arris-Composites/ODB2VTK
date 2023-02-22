@@ -10,6 +10,8 @@ Abaqus output database (.odb extension) is a binary file native to Abaqus. To ac
 2. Convert data at integrations points / section points and material orientation.
 3. Map Abaqus element to VTK cell at your will.
 
+If you want to know more about the design of ODB2VTK, checkout this [article](https://www.sciencedirect.com/science/article/pii/S2352711023000274).
+
 ## Usage Python
 
 ![](res/odb2vtk_tutorial.gif)
