@@ -213,9 +213,9 @@ class ODB2VTK:
 			# we are assuming that element in one instance should be consistent in terms of sectionPoint
 			# i.e., they either all have sectionPoint, or don't have sectinPoint
 			for block in subset.bulkDataBlocks:
-				if block.sectionPoint != None:
+				if block.sectionPoint is not None:
 					sectionPointMap[block.sectionPoint.description] = block.sectionPoint
-				if block.integrationPoints != None:
+				if block.integrationPoints is not None:
 					if maxNumOfIntegrationPoint < block.integrationPoints.max():
 						maxNumOfIntegrationPoint = block.integrationPoints.max()
 
@@ -278,17 +278,17 @@ class ODB2VTK:
 		return buffer
 
 	def WriteSortedPointData(self, bulkDataBlocks, instanceName, pointDataArray):
-		if bulkDataBlocks == None:
+		if bulkDataBlocks is None:
 			return
 		for block in bulkDataBlocks:
 			indices = [self._nodes_map[instanceName][label] for label in block.nodeLabels]
 			pointDataArray[indices] = block.data
 
 	def WriteSortedCellData(self, bulkDataBlocks, instanceName, cellDataArray):
-		if bulkDataBlocks == None:
+		if bulkDataBlocks is None:
 			return
 		for block in bulkDataBlocks:
-			if block.integrationPoints != None:
+			if block.integrationPoints is not None:
 				# note that different block may have different number of integration points.
 				# unfilled entries are assumed to be zero
 				indices = [self._elements_map[instanceName][label] for label in np.unique(block.elementLabels)]
@@ -317,11 +317,11 @@ class ODB2VTK:
 		for instanceName in self._instance_names:	
 			subset = fldOutput.getSubset(region=self.odb.getInstance(instanceName))
 			subset = subset.getSubset(position=CENTROID) 
-			if tempSectionPoint != None:
+			if tempSectionPoint is not None:
 				subset = subset.getSubset(sectionPoint=tempSectionPoint) 
 
 			for block in subset.bulkDataBlocks:
-				if block.localCoordSystem != None:
+				if block.localCoordSystem is not None:
 					indices = [self._elements_map[instanceName][label] for label in block.elementLabels]
 					cellDataArray[indices, :len(block.localCoordSystem[0])] = block.localCoordSystem
 
