@@ -260,6 +260,16 @@ On my machine, it is
 
 Then, you can configure and build the project using CMake.
 
+## Convert a range of frames by one command
+
+Now a new parse rule which accepts a range of frames has been added to the C++ version. This will be convenient to convert a large quantity of consecutive frames by one command.
+
+```
+odb2vtk.exe --header 0 --odbFile C:/test/mixed_elements/collision.odb --instance PART-1-1 PART-2-1 --step  Step-1:0-1000 --writeHistory 0 -- writePVD 0
+```
+
+converts frames ranging from 0 to 1000. So, it will generate 1001 individual vtu files. Do not mix it with single digit frame arguments.
+
 ## TODOS
 
 - [ ] implement writeHistory for C++ version.
