@@ -31,3 +31,4 @@ bld/
 [Ll]ogs/
 
 cpp/build/
+cpp/.vscode

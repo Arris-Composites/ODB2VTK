@@ -152,6 +152,34 @@ int main(int argc, char *argv[]) {
         }
         step_frames[step_name] = std::vector<int>();
         std::string::size_type pre_pos = found + 1, pos = 0;
+        // if the value is a single digit, it is a single frame
+        // if the value is formatted as 0-10, it means frames ranging from 0
+        // to 10
+        auto frames = str.substr(found + 1, str.size());
+        auto foundRanged = frames.find("-");
+        if (foundRanged != std::string::npos) {
+          auto start_frame = frames.substr(0, foundRanged);
+          auto end_frame = frames.substr(foundRanged + 1, frames.size());
+          auto start_frame_number = std::stoi(start_frame);
+          auto end_frame_number = std::stoi(end_frame);
+          if (start_frame_number < end_frame_number) {
+            for (int start = start_frame_number; start <= end_frame_number;
+                 start++) {
+              step_frames[step_name].push_back(start);
+            }
+            // we break the loop here
+            // do not mix single digit and ranged digits to reduce complexity
+            break;
+          } else {
+            std::cout << "start frame number is greater or equal to the end "
+                         "frame number "
+                         "if you are using ranged frames, you cannot mix it "
+                         "with single frame."
+                      << std::endl;
+            return -1;
+          }
+        }
+
         // step argument must be in name:1,3,4,5 format
         // split string by , and convert them to int
         while ((pos = str.find(",", pos)) != std::string::npos) {
