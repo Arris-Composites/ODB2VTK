@@ -391,7 +391,7 @@ void odb2vtk::WriteSortedCellData(const odb_SequenceFieldBulkData &blkDataBlock,
     int numIP = numValues / nElems;
     float *data = blk.data();
     for (int j = 0; j < nElems; j++) {
-      int cellLabelAbq = blk.elementLabels()[j];
+      int cellLabelAbq = blk.elementLabels()[j * numIP];
       INT64 cellLabelVtk = m_cellsMap[instanceName][cellLabelAbq];
       for (int ip = 0; ip < numIP; ip++) {
         for (int comp = 0; comp < numComp; comp++) {
