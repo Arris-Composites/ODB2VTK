@@ -286,7 +286,6 @@ class ODB2VTK:
         return buffer
 
     def WriteDataArray(self, fldOutput, vtkData, description, dataType):
-
         buffer = '<DataArray type="Float32" Name="{0}" NumberOfComponents="{1}"'.format(
             description, len(vtkData[1])
         )
@@ -379,9 +378,9 @@ class ODB2VTK:
                         self._elements_map[instanceName][label]
                         for label in block.elementLabels
                     ]
-                    cellDataArray[indices, : len(block.localCoordSystem[0])] = (
-                        block.localCoordSystem
-                    )
+                    cellDataArray[
+                        indices, : len(block.localCoordSystem[0])
+                    ] = block.localCoordSystem
 
         for data in cellDataArray:
             # note that localCoordSystem return here is quaternion
@@ -606,7 +605,6 @@ class ODB2VTK:
 
 
 if __name__ == "__main__":
-
     start_time = timeit.default_timer()
 
     parser = argparse.ArgumentParser()
