@@ -677,4 +677,5 @@ if __name__ == "__main__":
 
     odb2vtk.ConstructMap()
     odb2vtk.WriteVTUFiles()
+
     print("--- %s seconds ---" % (timeit.default_timer() - start_time))
