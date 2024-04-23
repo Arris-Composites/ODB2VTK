@@ -491,13 +491,10 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx) {
       vtu << "<VTKFile type = \"UnstructuredGrid\" version = \"1,0\" "
              "byte_order = \"LittleEndian\">"
           << "\n";
-      vtu << "<UnstructuredGrid>"
-          << "\n";
+      vtu << "<UnstructuredGrid>" << "\n";
       vtu << "<Piece NumberOfPoints=\"" << m_nodesNum << "\" "
-          << "NumberOfCells=\"" << m_cellsNum << "\">"
-          << "\n";
-      vtu << "<Points>"
-          << "\n";
+          << "NumberOfCells=\"" << m_cellsNum << "\">" << "\n";
+      vtu << "<Points>" << "\n";
       vtu << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" "
              "format=\"ascii\">"
           << "\n";
@@ -540,10 +537,8 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx) {
       }
       std::cout << "write nodes" << std::endl;
       vtu << nodeCoord;
-      vtu << "</DataArray>"
-          << "\n";
-      vtu << "</Points>"
-          << "\n";
+      vtu << "</DataArray>" << "\n";
+      vtu << "</Points>" << "\n";
 
       // write field data
       std::map<std::string, std::vector<std::string>> pointdataMap, celldataMap;
@@ -568,20 +563,17 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx) {
       vtu << "<PointData";
       for (const auto &item : pointdataMap) {
         if (item.second.size() != 0) {
-          vtu << " " << item.first << "="
-              << "\"" << item.second[0];
+          vtu << " " << item.first << "=" << "\"" << item.second[0];
           for (int i = 1; i < item.second.size(); i++) {
             vtu << "," << item.second[i];
           }
           vtu << "\"";
         }
       }
-      vtu << ">"
-          << "\n";
+      vtu << ">" << "\n";
       // write pointdata
       vtu << bufferPointdataArray;
-      vtu << "</PointData>"
-          << "\n";
+      vtu << "</PointData>" << "\n";
 
       // celldata - e.g., S, E
       // write celldata header
@@ -589,49 +581,39 @@ void odb2vtk::WriteVTUFile(std::string stepName, int frameIdx) {
       vtu << "<CellData ";
       for (const auto &item : celldataMap) {
         if (item.second.size() != 0) {
-          vtu << " " << item.first << "="
-              << "\"" << item.second[0];
+          vtu << " " << item.first << "=" << "\"" << item.second[0];
           for (int i = 1; i < item.second.size(); i++) {
             vtu << "," << item.second[i];
           }
           vtu << "\"";
         }
       }
-      vtu << ">"
-          << "\n";
+      vtu << ">" << "\n";
       // write celldata
       vtu << bufferCelldataArray;
-      vtu << "</CellData>"
-          << "\n";
+      vtu << "</CellData>" << "\n";
 
       // write cells
       std::cout << "write cell connectivity, offsets, and types" << std::endl;
-      vtu << "<Cells>"
-          << "\n";
+      vtu << "<Cells>" << "\n";
       vtu << "<DataArray type=\"Int64\" Name=\"connectivity\" format=\"ascii\">"
           << "\n";
       vtu << cellConnectivity;
-      vtu << "</DataArray>"
-          << "\n";
+      vtu << "</DataArray>" << "\n";
 
       vtu << "<DataArray type=\"Int64\" Name=\"offsets\" format=\"ascii\">"
           << "\n";
       vtu << cellOffset;
-      vtu << "</DataArray>"
-          << "\n";
+      vtu << "</DataArray>" << "\n";
 
       vtu << "<DataArray type=\"Int64\" Name=\"types\" format=\"ascii\">"
           << "\n";
       vtu << cellType;
-      vtu << "</DataArray>"
-          << "\n";
+      vtu << "</DataArray>" << "\n";
 
-      vtu << "</Cells>"
-          << "\n";
-      vtu << "</Piece>"
-          << "\n";
-      vtu << "</UnstructuredGrid>"
-          << "\n";
+      vtu << "</Cells>" << "\n";
+      vtu << "</Piece>" << "\n";
+      vtu << "</UnstructuredGrid>" << "\n";
       vtu << "</VTKFile>";
 
       std::cout << "complete" << std::endl;
