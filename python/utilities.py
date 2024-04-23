@@ -32,10 +32,11 @@
 
 import odbAccess
 
+
 class ReadableOdb(object):
     def __init__(self, odb, readOnly=True):
         self._odb = self.open(odb, readOnly=readOnly)
-    
+
     def open(self, odb, readOnly):
         return odbAccess.openOdb(odb, readOnly)
 
@@ -50,7 +51,7 @@ class ReadableOdb(object):
 
     def getNodes(self, instanceName):
         return self.getInstance(instanceName).nodes
-    
+
     def getElements(self, instanceName):
         return self.getInstance(instanceName).elements
 
@@ -69,9 +70,11 @@ class ReadableOdb(object):
     @property
     def odb(self):
         return self._odb
+
     @property
     def getStepsKeys(self):
         return self._odb.steps.keys()
+
     @property
     def getInstancesKeys(self):
-        return self._odb.rootAssembly.instances.keys()    
+        return self._odb.rootAssembly.instances.keys()
