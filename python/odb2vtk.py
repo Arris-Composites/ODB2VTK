@@ -378,9 +378,9 @@ class ODB2VTK:
                         self._elements_map[instanceName][label]
                         for label in block.elementLabels
                     ]
-                    cellDataArray[indices, : len(block.localCoordSystem[0])] = (
-                        block.localCoordSystem
-                    )
+                    cellDataArray[
+                        indices, : len(block.localCoordSystem[0])
+                    ] = block.localCoordSystem
 
         for data in cellDataArray:
             # note that localCoordSystem return here is quaternion
