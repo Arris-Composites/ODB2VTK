@@ -379,9 +379,9 @@ class ODB2VTK:
                         self._elements_map[instanceName][label]
                         for label in block.elementLabels
                     ]
-                    cellDataArray[
-                        indices, : len(block.localCoordSystem[0])
-                    ] = block.localCoordSystem
+                    cellDataArray[indices, : len(block.localCoordSystem[0])] = (
+                        block.localCoordSystem
+                    )
 
         for data in cellDataArray:
             # note that localCoordSystem return here is quaternion
@@ -603,6 +603,7 @@ class ODB2VTK:
         if not os.path.exists(os.path.join(self.odbPath, self.odbFileNameNoExt)):
             os.mkdir(os.path.join(self.odbPath, self.odbFileNameNoExt))
         return os.path.join(self.odbPath, self.odbFileNameNoExt, filName)
+
 
 if __name__ == "__main__":
     start_time = timeit.default_timer()
