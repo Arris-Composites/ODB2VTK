@@ -43,6 +43,7 @@ import json
 import argparse
 import timeit
 
+
 # abaqus position
 from abaqusConstants import NODAL, INTEGRATION_POINT, ELEMENT_NODAL, CENTROID
 
@@ -599,9 +600,9 @@ class ODB2VTK:
             np.savetxt(f, data, "%f", ",")
 
     def GetExportFileName(self, filName):
-        if not os.path.exists(self.odbPath + "\\" + self.odbFileNameNoExt):
-            os.mkdir(self.odbPath + "\\" + self.odbFileNameNoExt)
-        return self.odbPath + "\\" + self.odbFileNameNoExt + "\\" + filName
+        if not os.path.exists(os.path.join(self.odbPath, self.odbFileNameNoExt)):
+            os.mkdir(os.path.join(self.odbPath, self.odbFileNameNoExt))
+        return os.path.join(self.odbPath, self.odbFileNameNoExt, filName)
 
 
 if __name__ == "__main__":
