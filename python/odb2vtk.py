@@ -104,7 +104,7 @@ def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
     # output convention: (vtkType, abaqusComponentLabels, abaqusPosition)
 
     # TODO: assuming fldOutput.locations always have a size of 1.
-    # in the future maybe extend this to handle more than one locations
+    # in the future maybe extend this to handle more than one location
     abaqusDataType = fldOutput.type
     abaqusComponentLabels = fldOutput.componentLabels
     abaqusPosition = fldOutput.locations[0].position
@@ -114,7 +114,7 @@ def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
 
     if abaqusDataType == SCALAR:
         vtkType = "Scalars"
-        # scalar values have zero componentlabels
+        # scalar values have zero componentLabels
         # assign a default one here
         if len(abaqusComponentLabels) == 0:
             abaqusComponentLabels = "0"
@@ -216,7 +216,7 @@ class ODB2VTK:
         vtkData = ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput)
         bufferPointDataArray = ""
         bufferCellDataArray = ""
-        # if fieldoutput contains sectionPoint data, we need to generate seperate dataset
+        # if fieldOutput contains sectionPoint data, we need to generate separate dataset
         sectionPointMap = {}
         maxNumOfIntegrationPoint = 1
         for instanceName in self._instance_names:
@@ -229,7 +229,7 @@ class ODB2VTK:
             # we are checking the bulkDataBlocks here
             # We need to write vtu data according to what is included in bulkDataBlocks
             # we are assuming that element in one instance should be consistent in terms of sectionPoint
-            # i.e., they either all have sectionPoint, or don't have sectinPoint
+            # i.e., they either all have sectionPoint, or don't have sectionPoint
             for block in subset.bulkDataBlocks:
                 if block.sectionPoint is not None:
                     sectionPointMap[block.sectionPoint.description] = block.sectionPoint
@@ -271,12 +271,12 @@ class ODB2VTK:
     ):
         buffer = ""
         if len(sectionPointMap) == 0:
-            # meaning we dont' have any sectionPoint in the current fieldOutput
+            # meaning we don't have any sectionPoint in the current fieldOutput
             # generate one dataset
             buffer += self.WriteDataArray(fldOutput, vtkData, fldName, dataType)
             data_map[vtkData[0]].append(fldName)
         else:
-            # meaning we have sectionPoint in the current fieldOutuput
+            # meaning we have sectionPoint in the current fieldOutput
             # we need to split the data
             for description, sectionP in sectionPointMap.items():
                 subset = fldOutput.getSubset(sectionPoint=sectionP)
@@ -563,7 +563,7 @@ class ODB2VTK:
 
     def WriteCSVFILE(self):
         # extract all the historyOutputs from Abaqus and save them into CSV file
-        # TODO: we are assuming all historyoutput types are SCALAR.
+        # TODO: we are assuming all historyOutput types are SCALAR.
         # Need to include other types in the future.
         numOfDataArray = 0
         numOfDataPoint = 0
