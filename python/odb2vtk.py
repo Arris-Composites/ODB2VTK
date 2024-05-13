@@ -179,7 +179,7 @@ class ODB2VTK:
         with open(
             os.path.join(self.odbPath, self.odbFileNameNoExt) + ".json", "w"
         ) as fp:
-            json.dump(dictJson, fp, 4)
+            json.dump(dictJson, fp, indent=4)
 
     # instanceNames = ['names', 'names']
     # stepFrameDict = {'stepname': [0, 1, 2, 3], 'stepname': [0,1,2]}
