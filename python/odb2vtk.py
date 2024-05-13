@@ -43,7 +43,6 @@ import json
 import argparse
 import timeit
 
-
 # abaqus position
 from abaqusConstants import NODAL, INTEGRATION_POINT, ELEMENT_NODAL, CENTROID
 
@@ -210,12 +209,12 @@ class ODB2VTK:
                 indexElement += 1
 
     def WriteFieldOutputData(
-        self, fldName, stepName, frameIdx, pointdata_map, celldata_map
+            self, fldName, stepName, frameIdx, pointdata_map, celldata_map
     ):
         fldOutput = self.odb.getFieldOutput(stepName, frameIdx, fldName)
         vtkData = ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput)
-        bufferPointDataArray = ""
-        bufferCellDataArray = ""
+        bufferPointDataArray = []
+        bufferCellDataArray = []
         # if fieldOutput contains sectionPoint data, we need to generate separate dataset
         sectionPointMap = {}
         maxNumOfIntegrationPoint = 1
@@ -238,38 +237,47 @@ class ODB2VTK:
                         maxNumOfIntegrationPoint = block.integrationPoints.max()
 
         if vtkData[2] == NODAL:
-            bufferPointDataArray += self.WriteDataArrayWithSectionPoints(
-                sectionPointMap, fldOutput, vtkData, fldName, pointdata_map, "PointData"
+            self.WriteDataArrayWithSectionPoints(
+                sectionPointMap,
+                fldOutput,
+                vtkData,
+                fldName,
+                pointdata_map,
+                "PointData",
+                buffer=bufferPointDataArray,
             )
         if vtkData[2] == INTEGRATION_POINT:
             # visualize the data based on the value at the centroid from Abaqus
             vtkDataNew = (vtkData[0], vtkData[1], CENTROID)
-            bufferCellDataArray += self.WriteDataArrayWithSectionPoints(
+            self.WriteDataArrayWithSectionPoints(
                 sectionPointMap,
                 fldOutput,
                 vtkDataNew,
                 fldName + "_Centroid",
                 celldata_map,
                 "CellData",
+                buffer=bufferCellDataArray,
             )
             # we also want to store the values for each integration point
             vtkDataNew = (vtkData[0], vtkData[1] * maxNumOfIntegrationPoint, vtkData[2])
-            bufferCellDataArray += self.WriteDataArrayWithSectionPoints(
+            self.WriteDataArrayWithSectionPoints(
                 sectionPointMap,
                 fldOutput,
                 vtkDataNew,
                 fldName + "_IntegrationPoints",
                 celldata_map,
                 "CellData",
+                buffer=bufferCellDataArray,
             )
         # if vtkData[2] == CENTROID:
         # 	bufferCellDataArray += self.WriteDataArrayWithSectionPoints(sectionPointMap, fldOutput, vtkData, fldName, celldata_map, "CellData")
         return (bufferPointDataArray, bufferCellDataArray)
 
     def WriteDataArrayWithSectionPoints(
-        self, sectionPointMap, fldOutput, vtkData, fldName, data_map, dataType
+        self, sectionPointMap, fldOutput, vtkData, fldName, data_map, dataType, buffer=None
     ):
-        buffer = ""
+        if buffer is None:
+            buffer = []
         if len(sectionPointMap) == 0:
             # meaning we don't have any sectionPoint in the current fieldOutput
             # generate one dataset
@@ -280,20 +288,20 @@ class ODB2VTK:
             # we need to split the data
             for description, sectionP in sectionPointMap.items():
                 subset = fldOutput.getSubset(sectionPoint=sectionP)
-                buffer += self.WriteDataArray(
-                    subset, vtkData, fldName + description, dataType
-                )
+                buffer += self.WriteDataArray(subset, vtkData, fldName + description, dataType)
                 data_map[vtkData[0]].append(fldName + description)
         return buffer
 
-    def WriteDataArray(self, fldOutput, vtkData, description, dataType):
-        buffer = '<DataArray type="Float32" Name="{0}" NumberOfComponents="{1}"'.format(
-            description, len(vtkData[1])
+    def WriteDataArray(self, fldOutput, vtkData, description, dataType, buffer=None):
+        if buffer is None:
+            buffer = []
+		# use the same componentLabel from Abaqus
+        header = (
+            ['<DataArray type="Float32" Name="{0}" NumberOfComponents="{1}"'.format(description, len(vtkData[1]))]
+            + ['ComponentName{0}="{1}"'.format(i, label) for (i, label) in enumerate(vtkData[1])]
+            + ['format="ascii">\n']
         )
-        # use the same component label from Abaqus
-        for i, label in enumerate(vtkData[1]):
-            buffer += ' ComponentName{0}="{1}"'.format(i, label)
-        buffer += ' format="ascii">' + "\n"
+        buffer.append(" ".join(header))
 
         writer = None
         size = 0
@@ -310,10 +318,9 @@ class ODB2VTK:
             writer(subset.bulkDataBlocks, instanceName, dataArray)
         # can we make this faster???
         for data in dataArray:
-            for d in data:
-                buffer += "{0} ".format(d)
-            buffer += "\n"
-        buffer += "</DataArray>" + "\n"
+            buffer.append("".join(("{0} ".format(d) for d in data)))
+            buffer.append("\n")
+        buffer.append("</DataArray>\n")
         return buffer
 
     def WriteSortedPointData(self, bulkDataBlocks, instanceName, pointDataArray):
@@ -348,14 +355,11 @@ class ODB2VTK:
                 ]
                 cellDataArray[indices] = block.data
 
-    def WriteLocalCS(self, fldName, stepName, frameIdx, celldata_map):
+    def WriteLocalCS(self, fldName, stepName, frameIdx, celldata_map, buffer=None):
         # this function is to extract material orientation and write it as a vector data at cell.
-        buffer = (
-            '<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">'.format(
-                fldName
-            )
-            + "\n"
-        )
+        if buffer is None:
+            buffer = []
+        buffer.append('<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">\n'.format(fldName))
         fldOutput = self.odb.getFieldOutput(stepName, frameIdx, "S")
         tempSectionPoint = None
         for instanceName in self._instance_names:
@@ -393,13 +397,12 @@ class ODB2VTK:
             # convert quaternion to directional cosine
             # x y z is the orientation of 11
             # https://www.vectornav.com/resources/inertial-navigation-primer/math-fundamentals/math-attitudetran
-            x = q4**2 + q1**2 - q2**2 - q3**2
+            x = q4 ** 2 + q1 ** 2 - q2 ** 2 - q3 ** 2
             y = 2 * (q1 * q2 - q3 * q4)
             z = 2 * (q1 * q3 + q2 * q4)
-            buffer += "{0} {1} {2}".format(x, y, z)
-            buffer += "\n"
+            buffer.append("{0} {1} {2}\n".format(x, y, z))
 
-        buffer += "</DataArray>" + "\n"
+        buffer.append("</DataArray>\n")
         celldata_map["Vectors"].append(fldName)
         return buffer
 
@@ -413,115 +416,105 @@ class ODB2VTK:
         frameIdx = args[1]
 
         # start writing the buffer
-        buffer = (
-            '<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">'
-            + "\n"
-        )
-        cellConnectivityBuffer = ""
-        cellOffsetBuffer = ""
-        cellTypeBuffer = ""
+        buffer = []
+        buffer.append('<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">\n')
+        cellConnectivityBuffer = []
+        cellOffsetBuffer = []
+        cellTypeBuffer = []
         offset = 0
-        buffer += "<UnstructuredGrid>" + "\n"
-        buffer += (
-            '<Piece NumberOfPoints="{0}" NumberOfCells="{1}">'.format(
-                self._nodesNum, self._cellsNum
-            )
-            + "\n"
-        )
-        buffer += "<Points>" + "\n"
-        buffer += (
-            '<DataArray type="Float64" NumberOfComponents="3" format="ascii">' + "\n"
-        )
+        buffer.append("<UnstructuredGrid>\n")
+        buffer.append('<Piece NumberOfPoints="{0}" NumberOfCells="{1}">\n'.format(self._nodesNum, self._cellsNum))
+        buffer.append("<Points>\n")
+        buffer.append('<DataArray type="Float64" NumberOfComponents="3" format="ascii">\n')
         for instanceName in self._instance_names:
             # write nodes
             for node in self.odb.getNodes(instanceName):
-                coord = node.coordinates
-                buffer += "{0} {1} {2}".format(coord[0], coord[1], coord[2]) + "\n"
+                buffer.append("{0} {1} {2}\n".format(*node.coordinates))
             # let's write cell connectivity, offset, and type into a different buffer which will be used later
             for cell in self.odb.getElements(instanceName):
                 ## connectivity
-                for nodeLabel in cell.connectivity:
-                    cellConnectivityBuffer += "{0} ".format(
-                        self._nodes_map[instanceName][nodeLabel]
+                cellConnectivityBuffer.append(
+                    "".join(
+                        ("{0} ".format(self._nodes_map[instanceName][nodeLabel]) for nodeLabel in cell.connectivity)
                     )
-                cellConnectivityBuffer += "\n"
+                )
+                cellConnectivityBuffer.append("\n")
                 ## offset
                 offset += len(cell.connectivity)
-                cellOffsetBuffer += "{0} ".format(offset) + "\n"
+                cellOffsetBuffer.append("{0} \n".format(offset))
                 ## type
-                cellTypeBuffer += "{0} ".format(ABAQUS_VTK_CELL_MAP(cell.type)) + "\n"
-        buffer += "</DataArray>" + "\n"
-        buffer += "</Points>" + "\n"
+                cellTypeBuffer.append("{0} \n".format(ABAQUS_VTK_CELL_MAP(cell.type)))
+        buffer.append("</DataArray>\n")
+        buffer.append("</Points>\n")
 
         # write field data
         print("    writing field data")
         pointdata_map = {"Tensors": [], "Vectors": [], "Scalars": []}
         celldata_map = {"Tensors": [], "Vectors": [], "Scalars": []}
-        bufferPointDataArray = ""
-        bufferCellDataArray = ""
+        bufferPointDataArray = []
+        bufferCellDataArray = []
         for fldName, _ in self.odb.getFieldOutputs(stepName, frameIdx):
-            pBuffer, cBuffer = self.WriteFieldOutputData(
-                fldName, stepName, frameIdx, pointdata_map, celldata_map
-            )
+            pBuffer, cBuffer = self.WriteFieldOutputData(fldName, stepName, frameIdx, pointdata_map, celldata_map)
             bufferPointDataArray += pBuffer
             bufferCellDataArray += cBuffer
 
         # add material local coordinate CS
-        bufferCellDataArray += self.WriteLocalCS(
-            MATERIAL_ORIENTATION, stepName, frameIdx, celldata_map
-        )
+        bufferCellDataArray += self.WriteLocalCS(MATERIAL_ORIENTATION, stepName, frameIdx, celldata_map)
 
         # pointdata - e.g., U, RF
         # <PointData>
         print("    writing PointData")
-        buffer += "<PointData "
+        pointDataHeader = ["<PointData "]
         for dataArrayField, fldNames in pointdata_map.items():
             if len(fldNames) != 0:
-                buffer += dataArrayField + "="
-                buffer += "\"'{0}'".format(fldNames[0])
+                pointDataHeader.append(dataArrayField + "=")
+                pointDataHeader.append("\"'{0}'".format(fldNames[0]))
                 for i in range(1, len(fldNames)):
-                    buffer += ",'{0}'".format(fldNames[i])
-                buffer += '" '
-        buffer += ">" + "\n"
+                    pointDataHeader.append(",'{0}'".format(fldNames[i]))
+                pointDataHeader.append('" ')
+        pointDataHeader.append(">\n")
+        buffer.append("".join(pointDataHeader))
         # <DataArray>
         buffer += bufferPointDataArray
-        buffer += "</PointData>" + "\n"
+        buffer.append("</PointData>\n")
 
         # celldata - e.g., S, E
         # <CellData>
         print("    writing CellData")
-        buffer += "<CellData "
+        cellDataHeader = ["<CellData "]
         for dataArrayField, fldNames in celldata_map.items():
             if len(fldNames) != 0:
-                buffer += dataArrayField + "="
-                buffer += "\"'{0}'".format(fldNames[0])
+                cellDataHeader.append(dataArrayField + "=")
+                cellDataHeader.append("\"'{0}'".format(fldNames[0]))
                 for i in range(1, len(fldNames)):
-                    buffer += ",'{0}'".format(fldNames[i])
-                buffer += '" '
-        buffer += ">" + "\n"
+                    cellDataHeader.append(",'{0}'".format(fldNames[i]))
+                cellDataHeader.append('" ')
+        cellDataHeader.append(">\n")
+        buffer.append("".join(cellDataHeader))
+
         # <DataArray>
         buffer += bufferCellDataArray
-        buffer += "</CellData>" + "\n"
+        buffer.append("</CellData>\n")
 
         # write cells
         print("    writing cell connectivity, offsets, and types")
-        buffer += "<Cells>" + "\n"
-        buffer += '<DataArray type="Int64" Name="connectivity" format="ascii">' + "\n"
+        buffer.append("<Cells>\n")
+        buffer.append('<DataArray type="Int64" Name="connectivity" format="ascii">\n')
         buffer += cellConnectivityBuffer
-        buffer += "</DataArray>" + "\n"
+        buffer.append("</DataArray>\n")
 
-        buffer += '<DataArray type="Int64" Name="offsets" format="ascii">' + "\n"
+        buffer.append('<DataArray type="Int64" Name="offsets" format="ascii">\n')
         buffer += cellOffsetBuffer
-        buffer += "</DataArray>" + "\n"
+        buffer.append("</DataArray>\n")
 
-        buffer += '<DataArray type="Int64" Name="types" format="ascii">' + "\n"
+        buffer.append('<DataArray type="Int64" Name="types" format="ascii">\n')
         buffer += cellTypeBuffer
-        buffer += "</DataArray>" + "\n"
-        buffer += "</Cells>" + "\n"
+        buffer.append("</DataArray>\n")
+        buffer.append("</Cells>\n")
 
-        buffer += "</Piece>" + "\n"
-        buffer += "</UnstructuredGrid>" + "\n"
-        buffer += "</VTKFile>"
+        buffer.append("</Piece>\n")
+        buffer.append("</UnstructuredGrid>\n")
+        buffer.append("</VTKFile>")
         print("Complete.")
 
         with open(
@@ -530,8 +523,8 @@ class ODB2VTK:
             ),
             "w",
         ) as f:
-            f.write(buffer)
-            print("writing " + f.name)
+            print("writing {0}...".format(f.name))
+            f.writelines(buffer)
 
     def WritePVDFile(self):
         buffer = (
