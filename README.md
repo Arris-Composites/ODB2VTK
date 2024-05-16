@@ -490,7 +490,7 @@ odb2vtk.exe --header 0 --odbFile C:/test/mixed_elements/collision.odb --instance
 converts frames ranging from 0 to 1000. So, it will generate 1001 individual vtu files. Do not mix it with single digit frame arguments.
 
 ## Abaqus Version Updates
-Both the C++ and Python builds have been updated for Abaqus 2023. The C+
+Both the C++ and Python builds have been updated for Abaqus 2023.
 
 ## TODOS
 
