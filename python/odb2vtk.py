@@ -209,7 +209,7 @@ class ODB2VTK:
                 indexElement += 1
 
     def WriteFieldOutputData(
-            self, fldName, stepName, frameIdx, pointdata_map, celldata_map
+        self, fldName, stepName, frameIdx, pointdata_map, celldata_map
     ):
         fldOutput = self.odb.getFieldOutput(stepName, frameIdx, fldName)
         vtkData = ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput)
@@ -274,7 +274,14 @@ class ODB2VTK:
         return (bufferPointDataArray, bufferCellDataArray)
 
     def WriteDataArrayWithSectionPoints(
-        self, sectionPointMap, fldOutput, vtkData, fldName, data_map, dataType, buffer=None
+        self,
+        sectionPointMap,
+        fldOutput,
+        vtkData,
+        fldName,
+        data_map,
+        dataType,
+        buffer=None,
     ):
         if buffer is None:
             buffer = []
@@ -288,17 +295,26 @@ class ODB2VTK:
             # we need to split the data
             for description, sectionP in sectionPointMap.items():
                 subset = fldOutput.getSubset(sectionPoint=sectionP)
-                buffer += self.WriteDataArray(subset, vtkData, fldName + description, dataType)
+                buffer += self.WriteDataArray(
+                    subset, vtkData, fldName + description, dataType
+                )
                 data_map[vtkData[0]].append(fldName + description)
         return buffer
 
     def WriteDataArray(self, fldOutput, vtkData, description, dataType, buffer=None):
         if buffer is None:
             buffer = []
-		# use the same componentLabel from Abaqus
+        # use the same componentLabel from Abaqus
         header = (
-            ['<DataArray type="Float32" Name="{0}" NumberOfComponents="{1}"'.format(description, len(vtkData[1]))]
-            + ['ComponentName{0}="{1}"'.format(i, label) for (i, label) in enumerate(vtkData[1])]
+            [
+                '<DataArray type="Float32" Name="{0}" NumberOfComponents="{1}"'.format(
+                    description, len(vtkData[1])
+                )
+            ]
+            + [
+                'ComponentName{0}="{1}"'.format(i, label)
+                for (i, label) in enumerate(vtkData[1])
+            ]
             + ['format="ascii">\n']
         )
         buffer.append(" ".join(header))
@@ -359,7 +375,11 @@ class ODB2VTK:
         # this function is to extract material orientation and write it as a vector data at cell.
         if buffer is None:
             buffer = []
-        buffer.append('<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">\n'.format(fldName))
+        buffer.append(
+            '<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">\n'.format(
+                fldName
+            )
+        )
         fldOutput = self.odb.getFieldOutput(stepName, frameIdx, "S")
         tempSectionPoint = None
         for instanceName in self._instance_names:
@@ -397,7 +417,7 @@ class ODB2VTK:
             # convert quaternion to directional cosine
             # x y z is the orientation of 11
             # https://www.vectornav.com/resources/inertial-navigation-primer/math-fundamentals/math-attitudetran
-            x = q4 ** 2 + q1 ** 2 - q2 ** 2 - q3 ** 2
+            x = q4**2 + q1**2 - q2**2 - q3**2
             y = 2 * (q1 * q2 - q3 * q4)
             z = 2 * (q1 * q3 + q2 * q4)
             buffer.append("{0} {1} {2}\n".format(x, y, z))
@@ -417,15 +437,23 @@ class ODB2VTK:
 
         # start writing the buffer
         buffer = []
-        buffer.append('<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">\n')
+        buffer.append(
+            '<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">\n'
+        )
         cellConnectivityBuffer = []
         cellOffsetBuffer = []
         cellTypeBuffer = []
         offset = 0
         buffer.append("<UnstructuredGrid>\n")
-        buffer.append('<Piece NumberOfPoints="{0}" NumberOfCells="{1}">\n'.format(self._nodesNum, self._cellsNum))
+        buffer.append(
+            '<Piece NumberOfPoints="{0}" NumberOfCells="{1}">\n'.format(
+                self._nodesNum, self._cellsNum
+            )
+        )
         buffer.append("<Points>\n")
-        buffer.append('<DataArray type="Float64" NumberOfComponents="3" format="ascii">\n')
+        buffer.append(
+            '<DataArray type="Float64" NumberOfComponents="3" format="ascii">\n'
+        )
         for instanceName in self._instance_names:
             # write nodes
             for node in self.odb.getNodes(instanceName):
@@ -435,7 +463,10 @@ class ODB2VTK:
                 ## connectivity
                 cellConnectivityBuffer.append(
                     "".join(
-                        ("{0} ".format(self._nodes_map[instanceName][nodeLabel]) for nodeLabel in cell.connectivity)
+                        (
+                            "{0} ".format(self._nodes_map[instanceName][nodeLabel])
+                            for nodeLabel in cell.connectivity
+                        )
                     )
                 )
                 cellConnectivityBuffer.append("\n")
@@ -454,12 +485,16 @@ class ODB2VTK:
         bufferPointDataArray = []
         bufferCellDataArray = []
         for fldName, _ in self.odb.getFieldOutputs(stepName, frameIdx):
-            pBuffer, cBuffer = self.WriteFieldOutputData(fldName, stepName, frameIdx, pointdata_map, celldata_map)
+            pBuffer, cBuffer = self.WriteFieldOutputData(
+                fldName, stepName, frameIdx, pointdata_map, celldata_map
+            )
             bufferPointDataArray += pBuffer
             bufferCellDataArray += cBuffer
 
         # add material local coordinate CS
-        bufferCellDataArray += self.WriteLocalCS(MATERIAL_ORIENTATION, stepName, frameIdx, celldata_map)
+        bufferCellDataArray += self.WriteLocalCS(
+            MATERIAL_ORIENTATION, stepName, frameIdx, celldata_map
+        )
 
         # pointdata - e.g., U, RF
         # <PointData>
