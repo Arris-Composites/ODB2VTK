@@ -362,7 +362,7 @@ class ODB2VTK:
                 row, column = map(int, block.data.shape)
                 n = block.integrationPoints.max()
                 cellDataArray[indices, 0 : column * n] = block.data.reshape(
-                    row / n, column * n
+                    row // n, column * n
                 )
             else:
                 indices = [
