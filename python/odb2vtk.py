@@ -381,7 +381,7 @@ class ODB2VTK:
             fldOutput = self.odb.getFieldOutput(stepName, frameIdx, "S")
         except Exception as e:
             return buffer
-        
+
         buffer.append(
             '<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">\n'.format(
                 fldName
