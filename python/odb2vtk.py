@@ -375,12 +375,18 @@ class ODB2VTK:
         # this function is to extract material orientation and write it as a vector data at cell.
         if buffer is None:
             buffer = []
+
+        fldOutput = None
+        try:
+            fldOutput = self.odb.getFieldOutput(stepName, frameIdx, "S")
+        except Exception as e:
+            return buffer
+
         buffer.append(
             '<DataArray type="Float32" Name="{0}" NumberOfComponents="3" format="ascii">\n'.format(
                 fldName
             )
         )
-        fldOutput = self.odb.getFieldOutput(stepName, frameIdx, "S")
         tempSectionPoint = None
         for instanceName in self._instance_names:
             subset = fldOutput.getSubset(region=self.odb.getInstance(instanceName))
