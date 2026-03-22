@@ -94,6 +94,12 @@ def ABAQUS_VTK_CELL_MAP(abaqusElementType):
         return 5
     elif "R3D4" in abaqusElementType:
         return 9
+    elif "CAX3" in abaqusElementType:
+        return 5
+    elif "RNODE3D" in abaqusElementType:
+        return 1
+    elif "M3D6" in abaqusElementType:
+        return 22
     else:
         sys.exit("{0} element type not found".format(abaqusElementType))
         return None
