@@ -158,3 +158,6 @@ The first [ASCII batching optimization](python-ascii-write-optimization.md)
 records chunk-size comparisons, byte-for-byte output checks, and memory results.
 The [comparison with local main](python-main-comparison.md) measures the complete
 refactor plus batching against the original branch on the same ODB inputs.
+The subsequent [row-formatting experiment](python-row-format-optimization.md)
+records separate scalar and three-component paths, their combined improvement,
+and exact-output checks against the chunked writer.

@@ -127,20 +127,49 @@ class FieldTests(unittest.TestCase):
 class WriterTests(unittest.TestCase):
     def test_chunked_field_output_preserves_boundary_rows_and_numeric_text(self):
         boundary = writers._WRITE_CHUNK_ROWS
-        for count in (0, 1, boundary - 1, boundary, boundary + 1, boundary * 2 + 5):
-            with self.subTest(rows=count):
-                values = np.resize(
-                    np.array([-0.0, 1e-30, -1e30, np.inf, -np.inf, np.nan]), (count, 3)
-                )
-                field = FieldArray("U", "PointData", "Vectors", (), values)
-                stream = io.StringIO()
-                writers.write_data_array(stream, field)
-                expected = (
-                    '<DataArray type="Float32" Name="U" NumberOfComponents="3" format="ascii">\n'
-                    + "".join(" ".join(str(v) for v in row) + "\n" for row in values)
-                    + "</DataArray>\n"
-                )
-                self.assertEqual(stream.getvalue(), expected)
+        for width in (1, 3, 6):
+            for count in (0, 1, boundary - 1, boundary, boundary + 1, boundary * 2 + 5):
+                with self.subTest(rows=count, components=width):
+                    values = np.resize(
+                        np.array([-0.0, 1e-30, -1e30, np.inf, -np.inf, np.nan]),
+                        (count, width),
+                    )
+                    field = FieldArray("U", "PointData", "Vectors", (), values)
+                    stream = io.StringIO()
+                    writers.write_data_array(stream, field)
+                    expected = (
+                        '<DataArray type="Float32" Name="U" NumberOfComponents="{0}" format="ascii">\n'.format(
+                            width
+                        )
+                        + "".join(
+                            " ".join(str(v) for v in row) + "\n" for row in values
+                        )
+                        + "</DataArray>\n"
+                    )
+                    self.assertEqual(stream.getvalue(), expected)
+
+    def test_row_formatting_preserves_numpy_scalar_text_for_supported_widths(self):
+        for dtype in (np.float32, np.float64, np.int32, np.int64):
+            numbers = (
+                [-0.0, 1.23456789, 1e-30, -1e30, np.inf, -np.inf, np.nan]
+                if np.issubdtype(dtype, np.floating)
+                else [0, 1, -1, 1234567, -1234567]
+            )
+            for width in (1, 2, 3, 6, 48):
+                with self.subTest(dtype=dtype, components=width):
+                    values = np.resize(np.array(numbers, dtype=dtype), (9, width))
+                    stream = io.StringIO()
+                    writers.write_data_array(
+                        stream, FieldArray("values", "PointData", "Vectors", (), values)
+                    )
+                    data = ET.fromstring(stream.getvalue()).text
+                    self.assertEqual(
+                        data,
+                        "\n"
+                        + "".join(
+                            " ".join(str(v) for v in row) + "\n" for row in values
+                        ),
+                    )
 
     def test_large_field_is_written_before_all_rows_are_formatted(self):
         class Rows:

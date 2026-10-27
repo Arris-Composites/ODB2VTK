@@ -26,9 +26,16 @@ def _write_lines(stream, lines):
 
 
 def _write_rows(stream, values):
-    _write_lines(
-        stream, (" ".join(str(value) for value in row) + "\n" for row in values)
-    )
+    components = values.shape[1]
+    if components == 1:
+        lines = (str(row[0]) + "\n" for row in values)
+    elif components == 3:
+        lines = (
+            " ".join((str(row[0]), str(row[1]), str(row[2]))) + "\n" for row in values
+        )
+    else:
+        lines = (" ".join(str(value) for value in row) + "\n" for row in values)
+    _write_lines(stream, lines)
 
 
 def write_data_array(stream, field):
