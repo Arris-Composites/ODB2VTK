@@ -33,7 +33,10 @@ The above command will convert frame 0 to 1 in step 1, 0 to 5 in step 2, and 0 t
 
 `python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
-The above command utilizes multiprocessing in Python to spawn multiple abaqus python call in parallel. Another script `multiprocess.py` is provided for this purpose. It will split the frame in a one .vtu file per frame pattern and equivalent to the following three commands executed in parallel.
+The runner first validates the complete request in Abaqus, then converts one frame
+per worker. The two frame conversions below run in parallel; the final collection
+command runs only after both succeed. Use `--jobs 2` to limit concurrency and
+`--writeHistory 1` to export history once after the frame workers finish.
 
 `abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
@@ -82,6 +85,9 @@ and source injection; [Phase 2 results](doc/python-phase2-results.md) records it
 New library callers can use the [converter interface](doc/python-converter-interface.md)
 to export immutable requests without constructing maps. See
 [Phase 3 results](doc/python-phase3-results.md) for validation and publication behavior.
+The [CLI and parallel runner guide](doc/python-cli.md) documents statuses, shared
+argument validation, and verified worker completion; see
+[Phase 4 results](doc/python-phase4-results.md) for the integration checks.
 
 ## Build C++ Project by Visual Studio
 

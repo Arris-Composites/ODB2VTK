@@ -31,91 +31,30 @@
 """Existing command-line entry point and legacy library imports.
 
 New library users can import Converter, Selection, and OutputOptions from
-odb2vtk_core. CLI extraction remains a separate Phase 4 change.
+odb2vtk_core. The executable delegates to odb2vtk_core.cli.main.
 """
 
-import argparse
-import os
 import sys
-import timeit
+from importlib import import_module
 
-from odb2vtk_core.legacy import (
-    ODB2VTK,
-    ABAQUS_VTK_CELL_MAP,
-    ABAQUS_VTK_FIELDOUPUTS_MAP,
-)
-from odb2vtk_core.converter import MATERIAL_ORIENTATION
-from odb2vtk_core.source import AbaqusSource
+from odb2vtk_core.cli import main
+
+_EXPORTS = {
+    "ODB2VTK": "odb2vtk_core.legacy",
+    "ABAQUS_VTK_CELL_MAP": "odb2vtk_core.legacy",
+    "ABAQUS_VTK_FIELDOUPUTS_MAP": "odb2vtk_core.legacy",
+    "MATERIAL_ORIENTATION": "odb2vtk_core.converter",
+    "AbaqusSource": "odb2vtk_core.source",
+}
+
+
+def __getattr__(name):
+    if name not in _EXPORTS:
+        raise AttributeError(name)
+    value = getattr(import_module(_EXPORTS[name]), name)
+    globals()[name] = value
+    return value
+
 
 if __name__ == "__main__":
-    start_time = timeit.default_timer()
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--header",
-        required=True,
-        type=int,
-        help="if 1, extract header information and generate a .json file. Otherwise, generate .vtu file",
-    )
-    parser.add_argument(
-        "--instance",
-        help="selected instance names which are separated by whitespace, e.g. 'instanceName1' 'instanceName2'",
-        nargs="*",
-    )
-    parser.add_argument(
-        "--step",
-        help="selected step names and frames which are separated by whitespace, e.g., 'step1:1,2,3' 'step2:2,3,4'",
-        nargs="*",
-    )
-    parser.add_argument(
-        "--writeHistory", default=0, type=int, help="if 1, write history output."
-    )
-    parser.add_argument(
-        "--odbFile", required=True, help="selected odb file (full path name)"
-    )
-    parser.add_argument("--writePVD", default=0, type=int, help="if 1 write a pvd file")
-    parser.add_argument(
-        "--suffix", default="", type=str, help="string appended to the file"
-    )
-    args = parser.parse_args()
-
-    # check odbfile
-    if not args.odbFile:
-        sys.exit("Need an .odf file as input")
-    if not os.path.exists(args.odbFile):
-        sys.exit("{0} doesn't exist".format(args.odbFile))
-
-    with ODB2VTK(args.odbFile, args.suffix) as odb2vtk:
-        # if --header is on, ignore all others and extract header information
-        if args.header:
-            odb2vtk.ExtractHeader()
-            sys.exit(
-                "{0} generated".format(
-                    os.path.join(odb2vtk.odbPath, odb2vtk.odbFileNameNoExt)
-                )
-            )
-
-        if not args.instance:
-            sys.exit("instance not found")
-
-        if not args.step:
-            sys.exit("steps and frames not found")
-
-        # args.step - ['step1:1,2,3', 'step2:2,3,4']
-        # convert step-frame dictionary to {'stepname': [0, 1, 2, 3], 'stepname': [0,1,2]} format
-        step_frame_dict = {}
-        for item in args.step:
-            split = item.split(":")
-            step_frame_dict[split[0]] = []
-            for i in split[1].split(","):
-                step_frame_dict[split[0]].append(int(i))
-        odb2vtk.ReadArgs(args.instance, step_frame_dict)
-        if args.writeHistory:
-            odb2vtk.WriteCSVFILE()
-        if args.writePVD:
-            odb2vtk.WritePVDFile()
-            sys.exit()
-
-        odb2vtk.WriteVTUFiles()
-
-        print("--- %s seconds ---" % (timeit.default_timer() - start_time))
+    sys.exit(main())

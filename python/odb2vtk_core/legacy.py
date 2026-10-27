@@ -104,9 +104,7 @@ class ODB2VTK(object):
         return self._converter.export_frames(selection, self._outputs)
 
     def WritePVDFile(self):
-        return self._converter._export_planned_collection(
-            self._selected(), self._outputs
-        )
+        return self._converter.export_collection(self._selected(), self._outputs)
 
     def WriteCSVFILE(self):
         return self._converter.export_history(self._selected(), self._outputs)

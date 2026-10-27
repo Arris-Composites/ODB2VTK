@@ -1,9 +1,10 @@
 # Python exporter refactor plan
 
-Status: Phases 1, 2, and 3 completed on 2026-10-26. Later phases remain planned.
+Status: Phases 1 through 4 completed on 2026-10-26. Phase 5 remains planned.
 See [Phase 1 results](python-phase1-results.md),
-[Phase 2 results](python-phase2-results.md), and
-[Phase 3 results](python-phase3-results.md) for the implementation and validation
+[Phase 2 results](python-phase2-results.md),
+[Phase 3 results](python-phase3-results.md), and
+[Phase 4 results](python-phase4-results.md) for the implementation and validation
 records. Further changes to export behavior remain separate work.
 
 ## Objective
@@ -250,15 +251,15 @@ file is presented as a completed result.
 
 Tasks:
 
-- Make `odb2vtk.py` delegate to `cli.main(argv)` while preserving direct execution
+- [x] Make `odb2vtk.py` delegate to `cli.main(argv)` while preserving direct execution
   from the documented working directories.
-- Keep parsing and process termination inside the CLI module. Introduce clear
+- [x] Keep parsing and process termination inside the CLI module. Introduce clear
   nonzero failures and zero success statuses, documenting this behavior correction.
-- Preserve header-only and PVD-only invocation modes.
-- Verify `multiprocess.py` can still launch the script and request collection
+- [x] Preserve header-only and PVD-only invocation modes.
+- [x] Verify `multiprocess.py` can still launch the script and request collection
   generation. If failure propagation or collection scheduling must change,
   implement and test those changes explicitly rather than hiding them in moves.
-- Verify paths with spaces and suffix handling across entry points.
+- [x] Verify paths with spaces and suffix handling across entry points.
 
 Exit criteria: documented commands work; the CLI returns predictable statuses;
 the parallel runner remains integrated; unrelated CLI feature additions are

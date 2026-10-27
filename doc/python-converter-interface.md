@@ -143,7 +143,10 @@ documented scripts, source ownership, header mode, suffixes, and schemas remain
 supported. `ReadArgs` snapshots inputs, and `ConstructMap` is optional for exports.
 Retained raw-data helpers delegate to the same conversion implementation.
 
-The legacy PVD-only mode still writes planned references, preserving its existing
-parallel-runner contract. It is separate from the normal converter operation's
-completed-frame collection. Scheduling, failure propagation, argument parsing,
-and friendly CLI errors remain Phase 4 work.
+PVD-only export now uses `export_collection(selection, outputs)`, which requires
+all referenced VTUs to exist. `validate_frames`, `validate_history`, and
+`validate_collection` support preflight checks without numerical conversion or
+file creation; normal export methods still validate their own requests.
+
+The [CLI and parallel runner](python-cli.md) share argument validation. The runner
+verifies frame-worker receipts and output files before scheduling the collection.

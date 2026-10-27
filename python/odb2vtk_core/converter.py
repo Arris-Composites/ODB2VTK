@@ -277,7 +277,8 @@ class Converter(object):
         with atomic_output(outputs.collection_path) as stream:
             writers.write_pvd(stream, entries)
 
-    def export_frames(self, selection, outputs):
+    def validate_frames(self, selection, outputs):
+        """Validate a complete frame request without mesh reads or file creation."""
         selection = self._validate_selection(selection, require_frames=True)
         if not isinstance(outputs, OutputOptions):
             raise OutputError("Provide OutputOptions")
@@ -289,6 +290,11 @@ class Converter(object):
         self._validate_outputs(
             outputs, targets + ((outputs.collection_path,) if outputs.write_pvd else ())
         )
+        return selection
+
+    def export_frames(self, selection, outputs):
+        selection = self.validate_frames(selection, outputs)
+        total = sum(len(frames) for _, frames in selection.steps)
         paths, completed, diagnostics = [], [], []
         try:
             prepared = self._prepare_mesh(selection)
@@ -300,7 +306,7 @@ class Converter(object):
                         self._write_frame(stream, step, frame, prepared, diagnostics)
                     paths.append(path)
                     completed.append(FrameExport(step, frame, timestep, path))
-                    self._report("frame_completed", path, len(completed), len(targets))
+                    self._report("frame_completed", path, len(completed), total)
             if outputs.write_pvd:
                 self._publish_collection(completed, outputs)
                 paths.append(outputs.collection_path)
@@ -308,7 +314,7 @@ class Converter(object):
                     "collection_completed",
                     outputs.collection_path,
                     len(completed),
-                    len(targets),
+                    total,
                 )
         except Exception as error:
             raise ExportFailure(
@@ -318,11 +324,16 @@ class Converter(object):
             )
         return self._result(paths, completed, diagnostics)
 
-    def export_history(self, selection, outputs):
+    def validate_history(self, selection, outputs):
+        """Validate history selection and destination without building a table."""
         selection = self._validate_selection(selection, require_frames=False)
         if not isinstance(outputs, OutputOptions):
             raise OutputError("Provide OutputOptions")
         self._validate_outputs(outputs, (outputs.history_path,))
+        return selection
+
+    def export_history(self, selection, outputs):
+        selection = self.validate_history(selection, outputs)
         paths = []
         try:
             series = (
@@ -362,9 +373,9 @@ class Converter(object):
             )
         return self._result(paths, [], [])
 
-    def _export_planned_collection(self, selection, outputs):
-        """Retain the legacy PVD-only mode until parallel integration in Phase 4."""
-        selection = self._validate_selection(selection, require_frames=True)
+    def validate_collection(self, selection, outputs):
+        """Validate collection metadata and require all referenced files to exist."""
+        selection = self.validate_frames(selection, outputs)
         frames = tuple(
             FrameExport(
                 step,
@@ -376,8 +387,30 @@ class Converter(object):
             for frame in indices
         )
         self._validate_outputs(outputs, (outputs.collection_path,))
-        self._publish_collection(frames, outputs)
-        self._report(
-            "collection_completed", outputs.collection_path, len(frames), len(frames)
-        )
-        return self._result([outputs.collection_path], [], [])
+        missing = [frame.path for frame in frames if not os.path.isfile(frame.path)]
+        if missing:
+            raise OutputError(
+                "Cannot write collection; VTU file is missing: {0}".format(missing[0])
+            )
+        return frames
+
+    def export_collection(self, selection, outputs):
+        """Index existing VTUs; refuse missing references and publish atomically."""
+        frames = self.validate_collection(selection, outputs)
+        paths = []
+        try:
+            self._publish_collection(frames, outputs)
+            paths.append(outputs.collection_path)
+            self._report(
+                "collection_completed",
+                outputs.collection_path,
+                len(frames),
+                len(frames),
+            )
+        except Exception as error:
+            raise ExportFailure(
+                "Collection export failed: {0}".format(error),
+                self._result(paths, [], []),
+                error,
+            )
+        return self._result(paths, [], [])
