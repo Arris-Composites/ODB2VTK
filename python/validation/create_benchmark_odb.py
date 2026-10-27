@@ -1,6 +1,6 @@
 """Create a synthetic scaling fixture with Abaqus Python, without a solver.
 
-Usage: abaqus python create_benchmark_odb.py OUTPUT.odb [ELEMENTS] [FRAMES]
+Usage: abaqus python create_benchmark_odb.py OUTPUT.odb [ELEMENTS] [FRAMES] [LABEL_STRIDE]
 Disconnected C3D8R cells, U/RF, four nodal scalars and integration-point stress.
 This checks exporter scaling, not realistic solver workloads or every cell family.
 """
@@ -27,8 +27,9 @@ def main():
         raise FileExistsError(path)
     count = int(sys.argv[2]) if len(sys.argv) > 2 else 10000
     frames = int(sys.argv[3]) if len(sys.argv) > 3 else 4
-    if count < 1 or frames < 1:
-        raise ValueError("Element and frame counts must be positive")
+    stride = int(sys.argv[4]) if len(sys.argv) > 4 else 1
+    if count < 1 or frames < 1 or stride < 1:
+        raise ValueError("Element, frame and label-stride counts must be positive")
     odb = Odb(name=path.stem, path=str(path))
     try:
         part = odb.Part(name="PART", embeddedSpace=THREE_D, type=DEFORMABLE_BODY)
@@ -43,14 +44,16 @@ def main():
             (0, 1, 1),
         )
         nodes = tuple(
-            (8 * i + j + 1, 2 * i + x, y, z)
+            ((8 * i + j + 1) * stride, 2 * i + x, y, z)
             for i in range(count)
             for j, (x, y, z) in enumerate(corners)
         )
         part.addNodes(nodeData=nodes)
         part.addElements(
             elementData=tuple(
-                (i + 1,) + tuple(range(8 * i + 1, 8 * i + 9)) for i in range(count)
+                ((i + 1) * stride,)
+                + tuple(label * stride for label in range(8 * i + 1, 8 * i + 9))
+                for i in range(count)
             ),
             type="C3D8R",
         )
@@ -58,7 +61,7 @@ def main():
         step = odb.Step(
             name="Step-1", description="Scaling fixture", domain=TIME, timePeriod=1.0
         )
-        labels = tuple(range(1, 8 * count + 1))
+        labels = tuple(label * stride for label in range(1, 8 * count + 1))
         for index in range(frames):
             frame = step.Frame(incrementNumber=index, frameValue=float(index))
             for name in ("U", "RF"):
@@ -85,9 +88,9 @@ def main():
             stress.addData(
                 position=INTEGRATION_POINT,
                 instance=instance,
-                labels=tuple(range(1, count + 1)),
+                labels=tuple(label * stride for label in range(1, count + 1)),
                 data=tuple(
-                    (float(label), 2.0, 3.0, 4.0, 5.0, 6.0)
+                    (float(label * stride), 2.0, 3.0, 4.0, 5.0, 6.0)
                     for label in range(1, count + 1)
                 ),
             )

@@ -13,7 +13,7 @@ import numpy as np
 PYTHON_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PYTHON_DIR)
 
-from odb2vtk_core.fields import place_point_data, quaternions_to_directions
+from odb2vtk_core.fields import LabelLookup, place_point_data, quaternions_to_directions
 from odb2vtk_core.history import assemble_history_table
 from odb2vtk_core.mesh import build_label_maps, build_mesh, vtk_cell_type
 from odb2vtk_core.models import (
@@ -115,7 +115,9 @@ class MeshTests(unittest.TestCase):
 class FieldTests(unittest.TestCase):
     def test_nodal_values_follow_labels_and_keep_padding(self):
         values = np.zeros((3, 2))
-        result = place_point_data([10, 20], [[1, 2], [3, 4]], {20: 0, 10: 2}, values)
+        result = place_point_data(
+            [10, 20], [[1, 2], [3, 4]], LabelLookup({20: 0, 10: 2}), values
+        )
         self.assertIs(result, values)
         np.testing.assert_array_equal(values, [[3, 4], [0, 0], [1, 2]])
 

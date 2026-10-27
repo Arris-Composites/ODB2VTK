@@ -168,3 +168,5 @@ native repository lookups and records its source-lifetime and memory tradeoffs.
 The [unified mesh snapshot](python-mesh-snapshot-optimization.md) combines label
 and geometry reads, reduces temporary coordinate storage, and documents the
 source-record migration and complete-export benchmarks.
+The [vectorized label lookup](python-label-lookup-optimization.md) prepares bounded
+NumPy tables once per instance and reuses them for field placement across frames.

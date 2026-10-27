@@ -7,7 +7,12 @@ import numpy as np
 
 from . import writers
 from .errors import ExportFailure, OutputError, SelectionError, SourceError
-from .fields import place_cell_data, place_point_data, quaternions_to_directions
+from .fields import (
+    LabelLookup,
+    place_cell_data,
+    place_point_data,
+    quaternions_to_directions,
+)
 from .history import assemble_history_table
 from .mesh import build_label_maps, build_mesh
 from .models import (
@@ -137,6 +142,16 @@ class Converter(object):
                 raise SourceError(
                     "Mesh coordinates must have three components per node"
                 )
+            index = index._replace(
+                node_map={
+                    name: LabelLookup(mapping)
+                    for name, mapping in index.node_map.items()
+                },
+                element_map={
+                    name: LabelLookup(mapping)
+                    for name, mapping in index.element_map.items()
+                },
+            )
             return _PreparedMesh(selection.instances, index, geometry)
         except SourceError:
             raise

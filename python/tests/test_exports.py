@@ -11,7 +11,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from odb2vtk_core.fields import place_cell_data
+from odb2vtk_core.fields import LabelLookup, place_cell_data
 from odb2vtk_core.history import assemble_history_table
 from odb2vtk_core.models import HistorySeries
 from odb2vtk_core.writers import write_csv
@@ -75,7 +75,10 @@ class HistoryExportTests(unittest.TestCase):
 
 class IntegrationPointExportTests(unittest.TestCase):
     def setUp(self):
-        self.element_maps = {"A": {20: 0, 10: 1}, "B": {20: 2}}
+        self.element_maps = {
+            "A": LabelLookup({20: 0, 10: 1}),
+            "B": LabelLookup({20: 2}),
+        }
 
     def place_blocks(self, blocks, instance, values):
         for block in blocks:
