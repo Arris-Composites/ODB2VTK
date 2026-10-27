@@ -39,7 +39,8 @@ class ImportTests(unittest.TestCase):
             '        if fullname in ("odbAccess", "abaqusConstants", "utilities"):\n'
             "            raise ImportError(fullname)\n"
             "sys.meta_path.insert(0, BlockAbaqus())\n"
-            "from odb2vtk_core import models, mesh, fields, history, writers\n"
+            "from odb2vtk_core import models, mesh, fields, history, writers, source\n"
+            "import odb2vtk\n"
         ).format(PYTHON_DIR)
         result = subprocess.run(
             [sys.executable, "-c", code], capture_output=True, text=True

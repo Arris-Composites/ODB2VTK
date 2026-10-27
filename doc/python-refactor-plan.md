@@ -1,8 +1,9 @@
 # Python exporter refactor plan
 
-Status: Phase 1 completed on 2026-10-26. Later phases remain planned.
-See [Phase 1 results](python-phase1-results.md) for the implementation and
-validation record. Further changes to export behavior remain separate work.
+Status: Phases 1 and 2 completed on 2026-10-26. Later phases remain planned.
+See [Phase 1 results](python-phase1-results.md) and
+[Phase 2 results](python-phase2-results.md) for the implementation and validation
+records. Further changes to export behavior remain separate work.
 
 ## Objective
 
@@ -208,15 +209,15 @@ their numerical values, metadata, and existing schemas.
 
 Tasks:
 
-- Implement `AbaqusSource` with context management and explicit ownership of the
+- [x] Implement `AbaqusSource` with context management and explicit ownership of the
   open database. Accept an injected source in orchestration code.
-- Move Abaqus subset operations, constants, and bulk-object access into this
+- [x] Move Abaqus subset operations, constants, and bulk-object access into this
   module. Return or yield normalized records and arrays.
-- Implement the in-memory test adapter against the same source contract.
-- Verify source and test adapters obey shared shape, ordering, identity, and
+- [x] Implement the in-memory test adapter against the same source contract.
+- [x] Verify source and test adapters obey shared shape, ordering, identity, and
   lifetime requirements. Include real-source contract checks where Abaqus is
   available.
-- Retire `ReadableOdb` forwarding methods after migrating their callers, retaining
+- [x] Retire `ReadableOdb` forwarding methods after migrating their callers, retaining
   a small compatibility shim only where needed.
 
 Exit criteria: numerical code and writers receive no Abaqus objects; tests use

@@ -16,3 +16,11 @@ MeshData = namedtuple("MeshData", "points connectivity offsets cell_types")
 HistorySeries = namedtuple("HistorySeries", "name timestamps values")
 HistoryTable = namedtuple("HistoryTable", "headers values")
 CollectionEntry = namedtuple("CollectionEntry", "timestep part filename")
+StepInfo = namedtuple("StepInfo", "name frame_count")
+SectionPoint = namedtuple("SectionPoint", "number description")
+FieldInfo = namedtuple("FieldInfo", "name layout section_points max_integration_point")
+FieldBlock = namedtuple(
+    "FieldBlock",
+    "instance_name position labels values integration_points section_point",
+)
+OrientationBlock = namedtuple("OrientationBlock", "instance_name labels quaternions")

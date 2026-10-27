@@ -1,4 +1,3 @@
-"""Numerical conversion and serialization independent of Abaqus.
+"""Conversion modules and a lazily loaded Abaqus source adapter."""
 
-ODB access and export orchestration remain in odb2vtk.py during Phase 1.
-"""
+from .source import AbaqusSource

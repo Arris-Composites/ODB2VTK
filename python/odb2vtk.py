@@ -37,8 +37,6 @@ import sys
 import timeit
 
 import numpy as np
-import utilities
-from abaqusConstants import NODAL, INTEGRATION_POINT, CENTROID, SCALAR, VECTOR
 
 from odb2vtk_core.fields import (
     place_cell_data,
@@ -49,14 +47,16 @@ from odb2vtk_core.history import assemble_history_table
 from odb2vtk_core.mesh import build_label_maps, build_mesh, vtk_cell_type
 from odb2vtk_core.models import (
     CollectionEntry,
-    Element,
     FieldArray,
     FieldLayout,
-    HistorySeries,
-    InstanceLabels,
-    InstanceMesh,
 )
 from odb2vtk_core import writers
+from odb2vtk_core.source import (
+    AbaqusSource,
+    ReadableOdb,
+    legacy_field_layout,
+    normalize_bulk_blocks,
+)
 
 MATERIAL_ORIENTATION = "Material_Orientation"
 
@@ -70,33 +70,25 @@ def ABAQUS_VTK_CELL_MAP(abaqusElementType):
 
 
 def ABAQUS_VTK_FIELDOUPUTS_MAP(fldOutput):
-    # FieldLayout is tuple-compatible for existing callers, with named fields
-    # for all internal use. Multiple-location handling remains a later change.
-    component_names = tuple(fldOutput.componentLabels)
-    if fldOutput.type == SCALAR:
-        kind = "Scalars"
-        if not component_names:
-            component_names = ("0",)
-    elif fldOutput.type == VECTOR:
-        kind = "Vectors"
-    else:
-        kind = "Tensors"
-    return FieldLayout(kind, component_names, fldOutput.locations[0].position)
+    return legacy_field_layout(fldOutput)
 
 
-class ODB2VTK:
-    """Coordinate ODB queries using extracted conversion and stream writers.
+class ODB2VTK(object):
+    """Coordinate exports through a normalized, injectable source.
 
-    Resource ownership and the legacy initialization sequence are intentionally
-    retained until the source and converter phases of the refactor.
+    A source opened here is owned and closed here. An injected source remains
+    caller-owned. The legacy initialization sequence remains until Phase 3.
     """
 
-    def __init__(self, fileFullName, suffix):
+    def __init__(self, fileFullName, suffix, source=None):
         self.fileFullName = fileFullName
         self.odbFileName = os.path.basename(fileFullName)
         self.odbFileNameNoExt = self.odbFileName.split(".")[0] + suffix
         self.odbPath = os.path.dirname(fileFullName)
-        self.odb = utilities.ReadableOdb(self.fileFullName)
+        self._owns_source = source is None
+        self._source = (
+            AbaqusSource.open(self.fileFullName) if source is None else source
+        )
         self._nodes_map = {}
         self._elements_map = {}
         self._instance_names = []
@@ -104,13 +96,36 @@ class ODB2VTK:
         self._nodesNum = 0
         self._cellsNum = 0
 
+    @property
+    def source(self):
+        return self._source
+
+    @property
+    def odb(self):
+        """Legacy native access; new callers should use source or close()."""
+        return ReadableOdb.from_source(self.source)
+
+    def close(self):
+        if self._owns_source:
+            self.source.close()
+
+    def __enter__(self):
+        if self.source.closed:
+            raise RuntimeError("ODB source is closed")
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+        return False
+
     def ExtractHeader(self):
         metadata = {"instances": [], "steps": []}
         print("Scan instances...")
-        metadata["instances"].extend(self.odb.getInstancesKeys)
+        metadata["instances"].extend(self.source.instance_names)
         print("Scan steps and frames...")
-        for step_name in self.odb.getStepsKeys:
-            count = len(self.odb.getFrames(step_name))
+        for step in self.source.steps:
+            step_name = step.name
+            count = step.frame_count
             frames = [
                 step_name + "-frame-{0}".format(str(i).zfill(len(str(count))))
                 for i in range(count)
@@ -129,11 +144,7 @@ class ODB2VTK:
 
     def _instance_labels(self):
         for name in self._instance_names:
-            yield InstanceLabels(
-                name,
-                [node.label for node in self.odb.getNodes(name)],
-                [element.label for element in self.odb.getElements(name)],
-            )
+            yield self.source.mesh_labels(name)
 
     def ConstructMap(self):
         index = build_label_maps(self._instance_labels())
@@ -144,76 +155,81 @@ class ODB2VTK:
 
     def _instance_meshes(self):
         for name in self._instance_names:
-            yield InstanceMesh(
-                name,
-                [tuple(node.coordinates) for node in self.odb.getNodes(name)],
-                [
-                    Element(element.label, tuple(element.connectivity), element.type)
-                    for element in self.odb.getElements(name)
-                ],
-            )
+            yield self.source.mesh(name)
 
-    def _read_field_array(self, field, layout, name, association):
+    def _assemble_field(self, blocks, layout, name, association):
         size = self._nodesNum if association == "PointData" else self._cellsNum
         values = np.zeros((size, len(layout.component_names)))
-        for instance_name in self._instance_names:
-            subset = field.getSubset(region=self.odb.getInstance(instance_name))
-            subset = subset.getSubset(position=layout.position)
+        for block in blocks:
             if association == "PointData":
-                self.WriteSortedPointData(subset.bulkDataBlocks, instance_name, values)
+                place_point_data(
+                    block.labels,
+                    block.values,
+                    self._nodes_map[block.instance_name],
+                    values,
+                )
             else:
-                self.WriteSortedCellData(subset.bulkDataBlocks, instance_name, values)
+                place_cell_data(
+                    block.labels,
+                    block.values,
+                    block.integration_points,
+                    self._elements_map[block.instance_name],
+                    values,
+                )
         return FieldArray(
             name, association, layout.kind, layout.component_names, values
         )
 
-    def _section_arrays(self, section_points, field, layout, name, association):
-        if not section_points:
-            return [self._read_field_array(field, layout, name, association)]
-        return [
-            self._read_field_array(
-                field.getSubset(sectionPoint=point),
-                layout,
-                name + description,
-                association,
+    def _read_field_array(
+        self, step, frame, field_name, layout, name, association, section
+    ):
+        blocks = (
+            block
+            for instance in self._instance_names
+            for block in self.source.field_blocks(
+                step, frame, field_name, instance, layout.position, section
             )
-            for description, point in section_points.items()
-        ]
+        )
+        return self._assemble_field(blocks, layout, name, association)
 
     def _read_field_arrays(self, name, step_name, frame_index):
-        field = self.odb.getFieldOutput(step_name, frame_index, name)
-        layout = ABAQUS_VTK_FIELDOUPUTS_MAP(field)
-        section_points = {}
-        max_points = 1
-        for instance_name in self._instance_names:
-            subset = field.getSubset(region=self.odb.getInstance(instance_name))
-            subset = subset.getSubset(position=layout.position)
-            for block in subset.bulkDataBlocks:
-                if block.sectionPoint is not None:
-                    section_points[block.sectionPoint.description] = block.sectionPoint
-                if block.integrationPoints is not None:
-                    max_points = max(max_points, block.integrationPoints.max())
-
-        if layout.position == NODAL:
-            return self._section_arrays(
-                section_points, field, layout, name, "PointData"
-            )
-        if layout.position == INTEGRATION_POINT:
-            centroid_layout = layout._replace(position=CENTROID)
-            integration_layout = layout._replace(
-                component_names=layout.component_names * max_points
-            )
-            return self._section_arrays(
-                section_points, field, centroid_layout, name + "_Centroid", "CellData"
-            ) + self._section_arrays(
-                section_points,
-                field,
-                integration_layout,
-                name + "_IntegrationPoints",
-                "CellData",
-            )
-        # Preserve the currently supported positions during mechanical extraction.
-        return []
+        info = self.source.describe_field(
+            step_name, frame_index, name, self._instance_names
+        )
+        layout = info.layout
+        if layout.position == "NODAL":
+            requests = [(layout, name, "PointData")]
+        elif layout.position == "INTEGRATION_POINT":
+            requests = [
+                (layout._replace(position="CENTROID"), name + "_Centroid", "CellData"),
+                (
+                    layout._replace(
+                        component_names=layout.component_names
+                        * info.max_integration_point
+                    ),
+                    name + "_IntegrationPoints",
+                    "CellData",
+                ),
+            ]
+        else:
+            # Position support is unchanged by the source extraction.
+            return
+        for output_layout, output_name, association in requests:
+            for section in info.section_points or (None,):
+                section_name = (
+                    output_name
+                    if section is None
+                    else output_name + section.description
+                )
+                yield self._read_field_array(
+                    step_name,
+                    frame_index,
+                    name,
+                    output_layout,
+                    section_name,
+                    association,
+                    section,
+                )
 
     @staticmethod
     def _append_legacy_array(field, data_map, buffer):
@@ -246,16 +262,33 @@ class ODB2VTK:
     ):
         if buffer is None:
             buffer = []
-        for field in self._section_arrays(
-            sectionPointMap, fldOutput, FieldLayout(*vtkData), fldName, dataType
+        for description, section in (
+            sectionPointMap.items() if sectionPointMap else [("", None)]
         ):
+            field = self._legacy_field_array(
+                fldOutput,
+                FieldLayout(*vtkData),
+                fldName + description,
+                dataType,
+                section,
+            )
             self._append_legacy_array(field, data_map, buffer)
         return buffer
+
+    def _legacy_field_array(self, field, layout, name, association, section=None):
+        blocks = (
+            block
+            for instance in self._instance_names
+            for block in self.source.legacy_field_blocks(
+                field, instance, layout.position, section
+            )
+        )
+        return self._assemble_field(blocks, layout, name, association)
 
     def WriteDataArray(self, fldOutput, vtkData, description, dataType, buffer=None):
         if buffer is None:
             buffer = []
-        field = self._read_field_array(
+        field = self._legacy_field_array(
             fldOutput, FieldLayout(*vtkData), description, dataType
         )
         stream = io.StringIO()
@@ -264,60 +297,39 @@ class ODB2VTK:
         return buffer
 
     def WriteSortedPointData(self, bulkDataBlocks, instanceName, pointDataArray):
-        if bulkDataBlocks is not None:
-            for block in bulkDataBlocks:
-                place_point_data(
-                    block.nodeLabels,
-                    block.data,
-                    self._nodes_map[instanceName],
-                    pointDataArray,
-                )
+        for block in normalize_bulk_blocks(bulkDataBlocks, instanceName, "NODAL"):
+            place_point_data(
+                block.labels,
+                block.values,
+                self._nodes_map[instanceName],
+                pointDataArray,
+            )
 
     def WriteSortedCellData(self, bulkDataBlocks, instanceName, cellDataArray):
-        if bulkDataBlocks is not None:
-            for block in bulkDataBlocks:
-                place_cell_data(
-                    block.elementLabels,
-                    block.data,
-                    block.integrationPoints,
-                    self._elements_map[instanceName],
-                    cellDataArray,
-                )
+        for block in normalize_bulk_blocks(bulkDataBlocks, instanceName, "CENTROID"):
+            place_cell_data(
+                block.labels,
+                block.values,
+                block.integration_points,
+                self._elements_map[instanceName],
+                cellDataArray,
+            )
 
     def _read_local_cs(self, name, step_name, frame_index):
-        try:
-            field = self.odb.getFieldOutput(step_name, frame_index, "S")
-        except Exception:
+        if "S" not in self.source.field_names(step_name, frame_index):
             return None
-        section_point = None
-        for instance_name in self._instance_names:
-            subset = field.getSubset(region=self.odb.getInstance(instance_name))
-            subset = subset.getSubset(position=CENTROID)
-            for block in subset.bulkDataBlocks:
-                section_point = block.sectionPoint
-                break
-            break
         quaternions = np.zeros((self._cellsNum, 4))
-        for instance_name in self._instance_names:
-            subset = field.getSubset(region=self.odb.getInstance(instance_name))
-            subset = subset.getSubset(position=CENTROID)
-            if section_point is not None:
-                subset = subset.getSubset(sectionPoint=section_point)
-            for block in subset.bulkDataBlocks:
-                if block.localCoordSystem is not None:
-                    values = block.localCoordSystem
-                    place_point_data(
-                        block.elementLabels,
-                        values,
-                        self._elements_map[instance_name],
-                        quaternions[:, : len(values[0])],
-                    )
+        for block in self.source.orientation_blocks(
+            step_name, frame_index, self._instance_names
+        ):
+            place_point_data(
+                block.labels,
+                block.quaternions,
+                self._elements_map[block.instance_name],
+                quaternions[:, : block.quaternions.shape[1]],
+            )
         return FieldArray(
-            name,
-            "CellData",
-            "Vectors",
-            (),
-            quaternions_to_directions(quaternions),
+            name, "CellData", "Vectors", (), quaternions_to_directions(quaternions)
         )
 
     def WriteLocalCS(self, fldName, stepName, frameIdx, celldata_map, buffer=None):
@@ -342,7 +354,7 @@ class ODB2VTK:
         print("    writing field data")
         point_fields = []
         cell_fields = []
-        for name, _ in self.odb.getFieldOutputs(step_name, frame_index):
+        for name in self.source.field_names(step_name, frame_index):
             for field in self._read_field_arrays(name, step_name, frame_index):
                 if field.association == "PointData":
                     point_fields.append(field)
@@ -363,7 +375,7 @@ class ODB2VTK:
             for frame_index in frames:
                 entries.append(
                     CollectionEntry(
-                        self.odb.getFrame(step_name, frame_index).frameValue,
+                        self.source.frame_time(step_name, frame_index),
                         len(entries),
                         step_name + "_" + str(frame_index) + ".vtu",
                     )
@@ -376,13 +388,8 @@ class ODB2VTK:
 
     def _history_series(self):
         for step_name in self._step_frame_map:
-            for region_name, region in self.odb.getHistoryRegions(step_name).items():
-                for output_name, output in region.historyOutputs.items():
-                    yield HistorySeries(
-                        step_name + "_" + region_name + "_" + output_name,
-                        [row[0] for row in output.data],
-                        [row[1] for row in output.data],
-                    )
+            for series in self.source.history(step_name):
+                yield series
 
     def WriteCSVFILE(self):
         table = assemble_history_table(self._history_series())
@@ -435,38 +442,38 @@ if __name__ == "__main__":
     if not os.path.exists(args.odbFile):
         sys.exit("{0} doesn't exist".format(args.odbFile))
 
-    odb2vtk = ODB2VTK(args.odbFile, args.suffix)
-    # if --header is on, ignore all others and extract header information
-    if args.header:
-        odb2vtk.ExtractHeader()
-        sys.exit(
-            "{0} generated".format(
-                os.path.join(odb2vtk.odbPath, odb2vtk.odbFileNameNoExt)
+    with ODB2VTK(args.odbFile, args.suffix) as odb2vtk:
+        # if --header is on, ignore all others and extract header information
+        if args.header:
+            odb2vtk.ExtractHeader()
+            sys.exit(
+                "{0} generated".format(
+                    os.path.join(odb2vtk.odbPath, odb2vtk.odbFileNameNoExt)
+                )
             )
-        )
 
-    if not args.instance:
-        sys.exit("instance not found")
+        if not args.instance:
+            sys.exit("instance not found")
 
-    if not args.step:
-        sys.exit("steps and frames not found")
+        if not args.step:
+            sys.exit("steps and frames not found")
 
-    # args.step - ['step1:1,2,3', 'step2:2,3,4']
-    # convert step-frame dictionary to {'stepname': [0, 1, 2, 3], 'stepname': [0,1,2]} format
-    step_frame_dict = {}
-    for item in args.step:
-        split = item.split(":")
-        step_frame_dict[split[0]] = []
-        for i in split[1].split(","):
-            step_frame_dict[split[0]].append(int(i))
-    odb2vtk.ReadArgs(args.instance, step_frame_dict)
-    if args.writeHistory:
-        odb2vtk.WriteCSVFILE()
-    if args.writePVD:
-        odb2vtk.WritePVDFile()
-        sys.exit()
+        # args.step - ['step1:1,2,3', 'step2:2,3,4']
+        # convert step-frame dictionary to {'stepname': [0, 1, 2, 3], 'stepname': [0,1,2]} format
+        step_frame_dict = {}
+        for item in args.step:
+            split = item.split(":")
+            step_frame_dict[split[0]] = []
+            for i in split[1].split(","):
+                step_frame_dict[split[0]].append(int(i))
+        odb2vtk.ReadArgs(args.instance, step_frame_dict)
+        if args.writeHistory:
+            odb2vtk.WriteCSVFILE()
+        if args.writePVD:
+            odb2vtk.WritePVDFile()
+            sys.exit()
 
-    odb2vtk.ConstructMap()
-    odb2vtk.WriteVTUFiles()
+        odb2vtk.ConstructMap()
+        odb2vtk.WriteVTUFiles()
 
-    print("--- %s seconds ---" % (timeit.default_timer() - start_time))
+        print("--- %s seconds ---" % (timeit.default_timer() - start_time))

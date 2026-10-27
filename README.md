@@ -76,7 +76,9 @@ python -m unittest discover -s python/tests -v
 ```
 
 See the [Python refactor plan](doc/python-refactor-plan.md) and
-[Phase 1 results](doc/python-phase1-results.md) for the module design and validation.
+[Phase 1 results](doc/python-phase1-results.md) for the numerical module design.
+The [source interface](doc/python-source-interface.md) documents ODB ownership
+and source injection; [Phase 2 results](doc/python-phase2-results.md) records its validation.
 
 ## Build C++ Project by Visual Studio
 
