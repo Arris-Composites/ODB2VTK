@@ -1,8 +1,9 @@
 # Python exporter refactor plan
 
-Status: Phases 1 and 2 completed on 2026-10-26. Later phases remain planned.
-See [Phase 1 results](python-phase1-results.md) and
-[Phase 2 results](python-phase2-results.md) for the implementation and validation
+Status: Phases 1, 2, and 3 completed on 2026-10-26. Later phases remain planned.
+See [Phase 1 results](python-phase1-results.md),
+[Phase 2 results](python-phase2-results.md), and
+[Phase 3 results](python-phase3-results.md) for the implementation and validation
 records. Further changes to export behavior remain separate work.
 
 ## Objective
@@ -228,18 +229,18 @@ on successful exports and exceptions.
 
 Tasks:
 
-- Introduce validated selection and output options with explicit ownership.
-- Move the initialization sequence inside `export_frames` and `export_history`.
-- Scope mesh indices to a fixed selection and reuse them where the source mesh
+- [x] Introduce validated selection and output options with explicit ownership.
+- [x] Move the initialization sequence inside `export_frames` and `export_history`.
+- [x] Scope mesh indices to a fixed selection and reuse them where the source mesh
   is stable. Keep history export independent of mesh-index construction.
-- Centralize filename and suffix policy, directory preparation, and completed
+- [x] Centralize filename and suffix policy, directory preparation, and completed
   output tracking.
-- Preserve frame-by-frame processing. Writers should consume fields incrementally
+- [x] Preserve frame-by-frame processing. Writers should consume fields incrementally
   so refactoring does not require retaining every field or frame simultaneously.
-- Define partial-failure behavior. Prefer writing each file through a temporary
+- [x] Define partial-failure behavior. Prefer writing each file through a temporary
   sibling and replacing the destination after successful serialization. Build a
   collection from completed outputs after a successful requested export.
-- Add focused exceptions and optional progress reporting.
+- [x] Add focused exceptions and optional progress reporting.
 
 Exit criteria: callers export through a small interface with no ordering
 preconditions; invalid requests fail before conversion; no partially written

@@ -28,10 +28,10 @@ def write_data_array(stream, field):
     stream.write("</DataArray>\n")
 
 
-def _write_fields(stream, association, fields):
+def _write_fields(stream, association, fields, metadata):
     stream.write("<{0} ".format(association))
     for kind in ("Tensors", "Vectors", "Scalars"):
-        names = [field.name for field in fields if field.kind == kind]
+        names = [field.name for field in metadata if field.kind == kind]
         if names:
             stream.write(
                 '{0}="{1}" '.format(kind, ",".join("'{0}'".format(n) for n in names))
@@ -39,14 +39,28 @@ def _write_fields(stream, association, fields):
     stream.write(">\n")
     for field in fields:
         write_data_array(stream, field)
+        del field
     stream.write("</{0}>\n".format(association))
 
 
-def write_vtu(stream, mesh, point_fields, cell_fields):
-    """Write one frame. Fields belong to this frame only."""
-    # Materialize iterable metadata, never the text representation of the frame.
-    point_fields = list(point_fields)
-    cell_fields = list(cell_fields)
+def write_vtu(
+    stream, mesh, point_fields, cell_fields, point_metadata=None, cell_metadata=None
+):
+    """Write one frame; separate metadata permits lazy numerical field iterators.
+
+    Existing callers may still supply field lists without separate metadata.
+    Writers know only records and iterators, with no dependency on a data source.
+    """
+    if point_metadata is None:
+        point_fields = list(point_fields)
+        point_metadata = point_fields
+    else:
+        point_metadata = tuple(point_metadata)
+    if cell_metadata is None:
+        cell_fields = list(cell_fields)
+        cell_metadata = cell_fields
+    else:
+        cell_metadata = tuple(cell_metadata)
     stream.write(
         '<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">\n'
         "<UnstructuredGrid>\n"
@@ -59,8 +73,8 @@ def write_vtu(stream, mesh, point_fields, cell_fields):
     )
     _write_rows(stream, mesh.points)
     stream.write("</DataArray>\n</Points>\n")
-    _write_fields(stream, "PointData", point_fields)
-    _write_fields(stream, "CellData", cell_fields)
+    _write_fields(stream, "PointData", point_fields, point_metadata)
+    _write_fields(stream, "CellData", cell_fields, cell_metadata)
     stream.write("<Cells>\n")
     for name, values in (
         ("connectivity", mesh.connectivity),

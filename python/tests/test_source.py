@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from odb2vtk import ODB2VTK
 from odb2vtk_core.models import SectionPoint
 from odb2vtk_core.source import AbaqusSource, ReadableOdb
+from odb2vtk_core.errors import SelectionError
 from support import CONSTANTS, NativeOdb, make_source
 
 
@@ -195,7 +196,7 @@ class ConverterOwnershipTests(unittest.TestCase):
             io.StringIO()
         ):
             with patch.object(AbaqusSource, "open", return_value=source):
-                with self.assertRaises(KeyError):
+                with self.assertRaises(SelectionError):
                     with ODB2VTK(os.path.join(directory, "job.odb"), "") as converter:
                         converter.ReadArgs(["UNKNOWN"], {"Step-1": [0]})
                         converter.ConstructMap()

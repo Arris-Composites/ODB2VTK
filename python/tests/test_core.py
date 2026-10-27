@@ -125,6 +125,30 @@ class FieldTests(unittest.TestCase):
 
 
 class WriterTests(unittest.TestCase):
+    def test_streaming_metadata_can_be_a_one_shot_iterator(self):
+        mesh = MeshData(
+            np.zeros((1, 3)),
+            np.array([], dtype=int),
+            np.array([], dtype=int),
+            np.array([], dtype=int),
+        )
+        field = FieldArray(
+            "U", "PointData", "Vectors", ("U1", "U2", "U3"), np.zeros((1, 3))
+        )
+        stream = io.StringIO()
+        writers.write_vtu(
+            stream,
+            mesh,
+            iter([field]),
+            iter([]),
+            point_metadata=iter([field._replace(values=None)]),
+            cell_metadata=iter([]),
+        )
+        group = ET.fromstring(stream.getvalue()).find(
+            "UnstructuredGrid/Piece/PointData"
+        )
+        self.assertEqual(group.attrib["Vectors"], "'U'")
+
     def test_vtu_preserves_mesh_fields_components_and_active_attributes(self):
         mesh = MeshData(
             np.array([[0, 0, 0], [1, 0, 0]]),

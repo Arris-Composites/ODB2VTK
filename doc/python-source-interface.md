@@ -32,8 +32,10 @@ with AbaqusSource.open(odb_path) as source:
     names = source.instance_names
 ```
 
-The legacy initialization sequence remains until Phase 3. The injected dependency
-is exposed through the read-only `converter.source` property. `converter.close()`
+These examples retain the legacy facade's setup calls for compatibility.
+New code can use the [converter interface](python-converter-interface.md) without
+map construction. The injected dependency is exposed through the read-only
+`converter.source` property. The legacy facade's `converter.close()`
 closes only a source opened by the converter. A separately opened source remains
 under the caller's ownership.
 

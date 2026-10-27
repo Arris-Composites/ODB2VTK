@@ -12,6 +12,7 @@ from unittest.mock import patch
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from odb2vtk_core.source import AbaqusSource
+from odb2vtk_core.errors import SelectionError
 from support import make_source
 
 
@@ -96,7 +97,7 @@ class CliSourceLifetimeTests(unittest.TestCase):
     def test_conversion_exception_closes_source(self):
         source = make_source()
         with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaises(KeyError):
+            with self.assertRaises(SelectionError):
                 self.run_cli(
                     directory,
                     source,
