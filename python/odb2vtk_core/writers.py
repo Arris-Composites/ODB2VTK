@@ -1,9 +1,12 @@
 """Stream-based serialization of plain records, independent of the source."""
 
 import json
+from itertools import islice
 from xml.sax.saxutils import escape
 
 import numpy as np
+
+_WRITE_CHUNK_ROWS = 4096
 
 
 def _attribute(value):
@@ -12,9 +15,20 @@ def _attribute(value):
     )
 
 
+def _write_lines(stream, lines):
+    """Bound text buffering by row count without changing numeric formatting."""
+    lines = iter(lines)
+    while True:
+        chunk = "".join(islice(lines, _WRITE_CHUNK_ROWS))
+        if not chunk:
+            return
+        stream.write(chunk)
+
+
 def _write_rows(stream, values):
-    for row in values:
-        stream.write(" ".join(str(value) for value in row) + "\n")
+    _write_lines(
+        stream, (" ".join(str(value) for value in row) + "\n" for row in values)
+    )
 
 
 def write_data_array(stream, field):
@@ -90,8 +104,7 @@ def write_vtu(
         stream.write(
             '<DataArray type="Int64" Name="{0}" format="ascii">\n'.format(name)
         )
-        for value in values:
-            stream.write("{0}\n".format(value))
+        _write_lines(stream, ("{0}\n".format(value) for value in values))
         stream.write("</DataArray>\n")
     stream.write("</Cells>\n</Piece>\n</UnstructuredGrid>\n</VTKFile>")
 

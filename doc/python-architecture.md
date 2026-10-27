@@ -138,6 +138,7 @@ Performance tooling is separate from tests; no wall-clock threshold gates CI:
 ```text
 abaqus python python/validation/create_benchmark_odb.py C:/temp/scaling.odb 10000 4
 abaqus python python/validation/benchmark_exports.py --odb C:/temp/scaling.odb --instance PART-1-1 --frames 0,1,2,3 --suffix _current --report C:/temp/current.json
+abaqus python python/validation/profile_exports.py --odb C:/temp/scaling.odb --instance PART-1-1 --frames 0,1,2,3 --suffix _profile --report C:/temp/profile.json
 ```
 
 The generator refuses to overwrite an existing ODB. Run each benchmark sample
@@ -151,3 +152,9 @@ refer to that snapshot, not to a compatibility mode in the current package.
 
 See [Phase 5 results](python-phase5-results.md) for the recorded comparisons,
 performance tradeoffs, and remaining validation limits.
+See [timing by phase](python-profiling-results.md) for the exclusive workflow
+breakdown, profiling overhead, function hotspots, and optimization priorities.
+The first [ASCII batching optimization](python-ascii-write-optimization.md)
+records chunk-size comparisons, byte-for-byte output checks, and memory results.
+The [comparison with local main](python-main-comparison.md) measures the complete
+refactor plus batching against the original branch on the same ODB inputs.

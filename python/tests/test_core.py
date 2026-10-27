@@ -125,6 +125,49 @@ class FieldTests(unittest.TestCase):
 
 
 class WriterTests(unittest.TestCase):
+    def test_chunked_field_output_preserves_boundary_rows_and_numeric_text(self):
+        boundary = writers._WRITE_CHUNK_ROWS
+        for count in (0, 1, boundary - 1, boundary, boundary + 1, boundary * 2 + 5):
+            with self.subTest(rows=count):
+                values = np.resize(
+                    np.array([-0.0, 1e-30, -1e30, np.inf, -np.inf, np.nan]), (count, 3)
+                )
+                field = FieldArray("U", "PointData", "Vectors", (), values)
+                stream = io.StringIO()
+                writers.write_data_array(stream, field)
+                expected = (
+                    '<DataArray type="Float32" Name="U" NumberOfComponents="3" format="ascii">\n'
+                    + "".join(" ".join(str(v) for v in row) + "\n" for row in values)
+                    + "</DataArray>\n"
+                )
+                self.assertEqual(stream.getvalue(), expected)
+
+    def test_large_field_is_written_before_all_rows_are_formatted(self):
+        class Rows:
+            shape = (20000, 1)
+            consumed = 0
+
+            def __iter__(self):
+                for value in range(self.shape[0]):
+                    self.consumed += 1
+                    yield (value,)
+
+        rows = Rows()
+        writes = []
+
+        class Stream:
+            def write(self, text):
+                if text and text[0].isdigit():
+                    writes.append((rows.consumed, len(text)))
+
+        writers.write_data_array(
+            Stream(), FieldArray("TEMP", "PointData", "Scalars", (), rows)
+        )
+        self.assertGreater(writes[0][0], 1)
+        self.assertLess(writes[0][0], rows.shape[0])
+        self.assertLess(len(writes), rows.shape[0] // 10)
+        self.assertEqual(writes[-1][0], rows.shape[0])
+
     def test_streaming_metadata_can_be_a_one_shot_iterator(self):
         mesh = MeshData(
             np.zeros((1, 3)),
