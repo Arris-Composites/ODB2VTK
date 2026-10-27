@@ -13,7 +13,6 @@ from .models import (
     FieldInfo,
     FieldLayout,
     HistorySeries,
-    InstanceLabels,
     InstanceMesh,
     OrientationBlock,
     SectionPoint,
@@ -166,19 +165,18 @@ class AbaqusSource(object):
     def frame_time(self, step, frame):
         return self._frame(step, frame).frameValue
 
-    def mesh_labels(self, instance):
-        native = self._require_odb().rootAssembly.instances[instance]
-        return InstanceLabels(
-            instance,
-            tuple(node.label for node in native.nodes),
-            tuple(element.label for element in native.elements),
-        )
-
     def mesh(self, instance):
         native = self._require_odb().rootAssembly.instances[instance]
+        nodes = native.nodes
+        labels = []
+        coordinates = np.empty((len(nodes), 3), dtype=float)
+        for index, node in enumerate(nodes):
+            labels.append(node.label)
+            coordinates[index] = node.coordinates
         return InstanceMesh(
             instance,
-            tuple(tuple(node.coordinates) for node in native.nodes),
+            tuple(labels),
+            coordinates,
             tuple(
                 Element(element.label, tuple(element.connectivity), element.type)
                 for element in native.elements

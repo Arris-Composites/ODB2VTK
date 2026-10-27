@@ -118,28 +118,25 @@ class Converter(object):
 
     def _prepare_mesh(self, selection):
         try:
-            labels = tuple(
-                self.source.mesh_labels(name) for name in selection.instances
-            )
-            for instance in labels:
-                if len(set(instance.node_labels)) != len(instance.node_labels) or len(
-                    set(instance.element_labels)
-                ) != len(instance.element_labels):
-                    raise SourceError("Mesh labels must be unique within each instance")
-            index = build_label_maps(labels)
             meshes = tuple(self.source.mesh(name) for name in selection.instances)
-            for expected, names, mesh in zip(selection.instances, labels, meshes):
-                if (
-                    names.name != expected
-                    or names.name != mesh.name
-                    or len(names.node_labels) != len(mesh.coordinates)
-                    or tuple(e.label for e in mesh.elements)
-                    != tuple(names.element_labels)
+            for expected, mesh in zip(selection.instances, meshes):
+                if mesh.name != expected or len(mesh.node_labels) != len(
+                    mesh.coordinates
                 ):
                     raise SourceError(
-                        "Mesh geometry and labels disagree for {0}".format(names.name)
+                        "Mesh geometry and labels disagree for {0}".format(expected)
                     )
+            index = build_label_maps(meshes)
+            for mesh in meshes:
+                if len(index.node_map[mesh.name]) != len(mesh.node_labels) or len(
+                    index.element_map[mesh.name]
+                ) != len(mesh.elements):
+                    raise SourceError("Mesh labels must be unique within each instance")
             geometry = build_mesh(meshes, index.node_map)
+            if len(geometry.points) != index.node_count:
+                raise SourceError(
+                    "Mesh coordinates must have three components per node"
+                )
             return _PreparedMesh(selection.instances, index, geometry)
         except SourceError:
             raise

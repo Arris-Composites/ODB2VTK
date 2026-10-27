@@ -41,8 +41,8 @@ def build_label_maps(instances):
         for label in instance.node_labels:
             nodes[label] = node_count
             node_count += 1
-        for label in instance.element_labels:
-            elements[label] = cell_count
+        for element in instance.elements:
+            elements[element.label] = cell_count
             cell_count += 1
         node_map[instance.name] = nodes
         element_map[instance.name] = elements
@@ -56,7 +56,12 @@ def build_mesh(instances, node_map):
     offsets = []
     cell_types = []
     for instance in instances:
-        points.extend(instance.coordinates)
+        coordinates = np.asarray(instance.coordinates, dtype=float)
+        if not coordinates.size:
+            coordinates = coordinates.reshape((0, 3))
+        if coordinates.shape != (len(instance.node_labels), 3):
+            raise ValueError("Mesh coordinates must have three components per node")
+        points.append(coordinates)
         for element in instance.elements:
             connectivity.extend(
                 node_map[instance.name][label] for label in element.connectivity
@@ -64,7 +69,7 @@ def build_mesh(instances, node_map):
             offsets.append(len(connectivity))
             cell_types.append(vtk_cell_type(element.element_type))
     return MeshData(
-        np.asarray(points, dtype=float).reshape((-1, 3)),
+        np.concatenate(points, axis=0) if points else np.empty((0, 3), dtype=float),
         np.asarray(connectivity, dtype=np.int64),
         np.asarray(offsets, dtype=np.int64),
         np.asarray(cell_types, dtype=np.int64),

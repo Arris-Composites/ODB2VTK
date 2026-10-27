@@ -21,7 +21,6 @@ from odb2vtk_core.models import (
     Element,
     FieldArray,
     HistorySeries,
-    InstanceLabels,
     InstanceMesh,
     MeshData,
 )
@@ -50,30 +49,26 @@ class ImportTests(unittest.TestCase):
 
 class MeshTests(unittest.TestCase):
     def test_instance_scoped_labels_and_connectivity(self):
-        labels = [
-            InstanceLabels("A", [20, 10, 30], [7]),
-            InstanceLabels("B", [20, 10, 30, 40], [7]),
+        instances = [
+            InstanceMesh(
+                "A",
+                [20, 10, 30],
+                [(0, 0, 0), (1, 0, 0), (0, 1, 0)],
+                [Element(7, [30, 20, 10], "S3")],
+            ),
+            InstanceMesh(
+                "B",
+                [20, 10, 30, 40],
+                [(0, 0, 1), (1, 0, 1), (1, 1, 1), (0, 1, 1)],
+                [Element(7, [20, 10, 30, 40], "S4R")],
+            ),
         ]
-        index = build_label_maps(labels)
+        index = build_label_maps(instances)
         self.assertEqual(index.node_map["A"], {20: 0, 10: 1, 30: 2})
         self.assertEqual(index.node_map["B"], {20: 3, 10: 4, 30: 5, 40: 6})
         self.assertEqual(index.element_map, {"A": {7: 0}, "B": {7: 1}})
         self.assertEqual((index.node_count, index.cell_count), (7, 2))
-        mesh = build_mesh(
-            [
-                InstanceMesh(
-                    "A",
-                    [(0, 0, 0), (1, 0, 0), (0, 1, 0)],
-                    [Element(7, [30, 20, 10], "S3")],
-                ),
-                InstanceMesh(
-                    "B",
-                    [(0, 0, 1), (1, 0, 1), (1, 1, 1), (0, 1, 1)],
-                    [Element(7, [20, 10, 30, 40], "S4R")],
-                ),
-            ],
-            index.node_map,
-        )
+        mesh = build_mesh(instances, index.node_map)
         np.testing.assert_array_equal(mesh.connectivity, [2, 0, 1, 3, 4, 5, 6])
         np.testing.assert_array_equal(mesh.offsets, [3, 7])
         np.testing.assert_array_equal(mesh.cell_types, [5, 9])
@@ -102,9 +97,19 @@ class MeshTests(unittest.TestCase):
             vtk_cell_type("UNKNOWN")
 
     def test_empty_mesh(self):
-        mesh = build_mesh([], {})
-        self.assertEqual(mesh.points.shape, (0, 3))
-        self.assertEqual(mesh.connectivity.size, 0)
+        for instances in ([], [InstanceMesh("empty", (), np.empty((0, 3)), ())]):
+            with self.subTest(instances=instances):
+                index = build_label_maps(instances)
+                mesh = build_mesh(instances, index.node_map)
+                self.assertEqual(mesh.points.shape, (0, 3))
+                self.assertEqual(mesh.connectivity.size, 0)
+
+    def test_output_coordinates_do_not_alias_mesh_snapshots(self):
+        coordinates = np.array([[1.0, 2.0, 3.0]])
+        snapshot = InstanceMesh("A", (1,), coordinates, ())
+        geometry = build_mesh([snapshot], {"A": {1: 0}})
+        geometry.points.fill(-1)
+        np.testing.assert_array_equal(coordinates, [[1.0, 2.0, 3.0]])
 
 
 class FieldTests(unittest.TestCase):

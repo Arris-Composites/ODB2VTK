@@ -42,8 +42,7 @@ adapter tests supply a native-handle stand-in without altering Python imports.
 | `instance_names` | Tuple of names in source order |
 | `steps` | Tuple of `StepInfo(name, frame_count)` records |
 | `frame_time(step, frame)` | Existing frame value, without changing time semantics |
-| `mesh_labels(instance)` | `InstanceLabels` with node/element labels in source order |
-| `mesh(instance)` | `InstanceMesh` with coordinate tuples and `Element` records |
+| `mesh(instance)` | `InstanceMesh(name, node_labels, coordinates, elements)` snapshot |
 | `field_names(step, frame)` | Tuple of field names in source order |
 | `describe_field(step, frame, name, instances)` | `FieldInfo` for the selected instances |
 | `field_blocks(step, frame, name, instance, position, section=None)` | Iterator of owned `FieldBlock` records |
@@ -55,6 +54,19 @@ Step and frame names/indices are explicit arguments. Field positions are strings
 such as `NODAL`, `INTEGRATION_POINT`, and `CENTROID`, rather than Abaqus symbolic
 constants. Native handles, instances, fields, bulk objects, and section objects
 do not appear in normalized results.
+
+### Mesh snapshot
+
+`mesh(instance)` reads labels and geometry together. `node_labels` is a tuple in
+source order; `coordinates` is an independently owned float64 NumPy array of
+shape `(len(node_labels), 3)`; `elements` contains `Element(label, connectivity,
+element_type)` records. Element labels come from those records. Modifying returned
+coordinates does not modify the ODB or a later read, and the snapshot survives
+source closure.
+
+`mesh_labels()` and `InstanceLabels` have been removed. Custom adapters must
+include node labels in their mesh result. See the
+[migration and mesh benchmark](python-mesh-snapshot-optimization.md).
 
 ### Field and orientation records
 

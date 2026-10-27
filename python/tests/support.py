@@ -11,7 +11,6 @@ from odb2vtk_core.models import (
     FieldInfo,
     FieldLayout,
     HistorySeries,
-    InstanceLabels,
     InstanceMesh,
     OrientationBlock,
     SectionPoint,
@@ -34,9 +33,8 @@ def copy_block(block):
 class InMemorySource:
     """Satisfy the normalized source interface without simulating Abaqus queries."""
 
-    def __init__(self, meshes, labels, layouts, blocks, times, histories, orientations):
+    def __init__(self, meshes, layouts, blocks, times, histories, orientations):
         self._meshes = OrderedDict((mesh.name, mesh) for mesh in meshes)
-        self._labels = {item.name: item for item in labels}
         self._layouts = layouts
         self._blocks = blocks
         self._times = times
@@ -80,13 +78,12 @@ class InMemorySource:
         self._check_open()
         return self._times[step][frame]
 
-    def mesh_labels(self, instance):
-        self._check_open()
-        return self._labels[instance]
-
     def mesh(self, instance):
         self._check_open()
-        return self._meshes[instance]
+        mesh = self._meshes[instance]
+        return mesh._replace(
+            coordinates=np.array(mesh.coordinates, dtype=float, copy=True)
+        )
 
     def field_names(self, step, frame):
         self._check_open()
@@ -148,6 +145,7 @@ def make_source(include_stress=True):
         meshes.append(
             InstanceMesh(
                 name,
+                (3, 1, 4, 2),
                 tuple((label, offset, 0) for label in (3, 1, 4, 2)),
                 (Element(7, (1, 2, 3, 4), "S4"),),
             )
@@ -215,10 +213,8 @@ def make_source(include_stress=True):
         )
         for name, value in (("A", 11), ("B", 21))
     ]
-    labels = [InstanceLabels(mesh.name, (3, 1, 4, 2), (7,)) for mesh in meshes]
     return InMemorySource(
         meshes,
-        labels,
         {("Step-1", 0): layouts},
         blocks,
         OrderedDict([("Step-1", (0.5,))]),
@@ -268,12 +264,11 @@ class NativeOdb:
         self.rootAssembly = types.SimpleNamespace(instances=OrderedDict())
         for instance in fixture.instance_names:
             mesh = fixture.mesh(instance)
-            labels = fixture.mesh_labels(instance)
             self.rootAssembly.instances[instance] = types.SimpleNamespace(
                 name=instance,
                 nodes=[
                     types.SimpleNamespace(label=label, coordinates=coordinates)
-                    for label, coordinates in zip(labels.node_labels, mesh.coordinates)
+                    for label, coordinates in zip(mesh.node_labels, mesh.coordinates)
                 ],
                 elements=[
                     types.SimpleNamespace(

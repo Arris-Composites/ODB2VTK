@@ -28,7 +28,6 @@ class SourceSpy:
     def __init__(self, source):
         self.source = source
         self.mesh_reads = []
-        self.label_reads = []
         self.events = []
         self.fail_step = None
         self.fail_frame = None
@@ -39,10 +38,6 @@ class SourceSpy:
     def mesh(self, instance):
         self.mesh_reads.append(instance)
         return self.source.mesh(instance)
-
-    def mesh_labels(self, instance):
-        self.label_reads.append(instance)
-        return self.source.mesh_labels(instance)
 
     def field_blocks(self, step, frame, name, instance, position, section=None):
         self.events.append(("read", name))
@@ -180,6 +175,29 @@ class ConverterTests(unittest.TestCase):
         self.assertEqual(len(result.paths), 2)
         self.assertFalse(os.path.exists(outputs.collection_path))
 
+    def test_invalid_mesh_snapshots_fail_before_publication(self):
+        original = self.source.source._meshes["A"]
+        invalid = (
+            original._replace(name="WRONG"),
+            original._replace(coordinates=original.coordinates[:-1]),
+            original._replace(node_labels=(3, 3, 4, 2)),
+            original._replace(elements=original.elements * 2),
+            original._replace(
+                elements=(original.elements[0]._replace(connectivity=(1, 2, 3, 999)),)
+            ),
+            original._replace(
+                coordinates=tuple((0,) * 6 for _ in original.node_labels)
+            ),
+        )
+        for mesh in invalid:
+            with self.subTest(mesh=mesh):
+                self.source.source._meshes["A"] = mesh
+                with self.assertRaises(ExportFailure) as failure:
+                    self.converter.export_frames(self.selection, self.outputs)
+                self.assertIsInstance(failure.exception.cause, SourceError)
+                self.assertEqual(failure.exception.result.paths, ())
+                self.assertEqual(os.listdir(self.directory.name), [])
+
     def test_unsupported_fields_are_reported_without_changing_position_support(self):
         source = self.source.source
         source._layouts[("Step-1", 0)]["DIRECT"] = FieldLayout(
@@ -208,7 +226,6 @@ class ConverterTests(unittest.TestCase):
             result = converter.export_frames(self.selection, self.outputs)
         self.assertEqual(console.getvalue(), "")
         self.assertEqual(self.source.mesh_reads, ["A", "B"])
-        self.assertEqual(self.source.label_reads, ["A", "B"])
         self.assertEqual(len(result.paths), 3)
         self.assertEqual(
             [(frame.step, frame.frame, frame.timestep) for frame in result.frames],
@@ -267,7 +284,6 @@ class ConverterTests(unittest.TestCase):
         self.assertEqual(result.paths, (self.outputs.history_path,))
         self.assertEqual(result.frames, ())
         self.assertEqual(self.source.mesh_reads, [])
-        self.assertEqual(self.source.label_reads, [])
         self.assertEqual(
             Path(result.paths[0]).read_text().splitlines()[1:],
             ["11.000000,21.000000", "12.000000,22.000000"],

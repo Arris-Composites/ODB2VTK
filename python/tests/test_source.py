@@ -29,10 +29,10 @@ class SourceContract:
             [("Step-1", 1)],
         )
         self.assertEqual(self.source.frame_time("Step-1", 0), 0.5)
-        self.assertEqual(self.source.mesh_labels("A").node_labels, (3, 1, 4, 2))
-        self.assertEqual(self.source.mesh_labels("B").element_labels, (7,))
+        self.assertEqual(self.source.mesh("A").node_labels, (3, 1, 4, 2))
+        self.assertEqual(tuple(e.label for e in self.source.mesh("B").elements), (7,))
         mesh = self.source.mesh("B")
-        self.assertEqual(mesh.coordinates[0], (3, 100, 0))
+        np.testing.assert_array_equal(mesh.coordinates[0], (3, 100, 0))
         self.assertEqual(mesh.elements[0].connectivity, (1, 2, 3, 4))
 
     def test_field_metadata_and_sections_are_plain_records(self):
@@ -60,6 +60,9 @@ class SourceContract:
         np.testing.assert_array_equal(block.values, [[190, 191]])
 
     def test_returned_arrays_do_not_alias_the_source(self):
+        mesh = self.source.mesh("A")
+        mesh.coordinates.fill(-1)
+        np.testing.assert_array_equal(self.source.mesh("A").coordinates[0], [3, 0, 0])
         (block,) = self.source.field_blocks("Step-1", 0, "U", "A", "NODAL")
         block.values.fill(-1)
         block.labels.fill(-1)
@@ -74,10 +77,14 @@ class SourceContract:
         np.testing.assert_array_equal(again.integration_points, [1, 2])
 
     def test_snapshots_remain_usable_after_close(self):
+        mesh = self.source.mesh("A")
         field = next(self.source.field_blocks("Step-1", 0, "U", "A", "NODAL"))
         orientation = next(self.source.orientation_blocks("Step-1", 0, ["A", "B"]))
         history = next(self.source.history("Step-1"))
         self.source.close()
+        self.assertEqual(mesh.node_labels, (3, 1, 4, 2))
+        np.testing.assert_array_equal(mesh.coordinates[0], (3, 0, 0))
+        self.assertEqual(mesh.elements[0].connectivity, (1, 2, 3, 4))
         np.testing.assert_array_equal(field.labels, [1, 2, 3, 4])
         np.testing.assert_array_equal(field.values[:, 0], [1, 2, 3, 4])
         np.testing.assert_array_equal(orientation.quaternions, [[0, 0, 0, 1]])
@@ -90,7 +97,6 @@ class SourceContract:
             lambda: self.source.instance_names,
             lambda: self.source.steps,
             lambda: self.source.mesh("A"),
-            lambda: self.source.mesh_labels("A"),
             lambda: self.source.frame_time("Step-1", 0),
             lambda: self.source.field_names("Step-1", 0),
             lambda: self.source.describe_field("Step-1", 0, "U", ["A"]),
@@ -145,6 +151,22 @@ class AbaqusSourceContractTests(SourceContract, unittest.TestCase):
         field.blocks[0][2].data = np.zeros((1, 3))
         with self.assertRaisesRegex(ValueError, "matching lengths"):
             list(self.source.field_blocks("Step-1", 0, "U", "A", "NODAL"))
+
+    def test_mesh_snapshot_traverses_native_nodes_and_elements_once(self):
+        class Collection(list):
+            traversals = 0
+
+            def __iter__(self):
+                self.traversals += 1
+                return super().__iter__()
+
+        native = self.handle.rootAssembly.instances["A"]
+        native.nodes = Collection(native.nodes)
+        native.elements = Collection(native.elements)
+        mesh = self.source.mesh("A")
+        self.assertEqual(native.nodes.traversals, 1)
+        self.assertEqual(native.elements.traversals, 1)
+        self.assertEqual(mesh.node_labels, (3, 1, 4, 2))
 
 
 class ConverterOwnershipTests(unittest.TestCase):

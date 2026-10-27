@@ -165,3 +165,6 @@ records separate scalar and three-component paths, their combined improvement,
 and exact-output checks against the chunked writer.
 The [current-frame handle cache](python-source-cache-optimization.md) reduces
 native repository lookups and records its source-lifetime and memory tradeoffs.
+The [unified mesh snapshot](python-mesh-snapshot-optimization.md) combines label
+and geometry reads, reduces temporary coordinate storage, and documents the
+source-record migration and complete-export benchmarks.

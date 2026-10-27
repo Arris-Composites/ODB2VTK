@@ -58,8 +58,7 @@ class RealAbaqusSourceTests(unittest.TestCase):
             step = source.steps[0]
             self.assertGreater(step.frame_count, 0)
             mesh = source.mesh(instances[0])
-            labels = source.mesh_labels(instances[0])
-            self.assertEqual(len(mesh.coordinates), len(labels.node_labels))
+            self.assertEqual(len(mesh.coordinates), len(mesh.node_labels))
             for name in source.field_names(step.name, 0):
                 info = source.describe_field(step.name, 0, name, instances)
                 self.assertIsInstance(info.layout.position, str)

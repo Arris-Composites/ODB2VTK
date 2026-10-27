@@ -1,5 +1,11 @@
 # Current-frame native handle cache
 
+Historical measurement for `ef9abee`, before the unified mesh snapshot changed
+the source records. Reproduce this isolated cache experiment from that checkout;
+the saved pre-cache source requires its matching models/converter. The current
+[mesh benchmark](python-mesh-snapshot-optimization.md) compares complete packages
+across that record change.
+
 Implemented and measured on 2026-10-27 using Abaqus 2025 HF1 on Windows x64,
 Python 3.10.5 and NumPy 1.22.4. The baseline is `849b071`, including the existing
 chunked writes and specialized row formatting. Only the source changed in this
