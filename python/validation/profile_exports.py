@@ -164,6 +164,25 @@ def instrument(clock, converter, source):
                 writers, "write_vtu", clock.call(writers.write_vtu, "vtu_serialization")
             )
         )
+        if hasattr(writers, "serialized_mesh"):
+            original_mesh = writers.serialized_mesh
+
+            @contextmanager
+            def serialized_mesh(*args, **kwargs):
+                # Creation/closure happens outside write_vtu, but is still
+                # serialization work. ExitStack preserves failure semantics.
+                with ExitStack() as stack:
+                    with clock.measure("vtu_serialization"):
+                        result = stack.enter_context(original_mesh(*args, **kwargs))
+                    try:
+                        yield result
+                    finally:
+                        with clock.measure("vtu_serialization"):
+                            stack.close()
+
+            patches.enter_context(
+                patch.object(writers, "serialized_mesh", serialized_mesh)
+            )
 
         original_atomic = module.atomic_output
 

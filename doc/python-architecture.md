@@ -170,3 +170,6 @@ and geometry reads, reduces temporary coordinate storage, and documents the
 source-record migration and complete-export benchmarks.
 The [vectorized label lookup](python-label-lookup-optimization.md) prepares bounded
 NumPy tables once per instance and reuses them for field placement across frames.
+The [serialized mesh cache](python-mesh-text-optimization.md) avoids repeated
+coordinate/topology formatting across frames, with bounded spooling and a direct
+single-frame path.

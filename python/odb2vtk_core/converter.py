@@ -271,7 +271,7 @@ class Converter(object):
         )
         return self._assemble_field(blocks, plan, plan.name, plan.association, prepared)
 
-    def _write_frame(self, stream, step, frame, prepared, diagnostics):
+    def _write_frame(self, stream, step, frame, prepared, diagnostics, mesh_text=None):
         plans = self._field_plans(step, frame, prepared.instances, diagnostics)
         points = tuple(plan for plan in plans if plan.association == "PointData")
         cells = tuple(plan for plan in plans if plan.association == "CellData")
@@ -282,6 +282,7 @@ class Converter(object):
             (self._read_plan(plan, step, frame, prepared) for plan in cells),
             point_metadata=points,
             cell_metadata=cells,
+            mesh_text=mesh_text,
         )
 
     def _report(self, kind, path, completed, total):
@@ -322,15 +323,18 @@ class Converter(object):
         paths, completed, diagnostics = [], [], []
         try:
             prepared = self._prepare_mesh(selection)
-            for step, frames in selection.steps:
-                for frame in frames:
-                    path = outputs.frame_path(step, frame)
-                    timestep = self.source.frame_time(step, frame)
-                    with atomic_output(path) as stream:
-                        self._write_frame(stream, step, frame, prepared, diagnostics)
-                    paths.append(path)
-                    completed.append(FrameExport(step, frame, timestep, path))
-                    self._report("frame_completed", path, len(completed), total)
+            with writers.serialized_mesh(prepared.mesh, enabled=total > 1) as mesh_text:
+                for step, frames in selection.steps:
+                    for frame in frames:
+                        path = outputs.frame_path(step, frame)
+                        timestep = self.source.frame_time(step, frame)
+                        with atomic_output(path) as stream:
+                            self._write_frame(
+                                stream, step, frame, prepared, diagnostics, mesh_text
+                            )
+                        paths.append(path)
+                        completed.append(FrameExport(step, frame, timestep, path))
+                        self._report("frame_completed", path, len(completed), total)
             if outputs.write_pvd:
                 self._publish_collection(completed, outputs)
                 paths.append(outputs.collection_path)
