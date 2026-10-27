@@ -55,18 +55,27 @@ def write_data_array(stream, field):
     stream.write("</DataArray>\n")
 
 
-def _write_fields(stream, association, fields, metadata):
-    stream.write("<{0} ".format(association))
+def _component_count(field):
+    values = getattr(field, "values", None)
+    return (
+        values.shape[1]
+        if values is not None
+        else getattr(field, "component_count", len(field.component_names))
+    )
+
+
+def _active_attributes(metadata):
     for kind, width in (("Tensors", 9), ("Vectors", 3), ("Scalars", 1)):
         for field in metadata:
-            count = (
-                field.values.shape[1]
-                if hasattr(field, "values") and field.values is not None
-                else getattr(field, "component_count", len(field.component_names))
-            )
-            if field.kind == kind and count == width:
-                stream.write('{0}="{1}" '.format(kind, _attribute(field.name)))
+            if field.kind == kind and _component_count(field) == width:
+                yield '{0}="{1}" '.format(kind, _attribute(field.name))
                 break
+
+
+def _write_fields(stream, association, fields, metadata):
+    stream.write("<{0} ".format(association))
+    for attribute in _active_attributes(metadata):
+        stream.write(attribute)
     stream.write(">\n")
     for field in fields:
         write_data_array(stream, field)

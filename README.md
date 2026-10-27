@@ -35,6 +35,13 @@ This will open the odb file, extract instances, steps, and frames, and save them
 
 With 0 passed to header, it will write vtu data for instance "Part-1" at "Step-1" with frame number 0 and 1.
 
+Add `--format binary` to write uncompressed appended binary VTU files. The
+default is `--format ascii`; both modes use the same `.vtu` names and PVD
+references. Binary avoids decimal formatting and works with VTK/ParaView readers.
+The option also works with `python -m odb2vtk_core.parallel`. See the
+[binary serialization results](doc/python-binary-serialization.md) for timing,
+file sizes, precision and validation details.
+
 `abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-2:0,1,2,3,4,5" "Step-3:0,1,2,3" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 The above command will convert frame 0 to 1 in step 1, 0 to 5 in step 2, and 0 to 3 in step 3 for instance "Part-1" and "Part-2".

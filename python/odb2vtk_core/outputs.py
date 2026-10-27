@@ -27,12 +27,14 @@ def _leaf(name):
     return name
 
 
-class OutputOptions(namedtuple("_OutputOptions", "directory name suffix write_pvd")):
+class OutputOptions(
+    namedtuple("_OutputOptions", "directory name suffix write_pvd vtu_format")
+):
     """Write data under directory/(name+suffix), matching the existing layout."""
 
     __slots__ = ()
 
-    def __new__(cls, directory, name, suffix="", write_pvd=True):
+    def __new__(cls, directory, name, suffix="", write_pvd=True, vtu_format="ascii"):
         try:
             directory = os.path.abspath(os.fsdecode(os.fspath(directory)))
         except (TypeError, ValueError):
@@ -45,12 +47,14 @@ class OutputOptions(namedtuple("_OutputOptions", "directory name suffix write_pv
         _leaf(name + suffix)
         if not isinstance(write_pvd, bool):
             raise OutputError("write_pvd must be a boolean")
+        if vtu_format not in ("ascii", "binary"):
+            raise OutputError("VTU format must be 'ascii' or 'binary'")
         return super(OutputOptions, cls).__new__(
-            cls, directory, name, suffix, write_pvd
+            cls, directory, name, suffix, write_pvd, vtu_format
         )
 
     @classmethod
-    def from_odb(cls, path, suffix="", write_pvd=True):
+    def from_odb(cls, path, suffix="", write_pvd=True, vtu_format="ascii"):
         path = os.fsdecode(os.fspath(path))
         # Retain the existing first-dot naming policy during this migration.
         return cls(
@@ -58,6 +62,7 @@ class OutputOptions(namedtuple("_OutputOptions", "directory name suffix write_pv
             os.path.basename(path).split(".")[0],
             suffix,
             write_pvd,
+            vtu_format,
         )
 
     @property
@@ -114,7 +119,7 @@ def ensure_directory(path):
 
 
 @contextmanager
-def atomic_output(path):
+def atomic_output(path, binary=False):
     """Publish a complete file or preserve the previous destination on failure.
 
     Publication is atomic per file, not a transaction across an export request.
@@ -131,7 +136,7 @@ def atomic_output(path):
     except OSError as error:
         raise OutputError("Cannot prepare output {0}: {1}".format(path, error))
     try:
-        with os.fdopen(descriptor, "w") as stream:
+        with os.fdopen(descriptor, "wb" if binary else "w") as stream:
             yield stream
         try:
             os.replace(temporary, path)

@@ -164,6 +164,15 @@ def instrument(clock, converter, source):
                 writers, "write_vtu", clock.call(writers.write_vtu, "vtu_serialization")
             )
         )
+        if hasattr(module, "binary_writer"):
+            binary = module.binary_writer
+            patches.enter_context(
+                patch.object(
+                    binary,
+                    "write_vtu",
+                    clock.call(binary.write_vtu, "vtu_serialization"),
+                )
+            )
         if hasattr(writers, "serialized_mesh"):
             original_mesh = writers.serialized_mesh
 
@@ -187,8 +196,8 @@ def instrument(clock, converter, source):
         original_atomic = module.atomic_output
 
         @contextmanager
-        def atomic(path):
-            manager = original_atomic(path)
+        def atomic(path, *args, **kwargs):
+            manager = original_atomic(path, *args, **kwargs)
             with clock.measure("file_publication"):
                 stream = manager.__enter__()
             try:
@@ -217,6 +226,7 @@ def main():
     parser.add_argument("--report", required=True)
     parser.add_argument("--history", action="store_true")
     parser.add_argument("--no-phases", action="store_true")
+    parser.add_argument("--format", choices=("ascii", "binary"), default="ascii")
     parser.add_argument("--cprofile", help="optional separate cProfile output file")
     args = parser.parse_args()
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -230,7 +240,9 @@ def main():
     selection = Selection(
         args.instance, {args.step: tuple(int(v) for v in args.frames.split(","))}
     )
-    outputs = OutputOptions.from_odb(args.odb, args.suffix, write_pvd=True)
+    # ASCII also supports historical baseline packages without the new option.
+    options = {"vtu_format": "binary"} if args.format == "binary" else {}
+    outputs = OutputOptions.from_odb(args.odb, args.suffix, write_pvd=True, **options)
     clock = PhaseClock()
     profiler = None
     if args.cprofile:
@@ -272,6 +284,7 @@ def main():
         odb=str(Path(args.odb).resolve()),
         python=sys.version,
         numpy=np.__version__,
+        vtu_format=args.format,
         instances=args.instance,
         frames=list(selection.steps),
         history=args.history,

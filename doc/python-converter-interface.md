@@ -52,7 +52,8 @@ Frame export requires nonempty instances and frames. Both frame and history
 exports reject unknown instance/step names and out-of-range supplied indices
 before mesh conversion or file creation.
 
-`OutputOptions(directory, name, suffix="", write_pvd=True)` owns the naming policy.
+`OutputOptions(directory, name, suffix="", write_pvd=True, vtu_format="ascii")`
+owns the naming and VTU serialization policy.
 `directory` is the parent directory; the data folder is `name + suffix`:
 
 ```text
@@ -71,6 +72,13 @@ choose a different parent and base name. Paths are normalized to absolute paths.
 Names/suffixes cannot introduce path separators or invalid portable filename
 characters. Existing path conflicts and destination collisions are rejected
 before mesh conversion. Filesystem errors can still occur during publication.
+
+Set `vtu_format="binary"` on either constructor to write uncompressed appended
+binary VTU. The default is `"ascii"`. Binary uses Float64 coordinates, Float32
+fields and Int64 topology, matching the existing output declarations. It streams
+one field at a time to an atomic binary file; CSV, JSON and PVD remain text.
+The CLI option is `--format binary` for both serial and parallel commands.
+See [format and benchmark details](python-binary-serialization.md).
 
 Set `write_pvd=False` to export VTU frames without a collection. This flag has no
 effect on CSV or JSON export. There is no implicit history export during frame

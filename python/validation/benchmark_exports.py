@@ -56,6 +56,7 @@ def main():
     parser.add_argument("--frames", default="0,1")
     parser.add_argument("--suffix", required=True)
     parser.add_argument("--report", required=True)
+    parser.add_argument("--format", choices=("ascii", "binary"), default="ascii")
     args = parser.parse_args()
     frames = tuple(int(value) for value in args.frames.split(","))
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -69,10 +70,13 @@ def main():
     with AbaqusSource.open(args.odb) as source:
         Converter(source).export_frames(
             Selection([args.instance], {args.step: frames}),
-            OutputOptions.from_odb(args.odb, args.suffix, write_pvd=False),
+            OutputOptions.from_odb(
+                args.odb, args.suffix, write_pvd=False, vtu_format=args.format
+            ),
         )
     result = dict(
         implementation="current",
+        vtu_format=args.format,
         odb=args.odb,
         frames=len(frames),
         seconds=time.perf_counter() - start,

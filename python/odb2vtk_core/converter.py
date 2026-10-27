@@ -5,7 +5,7 @@ import os
 
 import numpy as np
 
-from . import writers
+from . import binary_writer, writers
 from .errors import ExportFailure, OutputError, SelectionError, SourceError
 from .fields import (
     LabelLookup,
@@ -271,18 +271,29 @@ class Converter(object):
         )
         return self._assemble_field(blocks, plan, plan.name, plan.association, prepared)
 
-    def _write_frame(self, stream, step, frame, prepared, diagnostics, mesh_text=None):
+    def _write_frame(
+        self,
+        stream,
+        step,
+        frame,
+        prepared,
+        diagnostics,
+        mesh_text=None,
+        vtu_format="ascii",
+    ):
         plans = self._field_plans(step, frame, prepared.instances, diagnostics)
         points = tuple(plan for plan in plans if plan.association == "PointData")
         cells = tuple(plan for plan in plans if plan.association == "CellData")
-        writers.write_vtu(
+        write = binary_writer.write_vtu if vtu_format == "binary" else writers.write_vtu
+        options = {} if vtu_format == "binary" else {"mesh_text": mesh_text}
+        write(
             stream,
             prepared.mesh,
             (self._read_plan(plan, step, frame, prepared) for plan in points),
             (self._read_plan(plan, step, frame, prepared) for plan in cells),
             point_metadata=points,
             cell_metadata=cells,
-            mesh_text=mesh_text,
+            **options,
         )
 
     def _report(self, kind, path, completed, total):
@@ -323,14 +334,23 @@ class Converter(object):
         paths, completed, diagnostics = [], [], []
         try:
             prepared = self._prepare_mesh(selection)
-            with writers.serialized_mesh(prepared.mesh, enabled=total > 1) as mesh_text:
+            binary = outputs.vtu_format == "binary"
+            with writers.serialized_mesh(
+                prepared.mesh, enabled=total > 1 and not binary
+            ) as mesh_text:
                 for step, frames in selection.steps:
                     for frame in frames:
                         path = outputs.frame_path(step, frame)
                         timestep = self.source.frame_time(step, frame)
-                        with atomic_output(path) as stream:
+                        with atomic_output(path, binary=binary) as stream:
                             self._write_frame(
-                                stream, step, frame, prepared, diagnostics, mesh_text
+                                stream,
+                                step,
+                                frame,
+                                prepared,
+                                diagnostics,
+                                mesh_text,
+                                outputs.vtu_format,
                             )
                         paths.append(path)
                         completed.append(FrameExport(step, frame, timestep, path))

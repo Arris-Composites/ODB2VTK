@@ -124,6 +124,15 @@ class ParallelTests(unittest.TestCase):
         self.assertEqual(len(worker.requests), 1)
         self.assertFalse(Path(self.request.outputs.data_directory).exists())
 
+    def test_binary_option_is_preserved_for_preflight_frame_and_collection_jobs(self):
+        worker = FakeWorker()
+        request = parse_request(self.arguments + ["--format", "binary"], parallel=True)
+        run_parallel(request, worker)
+        self.assertTrue(worker.requests)
+        self.assertTrue(
+            all(r.outputs.vtu_format == "binary" for r, _ in worker.requests)
+        )
+
     def test_worker_failure_drains_active_jobs_and_never_schedules_collection(self):
         worker = FakeWorker(barrier=threading.Barrier(2), fail="frame")
         with self.assertRaises(WorkerError) as result:

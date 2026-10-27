@@ -85,11 +85,27 @@ class CliTests(unittest.TestCase):
             ["--writeHistory", "2"],
             ["--jobs", "0"],
             ["--jobs", "bad"],
+            ["--format", "compressed"],
         ):
             with self.subTest(extra=extra), contextlib.redirect_stderr(io.StringIO()):
                 with self.assertRaises(SystemExit) as result:
                     parse_request(self.arguments + extra, parallel=True)
                 self.assertEqual(result.exception.code, 2)
+
+    def test_binary_option_survives_worker_payload_and_exports(self):
+        request = parse_request(self.arguments + ["--format", "binary"])
+        self.assertEqual(request.outputs.vtu_format, "binary")
+        self.assertEqual(request_payload(request)["outputs"]["vtu_format"], "binary")
+        job, receipt = self.write_job(request)
+        source = make_source()
+        self.assertEqual(
+            worker_main(job, receipt, source_factory=lambda path: source), 0
+        )
+        self.assertTrue(source.closed)
+        self.assertIn(
+            b'<AppendedData encoding="raw">',
+            Path(request.outputs.frame_path("Step-1", 0)).read_bytes(),
+        )
 
     def test_header_mode_ignores_step_selection(self):
         request = parse_request(

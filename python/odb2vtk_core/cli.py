@@ -45,6 +45,12 @@ def build_parser(parallel=False):
         "--suffix", default="", help="suffix appended to the output name"
     )
     parser.add_argument(
+        "--format",
+        choices=("ascii", "binary"),
+        default="ascii",
+        help="VTU serialization: ASCII or uncompressed appended binary (default: ascii)",
+    )
+    parser.add_argument(
         "--writeHistory",
         type=int,
         choices=(0, 1),
@@ -91,7 +97,9 @@ def parse_request(argv=None, parallel=False):
     if not os.path.isfile(path):
         parser.error("ODB file does not exist or is not a file: {0}".format(path))
     try:
-        outputs = OutputOptions.from_odb(path, args.suffix, write_pvd=False)
+        outputs = OutputOptions.from_odb(
+            path, args.suffix, write_pvd=False, vtu_format=args.format
+        )
         if args.header:
             return CliRequest(
                 path, "header", None, outputs, False, getattr(args, "jobs", 1)

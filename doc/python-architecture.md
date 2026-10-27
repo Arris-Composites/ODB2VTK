@@ -173,3 +173,6 @@ NumPy tables once per instance and reuses them for field placement across frames
 The [serialized mesh cache](python-mesh-text-optimization.md) avoids repeated
 coordinate/topology formatting across frames, with bounded spooling and a direct
 single-frame path.
+The [appended binary writer](python-binary-serialization.md) removes decimal
+formatting, streams typed array chunks, and preserves the source/assembly
+interfaces. Select it with `--format binary` or `vtu_format="binary"`.
