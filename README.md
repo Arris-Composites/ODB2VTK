@@ -88,6 +88,10 @@ to export immutable requests without constructing maps. See
 The [CLI and parallel runner guide](doc/python-cli.md) documents statuses, shared
 argument validation, and verified worker completion; see
 [Phase 4 results](doc/python-phase4-results.md) for the integration checks.
+The [Python architecture guide](doc/python-architecture.md) describes the final
+module responsibilities, runtime support, and compatibility migration.
+[Phase 5 results](doc/python-phase5-results.md) records VTK reader checks and
+export duration/memory measurements.
 
 ## Build C++ Project by Visual Studio
 
@@ -512,6 +516,11 @@ converts frames ranging from 0 to 1000. So, it will generate 1001 individual vtu
 
 ## Abaqus Version Updates
 Both the C++ and Python builds have been updated for Abaqus 2023.
+
+This describes the historical release. The refactored Python exporter is
+validated with Abaqus 2025 HF1 / Python 3.10 on Windows. Its pure conversion
+modules are also tested with CPython 3.12. Python 2 is unsupported; Abaqus 2023
+has not been revalidated. See the [runtime details](doc/python-architecture.md#supported-and-validated-runtimes).
 
 ## TODOS
 

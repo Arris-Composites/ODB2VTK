@@ -134,14 +134,18 @@ successful publication. Event kinds are `frame_completed`, `collection_completed
 The writer receives field metadata separately from lazy numerical field iterators.
 It writes each field before requesting the next one. Memory holds the selected
 mesh, current numerical processing data, and output/diagnostic metadata, rather
-than arrays for every field or frame. Large-ODB benchmarking remains separate work.
+than arrays for every field or frame. History export assembles its selected table
+in memory. See [Phase 5 results](python-phase5-results.md) for measured frame-export
+duration and memory on real and generated ODBs.
 
 ## Compatibility
 
 `odb2vtk.ODB2VTK` now re-exports the facade in `odb2vtk_core/legacy.py`. Existing
 documented scripts, source ownership, header mode, suffixes, and schemas remain
 supported. `ReadArgs` snapshots inputs, and `ConstructMap` is optional for exports.
-Retained raw-data helpers delegate to the same conversion implementation.
+`ConstructMap` now only validates the request; no mesh cache survives selection
+changes. Phase 5 removed transitional raw-data helpers; see the explicit
+[migration table](python-architecture.md#compatibility-and-migration).
 
 PVD-only export now uses `export_collection(selection, outputs)`, which requires
 all referenced VTUs to exist. `validate_frames`, `validate_history`, and

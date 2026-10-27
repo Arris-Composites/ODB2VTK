@@ -1,11 +1,13 @@
 # Python exporter refactor plan
 
-Status: Phases 1 through 4 completed on 2026-10-26. Phase 5 remains planned.
+Status: Phases 1 through 5 completed on 2026-10-26.
 See [Phase 1 results](python-phase1-results.md),
 [Phase 2 results](python-phase2-results.md),
-[Phase 3 results](python-phase3-results.md), and
-[Phase 4 results](python-phase4-results.md) for the implementation and validation
-records. Further changes to export behavior remain separate work.
+[Phase 3 results](python-phase3-results.md),
+[Phase 4 results](python-phase4-results.md), and
+[Phase 5 results](python-phase5-results.md) for the implementation and validation
+records. The final [architecture guide](python-architecture.md) documents runtime
+support and compatibility migration. Further behavior changes remain separate work.
 
 ## Objective
 
@@ -32,10 +34,11 @@ testable changes, with the existing scripts continuing to work between phases.
 - Keep C++ outside this refactor.
 - Keep runtime dependencies limited to the standard library and NumPy.
 
-Before choosing syntax or typing tools, establish the supported Abaqus/Python
-versions. The README names Abaqus 2023, while local checks used Abaqus 2025 with
-Python 3.10. Do not introduce dataclasses, protocols, or newer syntax until the
-runtime requirement is settled. Simple classes and duck typing remain an option.
+The final maintained Python range is 3.10 through 3.12. Native export was validated
+with Abaqus 2025 HF1 / Python 3.10.5 on Windows; pure conversion also passed on
+CPython 3.12.14. The historical Abaqus 2023 release was not revalidated. See the
+architecture guide for the exercised matrix and limits. Simple classes and duck
+typing provide the required source polymorphism without new typing dependencies.
 
 Behavior changes must be identified explicitly in their implementing change.
 Separate mechanical extraction from fixes to invalid XML metadata, unsupported
@@ -269,17 +272,23 @@ deferred.
 
 Tasks:
 
-- Remove duplicate legacy implementations and unused imports. Keep compatibility
+- [x] Remove duplicate legacy implementations and unused imports. Keep compatibility
   facades only for the supported interface identified in Phase 0.
-- Replace temporary tests that populate internal state with tests through the
+- [x] Replace temporary tests that populate internal state with tests through the
   resulting public interfaces. Preserve every regression scenario.
-- Document module responsibilities, supported runtimes, library usage, and test
+- [x] Document module responsibilities, supported runtimes, library usage, and test
   commands.
-- Run semantic comparisons on real ODB exports and compare duration and memory
+- [x] Run semantic comparisons on real ODB exports and compare duration and memory
   with the Phase 0 baseline. Investigate regressions before accepting them.
 
 Exit criteria: the acceptance checklist below is satisfied and remaining
 limitations are documented.
+
+Completed with 106 tests exercised across ordinary Python, optional VTK, and
+Abaqus environments; eight baseline/final VTUs passed semantic and reader checks.
+Duration and peak memory were measured on the two bundled models and a generated
+80,000-node, four-frame ODB. Intentional raw-helper removal, XML corrections,
+small-case overhead, and validation limits are recorded in Phase 5 results.
 
 ## Validation strategy
 
@@ -335,17 +344,18 @@ all at once would obscure whether the architectural migration preserves behavior
 
 ## Final acceptance checklist
 
-- [ ] Supported runtime versions are documented and exercised where available.
-- [ ] Only the source module imports Abaqus-specific modules and constants.
-- [ ] The source owns ODB lifetime and closes reliably on all paths.
-- [ ] Selection and mesh invariants cannot be invalidated by normal caller usage.
-- [ ] Numerical transformations operate on explicit records and arrays.
-- [ ] Writers have no source queries or Abaqus dependencies.
-- [ ] Export callers do not need to build maps or manipulate internal state.
-- [ ] Existing regression scenarios pass through the resulting interfaces.
-- [ ] Documented script commands and the parallel runner remain usable.
-- [ ] Existing schemas and supported numerical results are preserved, with any
+- [x] Supported runtime versions are documented and exercised where available.
+- [x] Only the source module imports Abaqus-specific modules and constants in production.
+- [x] The source owns ODB lifetime and closes reliably on all paths.
+- [x] Selection and mesh invariants cannot be invalidated by normal caller usage.
+- [x] Numerical transformations operate on explicit records and arrays.
+- [x] Writers have no source queries or Abaqus dependencies.
+- [x] Export callers do not need to build maps or manipulate internal state.
+- [x] Existing regression scenarios pass through the resulting interfaces.
+- [x] Documented script commands and the parallel runner remain usable.
+- [x] Existing schemas and supported numerical results are preserved, with any
       intentional behavior corrections documented separately.
-- [ ] Compatible real-ODB exports have passed semantic integration checks.
-- [ ] Memory remains bounded by the selected mesh and current processing data;
+- [x] Compatible real-ODB exports have passed semantic integration checks.
+- [x] Frame-export memory remains bounded by the selected mesh and current processing data,
+      plus request/result metadata; history export holds the selected history table;
       measured performance changes have been assessed.

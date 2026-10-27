@@ -1,0 +1,262 @@
+{
+  "runs": [
+    {
+      "implementation": "baseline",
+      "odb": "Job-1.odb",
+      "frames": 2,
+      "seconds": 0.572560100001283,
+      "peak_rss_bytes": 102928384,
+      "start_peak_rss_bytes": 76423168,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "Job-1",
+      "repeat": 0
+    },
+    {
+      "implementation": "current",
+      "odb": "Job-1.odb",
+      "frames": 2,
+      "seconds": 0.45295360000091023,
+      "peak_rss_bytes": 105693184,
+      "start_peak_rss_bytes": 79638528,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "Job-1",
+      "repeat": 0
+    },
+    {
+      "implementation": "current",
+      "odb": "Job-1.odb",
+      "frames": 2,
+      "seconds": 0.4631814000003942,
+      "peak_rss_bytes": 106291200,
+      "start_peak_rss_bytes": 79224832,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "Job-1",
+      "repeat": 1
+    },
+    {
+      "implementation": "baseline",
+      "odb": "Job-1.odb",
+      "frames": 2,
+      "seconds": 0.5656889000001684,
+      "peak_rss_bytes": 102645760,
+      "start_peak_rss_bytes": 76300288,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "Job-1",
+      "repeat": 1
+    },
+    {
+      "implementation": "baseline",
+      "odb": "Job-1.odb",
+      "frames": 2,
+      "seconds": 0.5877711000011914,
+      "peak_rss_bytes": 103788544,
+      "start_peak_rss_bytes": 76644352,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "Job-1",
+      "repeat": 2
+    },
+    {
+      "implementation": "current",
+      "odb": "Job-1.odb",
+      "frames": 2,
+      "seconds": 0.44936390000111714,
+      "peak_rss_bytes": 106127360,
+      "start_peak_rss_bytes": 79228928,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "Job-1",
+      "repeat": 2
+    },
+    {
+      "implementation": "baseline",
+      "odb": "2d_planar.odb",
+      "frames": 2,
+      "seconds": 0.0978002000010747,
+      "peak_rss_bytes": 100925440,
+      "start_peak_rss_bytes": 76709888,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "2d_planar",
+      "repeat": 0
+    },
+    {
+      "implementation": "current",
+      "odb": "2d_planar.odb",
+      "frames": 2,
+      "seconds": 0.1147240000009333,
+      "peak_rss_bytes": 104652800,
+      "start_peak_rss_bytes": 79147008,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "2d_planar",
+      "repeat": 0
+    },
+    {
+      "implementation": "current",
+      "odb": "2d_planar.odb",
+      "frames": 2,
+      "seconds": 0.1088830999997299,
+      "peak_rss_bytes": 103694336,
+      "start_peak_rss_bytes": 79450112,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "2d_planar",
+      "repeat": 1
+    },
+    {
+      "implementation": "baseline",
+      "odb": "2d_planar.odb",
+      "frames": 2,
+      "seconds": 0.10108480000053532,
+      "peak_rss_bytes": 100864000,
+      "start_peak_rss_bytes": 76574720,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "2d_planar",
+      "repeat": 1
+    },
+    {
+      "implementation": "baseline",
+      "odb": "2d_planar.odb",
+      "frames": 2,
+      "seconds": 0.10527079999883426,
+      "peak_rss_bytes": 101019648,
+      "start_peak_rss_bytes": 76349440,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "2d_planar",
+      "repeat": 2
+    },
+    {
+      "implementation": "current",
+      "odb": "2d_planar.odb",
+      "frames": 2,
+      "seconds": 0.1137946999988344,
+      "peak_rss_bytes": 103661568,
+      "start_peak_rss_bytes": 79446016,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "2d_planar",
+      "repeat": 2
+    },
+    {
+      "implementation": "baseline",
+      "odb": "scaling.odb",
+      "frames": 4,
+      "seconds": 11.764801499999521,
+      "peak_rss_bytes": 188198912,
+      "start_peak_rss_bytes": 76480512,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "scaling",
+      "repeat": 0
+    },
+    {
+      "implementation": "current",
+      "odb": "scaling.odb",
+      "frames": 4,
+      "seconds": 7.807897700000467,
+      "peak_rss_bytes": 130027520,
+      "start_peak_rss_bytes": 79536128,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "scaling",
+      "repeat": 0
+    },
+    {
+      "implementation": "current",
+      "odb": "scaling.odb",
+      "frames": 4,
+      "seconds": 7.785657000000356,
+      "peak_rss_bytes": 130834432,
+      "start_peak_rss_bytes": 79458304,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "scaling",
+      "repeat": 1
+    },
+    {
+      "implementation": "baseline",
+      "odb": "scaling.odb",
+      "frames": 4,
+      "seconds": 11.458324499999435,
+      "peak_rss_bytes": 187977728,
+      "start_peak_rss_bytes": 76509184,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "scaling",
+      "repeat": 1
+    },
+    {
+      "implementation": "baseline",
+      "odb": "scaling.odb",
+      "frames": 4,
+      "seconds": 11.413248699998803,
+      "peak_rss_bytes": 187875328,
+      "start_peak_rss_bytes": 76369920,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "scaling",
+      "repeat": 2
+    },
+    {
+      "implementation": "current",
+      "odb": "scaling.odb",
+      "frames": 4,
+      "seconds": 7.7625380999998015,
+      "peak_rss_bytes": 129855488,
+      "start_peak_rss_bytes": 79343616,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "fixture": "scaling",
+      "repeat": 2
+    }
+  ],
+  "summary": [
+    {
+      "fixture": "Job-1",
+      "baseline": {
+        "seconds_median": 0.572560100001283,
+        "peak_mib_median": 98.16015625,
+        "start_peak_mib_median": 72.8828125
+      },
+      "current": {
+        "seconds_median": 0.45295360000091023,
+        "peak_mib_median": 101.2109375,
+        "start_peak_mib_median": 75.55859375
+      }
+    },
+    {
+      "fixture": "2d_planar",
+      "baseline": {
+        "seconds_median": 0.10108480000053532,
+        "peak_mib_median": 96.25,
+        "start_peak_mib_median": 73.02734375
+      },
+      "current": {
+        "seconds_median": 0.1137946999988344,
+        "peak_mib_median": 98.890625,
+        "start_peak_mib_median": 75.765625
+      }
+    },
+    {
+      "fixture": "scaling",
+      "baseline": {
+        "seconds_median": 11.458324499999435,
+        "peak_mib_median": 179.26953125,
+        "start_peak_mib_median": 72.9375
+      },
+      "current": {
+        "seconds_median": 7.785657000000356,
+        "peak_mib_median": 124.00390625,
+        "start_peak_mib_median": 75.77734375
+      }
+    }
+  ],
+  "method": "Fresh Abaqus processes, three samples per case, alternating order. SDK/import time excluded equally. Peak process RSS includes native allocations. Windows x64, Abaqus 2025 HF1, NumPy 1.22.4.",
+  "baseline": "Saved pre-refactor snapshot after the two original correctness fixes; rerun now, not historical Phase 0 timing.",
+  "sha256": {
+    "baseline_odb2vtk.py": "44737bfeb4abf016ab088c8df03b6f1d21004d931714342b499333dd216e96d3",
+    "utilities.py": "2e36d71e66adcef72b4d9dfde8e1fa9a352278249aa174627862699d24bef910",
+    "Job-1.odb": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+    "2d_planar.odb": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+    "scaling.odb": "f0ec42d6d8021efab3b688e917b4d5bc978c9eda8e139e61b011c5e5788c496a"
+  },
+  "one_frame_probe": {
+    "implementation": "current",
+    "odb": "scaling.odb",
+    "frames": 1,
+    "seconds": 3.1326737999988836,
+    "peak_rss_bytes": 122839040,
+    "start_peak_rss_bytes": 79663104,
+    "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]"
+  },
+  "one_frame_probe_note": "Single indicative sample, separate from the three-sample four-frame medians; not a confidence interval or production-scale memory guarantee."
+}

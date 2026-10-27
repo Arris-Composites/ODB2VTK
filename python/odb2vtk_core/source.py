@@ -42,12 +42,6 @@ def _field_layout(field, constants):
     return FieldLayout(kind, components, field.locations[0].position)
 
 
-def legacy_field_layout(field):
-    """Keep the old helper's native position token for external callers."""
-    _, constants = _load_abaqus()
-    return _field_layout(field, constants)
-
-
 def _section_point(point):
     if point is None:
         return None
@@ -64,11 +58,11 @@ def _copy_rows(labels, values):
     return labels, values
 
 
-def normalize_bulk_blocks(blocks, instance_name, position):
+def _normalize_bulk_blocks(blocks, instance_name, position):
     """Snapshot native bulk objects while their backing storage is still valid.
 
-    Used by the adapter and retained legacy bulk-data helpers. Each yielded
-    record owns its arrays; no Abaqus object crosses into numerical conversion.
+    Used only by the adapter. Each yielded record owns its arrays; no Abaqus
+    object crosses into numerical conversion.
     """
     if blocks is None:
         return
@@ -226,20 +220,14 @@ class AbaqusSource(object):
             field = field.getSubset(sectionPoint=native)
         return self._field_blocks(field, instance, position)
 
-    def legacy_field_blocks(self, field, instance, position, section=None):
-        """Normalize raw field arguments accepted by the old helper methods."""
-        return self._field_blocks(field, instance, position, section)
-
-    def _field_blocks(self, field, instance, position, section=None):
+    def _field_blocks(self, field, instance, position):
         region = self._require_odb().rootAssembly.instances[instance]
-        if section is not None:
-            field = field.getSubset(sectionPoint=section)
         subset = field.getSubset(region=region).getSubset(
             position=self._native_position(position)
         )
         for block in subset.bulkDataBlocks:
             self._require_odb()
-            for normalized in normalize_bulk_blocks((block,), instance, position):
+            for normalized in _normalize_bulk_blocks((block,), instance, position):
                 yield normalized
 
     def orientation_blocks(self, step, frame, instances):

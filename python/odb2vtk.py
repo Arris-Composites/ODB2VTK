@@ -41,8 +41,6 @@ from odb2vtk_core.cli import main
 
 _EXPORTS = {
     "ODB2VTK": "odb2vtk_core.legacy",
-    "ABAQUS_VTK_CELL_MAP": "odb2vtk_core.legacy",
-    "ABAQUS_VTK_FIELDOUPUTS_MAP": "odb2vtk_core.legacy",
     "MATERIAL_ORIENTATION": "odb2vtk_core.converter",
     "AbaqusSource": "odb2vtk_core.source",
 }

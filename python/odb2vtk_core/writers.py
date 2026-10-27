@@ -1,13 +1,15 @@
-"""Stream-based writers for the existing exporter formats.
-
-Writers accept plain records and arrays and never query the source. Legacy XML
-version strings, active-array attributes, numeric types, and CSV formatting are
-preserved here; correcting these conventions is a separate behavior change.
-"""
+"""Stream-based serialization of plain records, independent of the source."""
 
 import json
+from xml.sax.saxutils import escape
 
 import numpy as np
+
+
+def _attribute(value):
+    return escape(
+        str(value), {'"': "&quot;", "\r": "&#13;", "\n": "&#10;", "\t": "&#9;"}
+    )
 
 
 def _write_rows(stream, values):
@@ -18,11 +20,11 @@ def _write_rows(stream, values):
 def write_data_array(stream, field):
     stream.write(
         '<DataArray type="Float32" Name="{0}" NumberOfComponents="{1}" '.format(
-            field.name, field.values.shape[1]
+            _attribute(field.name), field.values.shape[1]
         )
     )
     for index, label in enumerate(field.component_names):
-        stream.write('ComponentName{0}="{1}" '.format(index, label))
+        stream.write('ComponentName{0}="{1}" '.format(index, _attribute(label)))
     stream.write('format="ascii">\n')
     _write_rows(stream, field.values)
     stream.write("</DataArray>\n")
@@ -30,12 +32,16 @@ def write_data_array(stream, field):
 
 def _write_fields(stream, association, fields, metadata):
     stream.write("<{0} ".format(association))
-    for kind in ("Tensors", "Vectors", "Scalars"):
-        names = [field.name for field in metadata if field.kind == kind]
-        if names:
-            stream.write(
-                '{0}="{1}" '.format(kind, ",".join("'{0}'".format(n) for n in names))
+    for kind, width in (("Tensors", 9), ("Vectors", 3), ("Scalars", 1)):
+        for field in metadata:
+            count = (
+                field.values.shape[1]
+                if hasattr(field, "values") and field.values is not None
+                else getattr(field, "component_count", len(field.component_names))
             )
+            if field.kind == kind and count == width:
+                stream.write('{0}="{1}" '.format(kind, _attribute(field.name)))
+                break
     stream.write(">\n")
     for field in fields:
         write_data_array(stream, field)
@@ -62,7 +68,7 @@ def write_vtu(
     else:
         cell_metadata = tuple(cell_metadata)
     stream.write(
-        '<VTKFile type="UnstructuredGrid" version="1,0" byte_order="LittleEndian">\n'
+        '<VTKFile type="UnstructuredGrid" version="1.0" byte_order="LittleEndian">\n'
         "<UnstructuredGrid>\n"
         '<Piece NumberOfPoints="{0}" NumberOfCells="{1}">\n'.format(
             len(mesh.points), len(mesh.offsets)
@@ -98,7 +104,7 @@ def write_pvd(stream, entries):
     for entry in entries:
         stream.write(
             '<DataSet timestep="{0}" part="{1}" file="{2}"/>\n'.format(
-                entry.timestep, entry.part, entry.filename
+                entry.timestep, entry.part, _attribute(entry.filename)
             )
         )
     stream.write("</Collection>\n</VTKFile>")

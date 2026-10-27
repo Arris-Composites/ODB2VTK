@@ -410,7 +410,7 @@ class ConverterTests(unittest.TestCase):
         self.assertTrue(os.path.isfile(failure.exception.result.paths[0]))
         self.assertFalse(os.path.exists(self.outputs.collection_path))
 
-    def test_legacy_selection_copies_inputs_and_invalidates_prepared_maps(self):
+    def test_legacy_selection_copies_inputs_and_reselection_prepares_new_mesh(self):
         facade = ODB2VTK(
             os.path.join(self.directory.name, "job.odb"), "", source=self.source
         )
@@ -428,13 +428,13 @@ class ConverterTests(unittest.TestCase):
             np.fromstring(points.text, sep=" ").reshape((-1, 3))[:, 1], [0] * 4
         )
         facade.ReadArgs(["B"], {"Step-1": [0]})
-        point_map = {"Scalars": [], "Vectors": [], "Tensors": []}
-        cell_map = {"Scalars": [], "Vectors": [], "Tensors": []}
-        points, _ = facade.WriteFieldOutputData(
-            "TEMP", "Step-1", 0, point_map, cell_map
+        with contextlib.redirect_stdout(io.StringIO()):
+            result = facade.WriteVTUFiles()
+        field = ET.parse(result.frames[0].path).find(
+            'UnstructuredGrid/Piece/PointData/DataArray[@Name="TEMP"]'
         )
         np.testing.assert_array_equal(
-            np.fromstring(ET.fromstring("".join(points)).text, sep=" "),
+            np.fromstring(field.text, sep=" "),
             [103, 101, 104, 102],
         )
 

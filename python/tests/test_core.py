@@ -147,7 +147,7 @@ class WriterTests(unittest.TestCase):
         group = ET.fromstring(stream.getvalue()).find(
             "UnstructuredGrid/Piece/PointData"
         )
-        self.assertEqual(group.attrib["Vectors"], "'U'")
+        self.assertEqual(group.attrib["Vectors"], "U")
 
     def test_vtu_preserves_mesh_fields_components_and_active_attributes(self):
         mesh = MeshData(
@@ -183,10 +183,11 @@ class WriterTests(unittest.TestCase):
         stream = io.StringIO()
         writers.write_vtu(stream, mesh, iter(points), iter(cells))
         root = ET.fromstring(stream.getvalue())
-        self.assertEqual(root.attrib["version"], "1,0")
+        self.assertEqual(root.attrib["version"], "1.0")
         piece = root.find("UnstructuredGrid/Piece")
         self.assertEqual(piece.attrib, {"NumberOfPoints": "2", "NumberOfCells": "1"})
-        self.assertEqual(piece.find("PointData").attrib["Vectors"], "'U','RF'")
+        self.assertEqual(piece.find("PointData").attrib["Vectors"], "U")
+        self.assertNotIn("Tensors", piece.find("CellData").attrib)
         displacement = piece.find("PointData/DataArray")
         self.assertEqual(displacement.attrib["ComponentName2"], "U3")
         np.testing.assert_array_equal(
@@ -219,6 +220,20 @@ class WriterTests(unittest.TestCase):
         self.assertEqual(
             entries[1].attrib, {"timestep": "0.0", "part": "1", "file": "Step-2_0.vtu"}
         )
+
+    def test_xml_attributes_round_trip_special_characters_without_vtk(self):
+        name = 'U & "local" <frame>\nnext\tpart\r'
+        stream = io.StringIO()
+        writers.write_data_array(
+            stream, FieldArray(name, "PointData", "Scalars", (name,), np.zeros((1, 1)))
+        )
+        field = ET.fromstring(stream.getvalue())
+        self.assertEqual(field.attrib["Name"], name)
+        self.assertEqual(field.attrib["ComponentName0"], name)
+        stream = io.StringIO()
+        writers.write_pvd(stream, [CollectionEntry(0, 0, name + ".vtu")])
+        entry = ET.fromstring(stream.getvalue()).find("Collection/DataSet")
+        self.assertEqual(entry.attrib["file"], name + ".vtu")
 
     def test_header_schema(self):
         metadata = {"instances": ["A"], "steps": [["Step-1", ["Step-1-frame-0"]]]}

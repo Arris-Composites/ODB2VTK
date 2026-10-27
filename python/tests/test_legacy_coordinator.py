@@ -116,22 +116,21 @@ class CoordinatorTests(unittest.TestCase):
             self.assertEqual(piece.attrib["NumberOfPoints"], "4")
             self.assertEqual(piece.findall("CellData/DataArray"), [])
 
-    def test_legacy_field_method_delegates_to_the_same_conversion_and_writer(self):
+    def test_single_frame_export_needs_no_construct_map(self):
         source = make_source()
         self.addCleanup(source.close)
-        converter = ODB2VTK("job.odb", "", source=source)
-        converter.ReadArgs(["A"], {"Step-1": [0]})
-        converter.ConstructMap()
-        point_map = {"Scalars": [], "Vectors": [], "Tensors": []}
-        cell_map = {"Scalars": [], "Vectors": [], "Tensors": []}
-        points, cells = converter.WriteFieldOutputData(
-            "TEMP", "Step-1", 0, point_map, cell_map
-        )
-        self.assertEqual(point_map["Scalars"], ["TEMP"])
-        self.assertEqual(cells, [])
-        np.testing.assert_array_equal(
-            np.fromstring(ET.fromstring("".join(points)).text, sep=" "), [3, 1, 4, 2]
-        )
+        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(
+            io.StringIO()
+        ):
+            converter = ODB2VTK(os.path.join(directory, "job.odb"), "", source=source)
+            converter.ReadArgs(["A"], {"Step-1": [0]})
+            result = converter.WriteVTUFile(("Step-1", 0))
+            field = ET.parse(result.frames[0].path).find(
+                'UnstructuredGrid/Piece/PointData/DataArray[@Name="TEMP"]'
+            )
+            np.testing.assert_array_equal(
+                np.fromstring(field.text, sep=" "), [3, 1, 4, 2]
+            )
 
 
 if __name__ == "__main__":

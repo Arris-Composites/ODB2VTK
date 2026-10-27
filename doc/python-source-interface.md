@@ -117,7 +117,7 @@ underlying source. The normal export path does not call these getters.
 part of the normalized interface and is unavailable for an in-memory source.
 Use `converter.close()` or the source's context manager for resource management.
 
-Old raw-field and raw-bulk helper methods remain as delegating compatibility
-methods. They normalize data inside `source.py` before passing numerical arrays
-to conversion functions. The old field-layout helper retains its native position
-token for callers that already use Abaqus constants.
+Phase 5 removed transitional raw-field and raw-bulk helpers. Native normalization
+is private to the source. Use `describe_field` and `field_blocks` for normalized
+reads, or complete `Converter` requests for exports. See the
+[migration table](python-architecture.md#compatibility-and-migration).

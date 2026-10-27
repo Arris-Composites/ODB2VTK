@@ -1,7 +1,7 @@
 """Plain records shared by conversion and serialization modules.
 
 Array storage belongs to the caller. These records do not retain Abaqus objects.
-Named tuples keep the extracted code compatible with older Python runtimes.
+Named tuples provide compact immutable metadata records.
 """
 
 from collections import namedtuple

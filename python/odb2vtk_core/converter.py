@@ -23,9 +23,19 @@ from .outputs import OutputOptions, atomic_output, validate_destinations
 
 MATERIAL_ORIENTATION = "Material_Orientation"
 _PreparedMesh = namedtuple("_PreparedMesh", "instances index mesh")
-_FieldPlan = namedtuple(
-    "_FieldPlan", "name association kind component_names source_name position section"
-)
+
+
+class _FieldPlan(
+    namedtuple(
+        "_FieldPlan",
+        "name association kind component_names source_name position section",
+    )
+):
+    __slots__ = ()
+
+    @property
+    def component_count(self):
+        return len(self.component_names) if self.source_name is not None else 3
 
 
 class Converter(object):
@@ -136,11 +146,9 @@ class Converter(object):
         except Exception as error:
             raise SourceError("Cannot prepare selected mesh: {0}".format(error))
 
-    def _field_plans(
-        self, step, frame, instances, diagnostics, names=None, include_orientation=True
-    ):
+    def _field_plans(self, step, frame, instances, diagnostics):
         plans = []
-        names = self.source.field_names(step, frame) if names is None else names
+        names = self.source.field_names(step, frame)
         for name in names:
             info = self.source.describe_field(step, frame, name, instances)
             layout = info.layout
@@ -189,7 +197,7 @@ class Converter(object):
                             section,
                         )
                     )
-        if include_orientation and "S" in names:
+        if "S" in names:
             plans.append(
                 _FieldPlan(
                     MATERIAL_ORIENTATION, "CellData", "Vectors", (), None, None, None
@@ -222,7 +230,7 @@ class Converter(object):
             name, association, layout.kind, layout.component_names, values
         )
 
-    def _orientation(self, step, frame, prepared, name=MATERIAL_ORIENTATION):
+    def _orientation(self, step, frame, prepared):
         values = np.zeros((prepared.index.cell_count, 4))
         for block in self.source.orientation_blocks(step, frame, prepared.instances):
             place_point_data(
@@ -232,12 +240,16 @@ class Converter(object):
                 values[:, : block.quaternions.shape[1]],
             )
         return FieldArray(
-            name, "CellData", "Vectors", (), quaternions_to_directions(values)
+            MATERIAL_ORIENTATION,
+            "CellData",
+            "Vectors",
+            (),
+            quaternions_to_directions(values),
         )
 
     def _read_plan(self, plan, step, frame, prepared):
         if plan.source_name is None:
-            return self._orientation(step, frame, prepared, plan.name)
+            return self._orientation(step, frame, prepared)
         blocks = (
             block
             for instance in prepared.instances
