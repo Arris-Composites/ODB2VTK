@@ -48,7 +48,9 @@ is published atomically; a request containing several files is not transactional
 Frame export holds the selected mesh and current field processing data, not all
 frames or serialized XML buffers. A frame is written before the next frame is
 read. Source blocks are copied one at a time. Request/result metadata grows with
-the number of selected frames and diagnostics. History export assembles its
+the number of selected frames and diagnostics. The source also caches native
+handles for its current frame; those handles may retain SDK backing buffers
+until frame eviction or closure. History export assembles its
 selected history table in memory; it is not a streaming time-series interface.
 
 ## Supported and validated runtimes
@@ -161,3 +163,5 @@ refactor plus batching against the original branch on the same ODB inputs.
 The subsequent [row-formatting experiment](python-row-format-optimization.md)
 records separate scalar and three-component paths, their combined improvement,
 and exact-output checks against the chunked writer.
+The [current-frame handle cache](python-source-cache-optimization.md) reduces
+native repository lookups and records its source-lifetime and memory tradeoffs.

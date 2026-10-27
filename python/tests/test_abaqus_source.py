@@ -15,6 +15,41 @@ from odb2vtk_core.source import AbaqusSource
     os.environ.get("ODB2VTK_TEST_ODB"), "Set ODB2VTK_TEST_ODB to a compatible ODB"
 )
 class RealAbaqusSourceTests(unittest.TestCase):
+    def test_frame_revisit_preserves_native_field_values(self):
+        with AbaqusSource.open(os.environ["ODB2VTK_TEST_ODB"]) as source:
+            step = next((step for step in source.steps if step.frame_count > 1), None)
+            if step is None:
+                self.skipTest("A frame-revisit check requires at least two frames")
+            instance = source.instance_names[0]
+            names = source.field_names(step.name, 0)
+            name = next(
+                (
+                    name
+                    for name in names
+                    if source.describe_field(
+                        step.name, 0, name, [instance]
+                    ).layout.position
+                    == "NODAL"
+                ),
+                None,
+            )
+            if name is None:
+                self.skipTest("A frame-revisit check requires a nodal field")
+            first = tuple(source.field_blocks(step.name, 0, name, instance, "NODAL"))
+            self.assertTrue(first)
+            source.frame_time(step.name, 1)
+            source.field_names(step.name, 1)
+            if name in source.field_names(step.name, 1):
+                tuple(source.field_blocks(step.name, 1, name, instance, "NODAL"))
+            self.assertEqual(source.field_names(step.name, 0), names)
+            again = tuple(source.field_blocks(step.name, 0, name, instance, "NODAL"))
+            self.assertEqual(len(first), len(again))
+            for original, revisited in zip(first, again):
+                np.testing.assert_array_equal(original.labels, revisited.labels)
+                np.testing.assert_array_equal(original.values, revisited.values)
+        with self.assertRaisesRegex(RuntimeError, "source is closed"):
+            source.field_names(step.name, 0)
+
     def test_real_source_contract_and_snapshot_lifetime(self):
         snapshots = []
         with AbaqusSource.open(os.environ["ODB2VTK_TEST_ODB"]) as source:

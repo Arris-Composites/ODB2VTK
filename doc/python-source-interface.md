@@ -95,6 +95,20 @@ Missing stress leaves material orientation optional. Other source/query failures
 propagate rather than being silently treated as missing stress. Inconsistent
 bulk-data row counts fail at the source with `ValueError`.
 
+## Current-frame handle caching
+
+`AbaqusSource` reuses native frame/repository/field handles for the current frame.
+Selecting a different step/frame evicts those handles and section metadata;
+returning to a previous frame reloads it. Timestamp-only reads do not fetch
+fields. All cached queries still require an open source, and closure evicts
+handles before closing the native ODB, including on failure.
+
+Numerical results remain independent copies. Native handles may retain SDK
+backing buffers until eviction or closure, so source memory can include current
+frame data in addition to the field currently being converted. Reopen after
+external/native edits; the source assumes stable ODB data while open. See the
+[cache benchmark](python-source-cache-optimization.md) for timings and memory.
+
 ## Removed compatibility access
 
 `utilities.py`, `ReadableOdb`, and the `ODB2VTK` facade have been removed.

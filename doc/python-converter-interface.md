@@ -134,7 +134,9 @@ successful publication. Event kinds are `frame_completed`, `collection_completed
 The writer receives field metadata separately from lazy numerical field iterators.
 It writes each field before requesting the next one. Memory holds the selected
 mesh, current numerical processing data, and output/diagnostic metadata, rather
-than arrays for every field or frame. History export assembles its selected table
+than retaining all normalized arrays. The source's current-frame native handle
+cache may retain SDK buffers until frame eviction or closure; see the
+[cache measurements](python-source-cache-optimization.md). History export assembles its selected table
 in memory. See [Phase 5 results](python-phase5-results.md) for measured frame-export
 duration and memory on real and generated ODBs.
 

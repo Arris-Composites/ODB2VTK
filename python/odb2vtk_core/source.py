@@ -96,6 +96,10 @@ class AbaqusSource(object):
     def __init__(self, odb, constants):
         self._odb = odb
         self._constants = constants
+        self._frame_cache_key = None
+        self._frame_cache = None
+        self._field_repository_cache = None
+        self._field_cache = {}
         self._section_cache_key = None
         self._section_cache = {}
 
@@ -116,10 +120,17 @@ class AbaqusSource(object):
     def close(self):
         odb = self._odb
         self._odb = None
-        self._section_cache.clear()
-        self._section_cache_key = None
+        self._clear_frame_cache()
         if odb is not None:
             odb.close()
+
+    def _clear_frame_cache(self):
+        self._field_cache.clear()
+        self._field_repository_cache = None
+        self._frame_cache = None
+        self._frame_cache_key = None
+        self._section_cache.clear()
+        self._section_cache_key = None
 
     def __enter__(self):
         self._require_odb()
@@ -141,7 +152,16 @@ class AbaqusSource(object):
         )
 
     def _frame(self, step, frame):
-        return self._require_odb().steps[step].frames[frame]
+        odb = self._require_odb()
+        # Distinguish 0 from 0.0 so a cache hit cannot bypass native index checks.
+        key = (step, type(frame), frame)
+        if key != self._frame_cache_key:
+            # Drop previous handles even if the next native lookup fails.
+            self._clear_frame_cache()
+            native = odb.steps[step].frames[frame]
+            self._frame_cache = native
+            self._frame_cache_key = key
+        return self._frame_cache
 
     def frame_time(self, step, frame):
         return self._frame(step, frame).frameValue
@@ -166,10 +186,19 @@ class AbaqusSource(object):
         )
 
     def field_names(self, step, frame):
-        return tuple(self._frame(step, frame).fieldOutputs.keys())
+        return tuple(self._fields(step, frame).keys())
+
+    def _fields(self, step, frame):
+        native = self._frame(step, frame)
+        if self._field_repository_cache is None:
+            self._field_repository_cache = native.fieldOutputs
+        return self._field_repository_cache
 
     def _field(self, step, frame, name):
-        return self._frame(step, frame).fieldOutputs[name]
+        fields = self._fields(step, frame)
+        if name not in self._field_cache:
+            self._field_cache[name] = fields[name]
+        return self._field_cache[name]
 
     def _prepare_section_cache(self, key):
         # Retain native section metadata for only the current field query.
