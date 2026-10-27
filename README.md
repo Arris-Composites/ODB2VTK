@@ -68,6 +68,16 @@ project
 
 If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
 
+The numerical conversion and serialization modules in `python/odb2vtk_core` can
+be tested with ordinary Python and NumPy, without an Abaqus installation:
+
+```text
+python -m unittest discover -s python/tests -v
+```
+
+See the [Python refactor plan](doc/python-refactor-plan.md) and
+[Phase 1 results](doc/python-phase1-results.md) for the module design and validation.
+
 ## Build C++ Project by Visual Studio
 
 Cpp folder has the source code for the C++ implemnetation.
