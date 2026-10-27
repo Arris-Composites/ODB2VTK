@@ -28,7 +28,8 @@ def _positive_int(text):
 
 def build_parser(parallel=False):
     parser = argparse.ArgumentParser(
-        description="Convert Abaqus ODB data to VTU, PVD, JSON, and CSV."
+        prog="python -m odb2vtk_core" + (".parallel" if parallel else ""),
+        description="Convert Abaqus ODB data to VTU, PVD, JSON, and CSV.",
     )
     parser.add_argument(
         "--header",

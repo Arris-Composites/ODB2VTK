@@ -15,34 +15,42 @@ If you want to know more about the design of ODB2VTK, checkout this [article](ht
 ## Usage Python
 
 ![](res/odb2vtk_tutorial.gif)
-ODB2VTK is a command line tool which uses Abaqus Python. So Abaqus must be installed to use this tool.
+Run the following commands from the repository's `python` directory (`cd python`
+from the repository root). ODB access requires Abaqus Python. The package entry
+points replace the removed `odb2vtk.py` and `multiprocess.py` scripts; the old
+`ODB2VTK` and `ReadableOdb` library interfaces are no longer supported.
 
-`abaqus python odb2vtk.py --header 1 --odbFile <my_odb_file_path>/my_odb_file.odb`
+For library use, import `AbaqusSource`, `Converter`, `Selection`, and
+`OutputOptions` from `odb2vtk_core`. See the [library guide](doc/python-converter-interface.md).
+From other working directories, set `PYTHONPATH` to the repository's absolute
+`python` directory.
+
+`abaqus python -m odb2vtk_core --header 1 --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 This will open the odb file, extract instances, steps, and frames, and save them into a JSON file in the same directory of the odb file.
 
 ![json_header](res/json_header.png)
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" --step "Step-1:0,1" --odbFile <my_odb_file_path>/my_odb_file.odb`
+`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" --step "Step-1:0,1" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 With 0 passed to header, it will write vtu data for instance "Part-1" at "Step-1" with frame number 0 and 1.
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-2:0,1,2,3,4,5" "Step-3:0,1,2,3" --odbFile <my_odb_file_path>/my_odb_file.odb`
+`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-1:0,1" "Step-2:0,1,2,3,4,5" "Step-3:0,1,2,3" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 The above command will convert frame 0 to 1 in step 1, 0 to 5 in step 2, and 0 to 3 in step 3 for instance "Part-1" and "Part-2".
 
-`python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
+`python -m odb2vtk_core.parallel --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
 The runner first validates the complete request in Abaqus, then converts one frame
 per worker. The two frame conversions below run in parallel; the final collection
 command runs only after both succeed. Use `--jobs 2` to limit concurrency and
 `--writeHistory 1` to export history once after the frame workers finish.
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
+`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
+`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
 
-`abaqus python odb2vtk.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
+`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
 
 The last command will generate a .pvd file.
 Suppose the odb directory looks like this
@@ -55,7 +63,7 @@ project
 
 ```
 
-After `python multiprocess.py --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile ./Job-1.odb` has been executed, we will get
+After `python -m odb2vtk_core.parallel --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile ./Job-1.odb` has been executed, we will get
 
 ```
 
@@ -71,8 +79,9 @@ project
 
 If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
 
-The numerical conversion and serialization modules in `python/odb2vtk_core` can
-be tested with ordinary Python and NumPy, without an Abaqus installation:
+From the repository root, the numerical conversion and serialization modules in
+`python/odb2vtk_core` can be tested with ordinary Python and NumPy, without an
+Abaqus installation:
 
 ```text
 python -m unittest discover -s python/tests -v

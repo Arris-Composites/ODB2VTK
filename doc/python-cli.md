@@ -1,42 +1,45 @@
 # Python CLI and parallel runner
 
-The existing scripts remain the executable entry points:
+Use the package entry points:
 
-- `odb2vtk.py` delegates to `odb2vtk_core.cli.main(argv)` under Abaqus Python.
-- `multiprocess.py` delegates to `odb2vtk_core.parallel.main(argv)` under ordinary
+- `abaqus python -m odb2vtk_core` executes `odb2vtk_core.cli.main(argv)`.
+- `python -m odb2vtk_core.parallel` executes `odb2vtk_core.parallel.main(argv)` under ordinary
   Python, with the Abaqus command available on `PATH`.
 
-Both functions return status codes. The thin scripts translate them to process
+Both functions return status codes. The module entry points translate them to process
 exits. Help and the host parallel coordinator use the standard library; NumPy and
 Abaqus are loaded only when numerical/source operations need them.
 
 ## Commands
 
-Run these from the repository's `python` directory, or use absolute script paths.
+Run these from the repository's `python` directory (`cd python` from the repo
+root). From another directory, put the absolute repository `python` directory on
+`PYTHONPATH` for both the host and Abaqus interpreter. The old standalone scripts
+and library wrappers have been removed; they are not supported aliases.
 Quote paths, step names, instance names, and suffixes containing spaces.
 
 Write header JSON:
 
 ```text
-abaqus python odb2vtk.py --header 1 --odbFile "C:/simulation results/job.odb"
+abaqus python -m odb2vtk_core --header 1 --odbFile "C:/simulation results/job.odb"
 ```
 
 Convert frames and optionally history, without a PVD:
 
 ```text
-abaqus python odb2vtk.py --header 0 --odbFile "C:/simulation results/job.odb" --instance "PART-1-1" --step "Step-1:0,1" --writeHistory 1 --suffix "_selected"
+abaqus python -m odb2vtk_core --header 0 --odbFile "C:/simulation results/job.odb" --instance "PART-1-1" --step "Step-1:0,1" --writeHistory 1 --suffix "_selected"
 ```
 
 Index existing VTUs without converting them:
 
 ```text
-abaqus python odb2vtk.py --header 0 --odbFile "C:/simulation results/job.odb" --instance "PART-1-1" --step "Step-1:0,1" --writePVD 1 --suffix "_selected"
+abaqus python -m odb2vtk_core --header 0 --odbFile "C:/simulation results/job.odb" --instance "PART-1-1" --step "Step-1:0,1" --writePVD 1 --suffix "_selected"
 ```
 
 Convert with at most two Abaqus workers, then export history once and write a PVD:
 
 ```text
-python multiprocess.py --header 0 --odbFile "C:/simulation results/job.odb" --instance "PART-1-1" --step "Step-1:0,1" --jobs 2 --writeHistory 1 --suffix "_parallel"
+python -m odb2vtk_core.parallel --header 0 --odbFile "C:/simulation results/job.odb" --instance "PART-1-1" --step "Step-1:0,1" --jobs 2 --writeHistory 1 --suffix "_parallel"
 ```
 
 The parallel script also supports header-only and PVD-only requests. Its normal
@@ -125,5 +128,6 @@ preserved the original string; overriding native SDK path expansion is outside
 this refactor. Avoid known `%ENV%` sequences in literal ODB input names on that
 installation.
 
-Large-ODB performance and the complete supported Abaqus/Python matrix remain
-Phase 5 work. This implementation was tested with Python 3.10/3.12 and Abaqus 2025.
+See [Phase 5 results](python-phase5-results.md) for duration and memory
+measurements, and the [architecture guide](python-architecture.md) for supported
+runtimes. This implementation was tested with Python 3.10/3.12 and Abaqus 2025.

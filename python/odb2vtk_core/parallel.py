@@ -263,3 +263,7 @@ def main(argv=None, worker_factory=None):
                 file=sys.stderr,
             )
         return 2 if isinstance(error, WorkerError) and error.code == 2 else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

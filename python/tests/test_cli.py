@@ -180,13 +180,14 @@ class CliTests(unittest.TestCase):
         self.assertEqual(result["paths"], [request.outputs.frame_path("Step-1", 0)])
         self.assertTrue(source.closed)
 
-    def test_thin_scripts_support_help_from_another_working_directory(self):
+    def test_module_entrypoints_support_help_from_another_working_directory(self):
         root = Path(__file__).resolve().parents[1]
-        for name in ("odb2vtk.py", "multiprocess.py"):
-            with self.subTest(script=name):
+        for name in ("odb2vtk_core", "odb2vtk_core.parallel"):
+            with self.subTest(module=name):
                 result = subprocess.run(
-                    [sys.executable, str(root / name), "--help"],
+                    [sys.executable, "-m", name, "--help"],
                     cwd=self.directory.name,
+                    env=dict(os.environ, PYTHONPATH=str(root)),
                     capture_output=True,
                     text=True,
                     timeout=20,
@@ -196,17 +197,34 @@ class CliTests(unittest.TestCase):
 
     def test_help_does_not_require_site_packages_or_numpy(self):
         root = Path(__file__).resolve().parents[1]
-        for name in ("odb2vtk.py", "multiprocess.py"):
-            with self.subTest(script=name):
+        for name in ("odb2vtk_core", "odb2vtk_core.parallel"):
+            with self.subTest(module=name):
                 result = subprocess.run(
-                    [sys.executable, "-S", str(root / name), "--help"],
+                    [sys.executable, "-S", "-m", name, "--help"],
                     cwd=self.directory.name,
+                    env=dict(os.environ, PYTHONPATH=str(root)),
                     capture_output=True,
                     text=True,
                     timeout=20,
                 )
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertIn("--odbFile", result.stdout)
+
+    def test_module_entrypoints_return_argument_error_status_without_numpy(self):
+        root = Path(__file__).resolve().parents[1]
+        for name in ("odb2vtk_core", "odb2vtk_core.parallel"):
+            with self.subTest(module=name):
+                result = subprocess.run(
+                    [sys.executable, "-S", "-m", name, "--unknown"],
+                    cwd=self.directory.name,
+                    env=dict(os.environ, PYTHONPATH=str(root)),
+                    capture_output=True,
+                    text=True,
+                    timeout=20,
+                )
+                self.assertEqual(result.returncode, 2, result.stderr)
+                self.assertIn("python -m " + name, result.stderr)
+                self.assertNotIn("Traceback", result.stderr)
 
 
 if __name__ == "__main__":

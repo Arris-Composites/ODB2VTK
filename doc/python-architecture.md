@@ -21,7 +21,6 @@ for both scripts.
 | `errors` | Selection, source, output, and partial-completion errors |
 | `cli` | Shared argument handling, execution, and worker receipts |
 | `parallel` | Bounded subprocess scheduling and verified aggregation |
-| `legacy` | Supported historical library calls delegated to `Converter` |
 
 Dependencies flow from the entry points through orchestration to the source and
 plain-data modules. Only `source.py` imports Abaqus modules in production code.
@@ -70,37 +69,39 @@ Python 2 is unsupported. The old README's Abaqus 2023 note describes the
 historical release; the refactored Python exporter has not been validated with
 Abaqus 2023 or its Python runtime. The ODB must be readable by the installed SDK;
 upgrade a copy when required. Ordinary Python cannot open native ODB files by
-installing NumPy alone. The host of `multiprocess.py` needs Python 3.10–3.12 but
+installing NumPy alone. The host of `python -m odb2vtk_core.parallel` needs Python 3.10–3.12 but
 does not need NumPy; workers run in Abaqus Python. VTK is optional validation
 tooling and is never imported by the converter.
 
-## Compatibility and migration
+## Interface migration
 
-Both executable filenames and documented flags remain supported. Existing
-`ODB2VTK` callers retain construction, context management, `close`, `source`,
-`odb`, `ReadArgs`, `ExtractHeader`, `WriteVTUFiles`, `WriteVTUFile`,
-`WritePVDFile`, `WriteCSVFILE`, and `GetExportFileName`.
-`utilities.ReadableOdb` remains available for native compatibility access.
+The old Python interface has been abandoned. `python/odb2vtk.py`,
+`python/multiprocess.py`, `python/utilities.py`, `odb2vtk_core/legacy.py`, and
+`source.ReadableOdb` have been removed. No aliases or deprecation wrappers remain.
+The original five-phase work kept compatibility temporarily; that requirement
+was explicitly retired after Phase 5.
 
-`ConstructMap` remains callable for old workflows, but now validates the request
-without caching mesh state. Each export prepares its own mesh. Code that relied
-on inspecting or mutating old internal maps must migrate to complete requests.
-
-Phase 5 removes transitional implementation helpers. This is an intentional
-change for undocumented low-level callers, not a claim of full compatibility
-with every former method:
-
-| Removed helper | Migration |
+| Former use | Supported replacement |
 | --- | --- |
-| `WriteFieldOutputData`, `WriteDataArray`, `WriteDataArrayWithSectionPoints`, `WriteLocalCS` | Use `Converter.export_frames`; serialization consumes plain `FieldArray` records internally |
-| `WriteSortedPointData`, `WriteSortedCellData` | Use `export_frames`; pure mapping functions live in `fields.py` for internal numerical work |
-| `ABAQUS_VTK_CELL_MAP` | Internal `mesh.vtk_cell_type` raises `ValueError` instead of exiting |
-| `ABAQUS_VTK_FIELDOUPUTS_MAP`, `source.legacy_field_layout`, `source.legacy_field_blocks`, `source.normalize_bulk_blocks` | Use the normalized source's `describe_field` and `field_blocks`; native normalization is private |
+| `abaqus python odb2vtk.py ...` | `abaqus python -m odb2vtk_core ...` |
+| `python multiprocess.py ...` | `python -m odb2vtk_core.parallel ...` |
+| `ODB2VTK(path, suffix)` | Open `AbaqusSource` in a context, then construct `Converter(source)` |
+| `ReadArgs` / `ConstructMap` | Create immutable `Selection` and `OutputOptions`; pass them directly to an export operation |
+| `ExtractHeader` | `export_header(outputs)` |
+| `WriteVTUFiles` / `WriteVTUFile` | `export_frames(selection, outputs)`; select one frame for a single-file request |
+| `WritePVDFile` | `export_collection(selection, outputs)` for existing VTUs, or use `write_pvd=True` during frame export |
+| `WriteCSVFILE` | `export_history(selection, outputs)` |
+| `ReadableOdb` native getters | Normalized `AbaqusSource` reads documented in the source guide |
+| `GetExportFileName` | `OutputOptions` destination properties and `frame_path` |
 
-Do not recreate calls into private converter methods. New callers should use
-the four public exports; plain-data functions are implementation interfaces
-covered by focused numerical tests, rather than a replacement compatibility
-surface for raw Abaqus objects.
+Run module commands from the repository's `python` directory, or add that
+directory to `PYTHONPATH`. Command options, output naming, and file formats are
+unchanged by this interface removal. The converter borrows its source: it does
+not close it or act as a context manager. Source contexts own resource cleanup.
+
+Raw field/bulk helpers and mapping functions from the former interface also
+remain removed. Numerical helpers in `mesh.py` and `fields.py` are internal
+plain-data functions, not replacements for raw native-object access.
 
 ## Intentional XML corrections
 
@@ -139,15 +140,14 @@ abaqus python python/validation/create_benchmark_odb.py C:/temp/scaling.odb 1000
 abaqus python python/validation/benchmark_exports.py --odb C:/temp/scaling.odb --instance PART-1-1 --frames 0,1,2,3 --suffix _current --report C:/temp/current.json
 ```
 
-The generator refuses to overwrite an existing ODB. To compare against the saved
-pre-refactor implementation, add `--baseline-dir DIRECTORY` containing
-`baseline_odb2vtk.py` and its original `utilities.py`. Phase 0 refers to the
-snapshot after the two original correctness fixes, not to a new historical
-timing measurement. Run each sample in a fresh process, alternate baseline and
-current order, keep database/frame selections identical, and compare medians.
-The benchmark excludes imports and SDK startup equally for both implementations;
-it includes opening, mesh preparation, frame writing, and closure. Peak RSS
-includes interpreter/SDK memory and native allocations, not just NumPy arrays.
+The generator refuses to overwrite an existing ODB. Run each benchmark sample
+in a fresh process with identical database/frame selections and compare medians.
+The current benchmark accepts complete requests using only the new interface.
+Timing excludes imports/SDK startup and includes opening, mesh preparation,
+frame writing, and closure. Peak RSS includes interpreter/SDK memory and native
+allocations, not just NumPy arrays. The historical baseline comparison tooling
+and old interface are available in commit `8f0d58e`; the recorded Phase 5 samples
+refer to that snapshot, not to a compatibility mode in the current package.
 
 See [Phase 5 results](python-phase5-results.md) for the recorded comparisons,
 performance tradeoffs, and remaining validation limits.

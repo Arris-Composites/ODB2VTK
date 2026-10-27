@@ -1,15 +1,13 @@
 """Run once in a fresh Abaqus Python process; no timing assertions in CI.
 
-Compare the current exporter with a saved pre-refactor module and its utilities.
+Measure complete export requests using the supported package interface.
 Timing excludes imports/SDK startup, includes open, map construction and VTUs.
 Peak RSS includes imports/SDK, and is not a Python allocation measurement.
 """
 
 import argparse
-import contextlib
 import ctypes
 import importlib
-import io
 import json
 import os
 from pathlib import Path
@@ -57,40 +55,24 @@ def main():
     parser.add_argument("--step", default="Step-1")
     parser.add_argument("--frames", default="0,1")
     parser.add_argument("--suffix", required=True)
-    parser.add_argument("--baseline-dir")
     parser.add_argument("--report", required=True)
     args = parser.parse_args()
     frames = tuple(int(value) for value in args.frames.split(","))
-    if args.baseline_dir:
-        sys.path.insert(0, args.baseline_dir)
-        module = importlib.import_module("baseline_odb2vtk")
-    else:
-        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-        from odb2vtk_core import AbaqusSource, Converter, OutputOptions, Selection
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from odb2vtk_core import AbaqusSource, Converter, OutputOptions, Selection
 
-    # The old module imports the SDK eagerly; the new adapter imports it lazily.
-    # Warm both explicitly so neither import policy biases export-only timing.
+    # Exclude lazy SDK imports from export-only timing.
     importlib.import_module("odbAccess")
     importlib.import_module("abaqusConstants")
     start_peak = peak_rss()
     start = time.perf_counter()
-    with contextlib.redirect_stdout(io.StringIO()):
-        if args.baseline_dir:
-            converter = module.ODB2VTK(args.odb, args.suffix)
-            try:
-                converter.ReadArgs([args.instance], {args.step: frames})
-                converter.ConstructMap()
-                converter.WriteVTUFiles()
-            finally:
-                converter.odb.odb.close()
-        else:
-            with AbaqusSource.open(args.odb) as source:
-                Converter(source).export_frames(
-                    Selection([args.instance], {args.step: frames}),
-                    OutputOptions.from_odb(args.odb, args.suffix, write_pvd=False),
-                )
+    with AbaqusSource.open(args.odb) as source:
+        Converter(source).export_frames(
+            Selection([args.instance], {args.step: frames}),
+            OutputOptions.from_odb(args.odb, args.suffix, write_pvd=False),
+        )
     result = dict(
-        implementation="baseline" if args.baseline_dir else "current",
+        implementation="current",
         odb=args.odb,
         frames=len(frames),
         seconds=time.perf_counter() - start,

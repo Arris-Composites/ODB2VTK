@@ -1,6 +1,11 @@
 # Python exporter refactor plan
 
-Status: Phases 1 through 5 completed on 2026-10-26.
+Status: Phases 1 through 5 completed on 2026-10-26. Following Phase 5, the user
+explicitly retired the old interface. The standalone script shims, `legacy.py`,
+and `ReadableOdb` were removed; package commands and the new library interface
+are now the only supported entry points. Original phase checklists below record
+the compatibility decisions at the time; they do not require keeping wrappers.
+See [interface migration](python-architecture.md#interface-migration).
 See [Phase 1 results](python-phase1-results.md),
 [Phase 2 results](python-phase2-results.md),
 [Phase 3 results](python-phase3-results.md),
@@ -21,8 +26,10 @@ testable changes, with the existing scripts continuing to work between phases.
 
 ## Scope and compatibility
 
-- Refactor `python/odb2vtk.py` and `python/utilities.py`.
-- Keep `python/odb2vtk.py` and `python/multiprocess.py` as executable entry points.
+- Maintain the `python/odb2vtk_core` package; old standalone scripts and wrappers
+  have been removed.
+- Use `abaqus python -m odb2vtk_core` and `python -m odb2vtk_core.parallel` as
+  executable entry points.
 - Update the parallel runner where integration requires it; broader process
   management improvements are a separate work item.
 - Preserve documented flags, selected-instance behavior, output names, suffixes,
@@ -65,11 +72,10 @@ Use a package name that does not conflict with the existing entry-point script:
 
 ```text
 python/
-  odb2vtk.py                  # Existing executable; delegates to cli.main
-  multiprocess.py             # Existing parallel executable
-  utilities.py                # Temporary compatibility shim, if needed
   odb2vtk_core/
     __init__.py               # Small supported library interface
+    __main__.py               # python -m odb2vtk_core
+    parallel.py               # python -m odb2vtk_core.parallel
     models.py                 # Selection and explicit data contracts
     source.py                 # AbaqusSource and its resource lifecycle
     mesh.py                   # Mesh indexing and element mapping
@@ -352,7 +358,7 @@ all at once would obscure whether the architectural migration preserves behavior
 - [x] Writers have no source queries or Abaqus dependencies.
 - [x] Export callers do not need to build maps or manipulate internal state.
 - [x] Existing regression scenarios pass through the resulting interfaces.
-- [x] Documented script commands and the parallel runner remain usable.
+- [x] Documented package commands and the parallel runner remain usable.
 - [x] Existing schemas and supported numerical results are preserved, with any
       intentional behavior corrections documented separately.
 - [x] Compatible real-ODB exports have passed semantic integration checks.

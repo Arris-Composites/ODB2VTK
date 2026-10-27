@@ -36,11 +36,11 @@ class ImportTests(unittest.TestCase):
             "sys.path.insert(0, {0!r})\n"
             "class BlockAbaqus(importlib.abc.MetaPathFinder):\n"
             "    def find_spec(self, fullname, *args):\n"
-            '        if fullname in ("odbAccess", "abaqusConstants", "utilities"):\n'
+            '        if fullname in ("odbAccess", "abaqusConstants"):\n'
             "            raise ImportError(fullname)\n"
             "sys.meta_path.insert(0, BlockAbaqus())\n"
             "from odb2vtk_core import models, mesh, fields, history, writers, source\n"
-            "import odb2vtk\n"
+            "from odb2vtk_core import AbaqusSource, Converter, Selection, OutputOptions\n"
         ).format(PYTHON_DIR)
         result = subprocess.run(
             [sys.executable, "-c", code], capture_output=True, text=True

@@ -138,14 +138,14 @@ than arrays for every field or frame. History export assembles its selected tabl
 in memory. See [Phase 5 results](python-phase5-results.md) for measured frame-export
 duration and memory on real and generated ODBs.
 
-## Compatibility
+## Package entry points
 
-`odb2vtk.ODB2VTK` now re-exports the facade in `odb2vtk_core/legacy.py`. Existing
-documented scripts, source ownership, header mode, suffixes, and schemas remain
-supported. `ReadArgs` snapshots inputs, and `ConstructMap` is optional for exports.
-`ConstructMap` now only validates the request; no mesh cache survives selection
-changes. Phase 5 removed transitional raw-data helpers; see the explicit
-[migration table](python-architecture.md#compatibility-and-migration).
+The old `ODB2VTK` and `ReadableOdb` interfaces and standalone Python scripts
+have been removed. Import the four public exports from `odb2vtk_core` for
+library use. From the repository's `python` directory, run
+`abaqus python -m odb2vtk_core` for direct conversion or
+`python -m odb2vtk_core.parallel` for the host runner. See the
+[migration guide](python-architecture.md#interface-migration).
 
 PVD-only export now uses `export_collection(selection, outputs)`, which requires
 all referenced VTUs to exist. `validate_frames`, `validate_history`, and

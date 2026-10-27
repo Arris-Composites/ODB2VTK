@@ -15,7 +15,6 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from odb2vtk import ODB2VTK
 from odb2vtk_core import Converter, OutputOptions, Selection
 from odb2vtk_core import writers
 from odb2vtk_core.errors import ExportFailure, OutputError, SelectionError, SourceError
@@ -410,26 +409,21 @@ class ConverterTests(unittest.TestCase):
         self.assertTrue(os.path.isfile(failure.exception.result.paths[0]))
         self.assertFalse(os.path.exists(self.outputs.collection_path))
 
-    def test_legacy_selection_copies_inputs_and_reselection_prepares_new_mesh(self):
-        facade = ODB2VTK(
-            os.path.join(self.directory.name, "job.odb"), "", source=self.source
-        )
+    def test_selection_copies_inputs_and_reselection_prepares_new_mesh(self):
+        converter = Converter(self.source)
         instances, frames = ["A"], [0]
-        facade.ReadArgs(instances, {"Step-1": frames})
-        facade.ConstructMap()
+        selection = Selection(instances, {"Step-1": frames})
         instances[:] = ["B"]
         frames[:] = [99]
-        with contextlib.redirect_stdout(io.StringIO()):
-            result = facade.WriteVTUFiles()
+        result = converter.export_frames(selection, self.outputs)
         points = ET.parse(result.frames[0].path).find(
             "UnstructuredGrid/Piece/Points/DataArray"
         )
         np.testing.assert_array_equal(
             np.fromstring(points.text, sep=" ").reshape((-1, 3))[:, 1], [0] * 4
         )
-        facade.ReadArgs(["B"], {"Step-1": [0]})
-        with contextlib.redirect_stdout(io.StringIO()):
-            result = facade.WriteVTUFiles()
+        selection = Selection(["B"], {"Step-1": [0]})
+        result = converter.export_frames(selection, self.outputs)
         field = ET.parse(result.frames[0].path).find(
             'UnstructuredGrid/Piece/PointData/DataArray[@Name="TEMP"]'
         )

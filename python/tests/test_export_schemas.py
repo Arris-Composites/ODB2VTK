@@ -1,8 +1,6 @@
 """Export characterization through a normally constructed, injected source."""
 
-import contextlib
 import csv
-import io
 import json
 import os
 import sys
@@ -14,26 +12,21 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from odb2vtk import ODB2VTK
+from odb2vtk_core import Converter, OutputOptions, Selection
 from support import make_source
 
 
-class CoordinatorTests(unittest.TestCase):
+class ExportSchemaTests(unittest.TestCase):
     def test_exports_preserve_selection_sections_centroid_queries_and_schemas(self):
         source = make_source()
         self.addCleanup(source.close)
-        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(
-            io.StringIO()
-        ):
-            converter = ODB2VTK(
-                os.path.join(directory, "job.odb"), "_case", source=source
-            )
-            converter.ReadArgs(["A", "B"], {"Step-1": [0]})
-            converter.ConstructMap()
-            converter.ExtractHeader()
-            converter.WriteVTUFiles()
-            converter.WritePVDFile()
-            converter.WriteCSVFILE()
+        with tempfile.TemporaryDirectory() as directory:
+            converter = Converter(source)
+            selection = Selection(["A", "B"], {"Step-1": [0]})
+            outputs = OutputOptions(directory, "job", "_case")
+            converter.export_header(outputs)
+            converter.export_frames(selection, outputs)
+            converter.export_history(selection, outputs)
             output = os.path.join(directory, "job_case")
             piece = ET.parse(os.path.join(output, "Step-1_0.vtu")).find(
                 "UnstructuredGrid/Piece"
@@ -103,28 +96,23 @@ class CoordinatorTests(unittest.TestCase):
     def test_missing_stress_keeps_orientation_optional(self):
         source = make_source(include_stress=False)
         self.addCleanup(source.close)
-        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(
-            io.StringIO()
-        ):
-            converter = ODB2VTK(os.path.join(directory, "job.odb"), "", source=source)
-            converter.ReadArgs(["A"], {"Step-1": [0]})
-            converter.ConstructMap()
-            converter.WriteVTUFiles()
+        with tempfile.TemporaryDirectory() as directory:
+            Converter(source).export_frames(
+                Selection(["A"], {"Step-1": [0]}), OutputOptions(directory, "job")
+            )
             piece = ET.parse(os.path.join(directory, "job", "Step-1_0.vtu")).find(
                 "UnstructuredGrid/Piece"
             )
             self.assertEqual(piece.attrib["NumberOfPoints"], "4")
             self.assertEqual(piece.findall("CellData/DataArray"), [])
 
-    def test_single_frame_export_needs_no_construct_map(self):
+    def test_single_frame_export_requires_only_a_complete_request(self):
         source = make_source()
         self.addCleanup(source.close)
-        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(
-            io.StringIO()
-        ):
-            converter = ODB2VTK(os.path.join(directory, "job.odb"), "", source=source)
-            converter.ReadArgs(["A"], {"Step-1": [0]})
-            result = converter.WriteVTUFile(("Step-1", 0))
+        with tempfile.TemporaryDirectory() as directory:
+            result = Converter(source).export_frames(
+                Selection(["A"], {"Step-1": [0]}), OutputOptions(directory, "job")
+            )
             field = ET.parse(result.frames[0].path).find(
                 'UnstructuredGrid/Piece/PointData/DataArray[@Name="TEMP"]'
             )

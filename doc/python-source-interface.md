@@ -6,42 +6,30 @@ ordinary Python tests. Both satisfy the contract below.
 
 ## Ownership and construction
 
-Let the converter open and own the database:
+The caller opens and owns the source; the converter borrows it:
 
 ```python
-from odb2vtk import ODB2VTK
+from odb2vtk_core import AbaqusSource, Converter, OutputOptions, Selection
 
-with ODB2VTK(odb_path, "") as converter:
-    converter.ReadArgs(["PART-1-1"], {"Step-1": [0, 1]})
-    converter.ConstructMap()
-    converter.WriteVTUFiles()
-```
-
-Or open a source separately and lend it to the converter:
-
-```python
-from odb2vtk import ODB2VTK
-from odb2vtk_core import AbaqusSource
+selection = Selection(["PART-1-1"], {"Step-1": [0, 1]})
+outputs = OutputOptions.from_odb(odb_path)
 
 with AbaqusSource.open(odb_path) as source:
-    with ODB2VTK(odb_path, "", source=source) as converter:
-        converter.ReadArgs(["PART-1-1"], {"Step-1": [0, 1]})
-        converter.ConstructMap()
-        converter.WriteVTUFiles()
-    # The converter leaves a borrowed source open.
+    converter = Converter(source)
+    converter.export_frames(selection, outputs)
+    # Export leaves the source open for subsequent operations.
     names = source.instance_names
+# The source context closes the native ODB, including on export failure.
 ```
 
-These examples retain the legacy facade's setup calls for compatibility.
-New code can use the [converter interface](python-converter-interface.md) without
-map construction. The injected dependency is exposed through the read-only
-`converter.source` property. The legacy facade's `converter.close()`
-closes only a source opened by the converter. A separately opened source remains
-under the caller's ownership.
+The injected dependency is exposed through the read-only `converter.source`
+property. The converter does not open or close it and is not a context manager.
+Use a source context or explicitly call `source.close()` in a `finally` block.
+No separate map-construction call is needed.
 
 `AbaqusSource.open(path, read_only=True)` loads Abaqus modules lazily. Importing
-the source, numerical modules, compatibility shim, or exporter works in ordinary
-Python with NumPy installed. Opening a real database requires Abaqus Python.
+the package and its numerical modules works in ordinary Python with NumPy
+installed. Opening a real database requires Abaqus Python.
 
 The source constructor also accepts an already-open native ODB handle and its
 constants module. This transfers ownership of that handle to the source and lets
@@ -107,17 +95,9 @@ Missing stress leaves material orientation optional. Other source/query failures
 propagate rather than being silently treated as missing stress. Inconsistent
 bulk-data row counts fail at the source with `ValueError`.
 
-## Legacy access
+## Removed compatibility access
 
-`utilities.ReadableOdb` re-exports the compatibility class from `source.py`. Its
-legacy getters retain native return types; their resource lifetime follows the
-underlying source. The normal export path does not call these getters.
-
-`converter.odb` provides this compatibility view for an `AbaqusSource`. It is not
-part of the normalized interface and is unavailable for an in-memory source.
-Use `converter.close()` or the source's context manager for resource management.
-
-Phase 5 removed transitional raw-field and raw-bulk helpers. Native normalization
-is private to the source. Use `describe_field` and `field_blocks` for normalized
-reads, or complete `Converter` requests for exports. See the
-[migration table](python-architecture.md#compatibility-and-migration).
+`utilities.py`, `ReadableOdb`, and the `ODB2VTK` facade have been removed.
+Native ODB handles and forwarding getters are not part of the supported
+interface. Use normalized reads described above, or complete `Converter`
+requests. See the [migration guide](python-architecture.md#interface-migration).

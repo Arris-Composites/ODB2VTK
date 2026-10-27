@@ -1,4 +1,4 @@
-"""CLI statuses, resource lifetime, and thin executable delegation."""
+"""CLI statuses, resource lifetime, and package execution."""
 
 import contextlib
 import io
@@ -143,10 +143,9 @@ class CliSourceLifetimeTests(unittest.TestCase):
         self.assertTrue(source.closed)
 
     def test_entrypoint_uses_main_return_code(self):
-        script = os.path.join(os.path.dirname(os.path.dirname(__file__)), "odb2vtk.py")
         with patch("odb2vtk_core.cli.main", return_value=7) as cli_main:
             with self.assertRaises(SystemExit) as result:
-                runpy.run_path(script, run_name="__main__")
+                runpy.run_module("odb2vtk_core", run_name="__main__")
         self.assertEqual(result.exception.code, 7)
         cli_main.assert_called_once_with()
 

@@ -1,7 +1,5 @@
 """Shared source contracts and ownership tests without Abaqus import stubs."""
 
-import contextlib
-import io
 import os
 import sys
 import tempfile
@@ -12,9 +10,9 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from odb2vtk import ODB2VTK
+from odb2vtk_core import Converter, OutputOptions, Selection
 from odb2vtk_core.models import SectionPoint
-from odb2vtk_core.source import AbaqusSource, ReadableOdb
+from odb2vtk_core.source import AbaqusSource
 from odb2vtk_core.errors import SelectionError
 from support import CONSTANTS, NativeOdb, make_source
 
@@ -148,84 +146,59 @@ class AbaqusSourceContractTests(SourceContract, unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "matching lengths"):
             list(self.source.field_blocks("Step-1", 0, "U", "A", "NODAL"))
 
-    def test_native_compatibility_reader_borrows_the_source(self):
-        reader = ReadableOdb.from_source(self.source)
-        self.assertEqual(tuple(reader.getInstancesKeys), ("A", "B"))
-        self.assertEqual(reader.getNodes("A")[0].label, 3)
-        self.assertEqual(reader.getFrame("Step-1", 0).frameValue, 0.5)
-        reader.close()
-        self.assertFalse(self.source.closed)
-        self.source.close()
-        with self.assertRaisesRegex(RuntimeError, "source is closed"):
-            reader.getNodes("A")
-
-    def test_native_compatibility_constructor_owns_its_source(self):
-        with patch.object(AbaqusSource, "open", return_value=self.source) as factory:
-            with ReadableOdb("job.odb") as reader:
-                self.assertEqual(reader.getNodes("A")[0].label, 3)
-                self.assertFalse(self.source.closed)
-        factory.assert_called_once_with("job.odb", read_only=True)
-        reader.close()
-        self.assertEqual(self.handle.close_calls, 1)
-        with self.assertRaises(TypeError):
-            ReadableOdb.from_source(None)
-
 
 class ConverterOwnershipTests(unittest.TestCase):
-    def test_owned_source_closes_after_success(self):
+    def test_source_context_closes_after_success(self):
         source = make_source()
         with patch.object(AbaqusSource, "open", return_value=source) as factory:
-            with ODB2VTK("job.odb", "") as converter:
+            with AbaqusSource.open("job.odb") as owned:
+                converter = Converter(owned)
                 self.assertIs(converter.source, source)
-                self.assertFalse(source.closed)
+                self.assertEqual(converter.inspect()["instances"], ["A", "B"])
             factory.assert_called_once_with("job.odb")
-        converter.close()
         self.assertTrue(source.closed)
         self.assertEqual(source.close_calls, 1)
 
     def test_source_dependency_cannot_be_reassigned(self):
-        source = make_source()
-        self.addCleanup(source.close)
-        converter = ODB2VTK("job.odb", "", source=source)
-        with self.assertRaises(AttributeError):
-            converter.source = make_source()
+        with make_source() as source, make_source() as other:
+            converter = Converter(source)
+            with self.assertRaises(AttributeError):
+                converter.source = other
 
-    def test_owned_source_closes_after_export_failure(self):
+    def test_source_context_closes_after_selection_failure(self):
         source = make_source()
-        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(
-            io.StringIO()
-        ):
-            with patch.object(AbaqusSource, "open", return_value=source):
-                with self.assertRaises(SelectionError):
-                    with ODB2VTK(os.path.join(directory, "job.odb"), "") as converter:
-                        converter.ReadArgs(["UNKNOWN"], {"Step-1": [0]})
-                        converter.ConstructMap()
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(SelectionError):
+                with source:
+                    Converter(source).export_frames(
+                        Selection(["UNKNOWN"], {"Step-1": [0]}),
+                        OutputOptions(directory, "job"),
+                    )
         self.assertTrue(source.closed)
         self.assertEqual(source.close_calls, 1)
 
-    def test_owned_source_closes_on_system_exit(self):
+    def test_source_context_closes_on_system_exit(self):
         source = make_source()
-        with patch.object(AbaqusSource, "open", return_value=source):
-            with self.assertRaises(SystemExit):
-                with ODB2VTK("job.odb", ""):
-                    raise SystemExit(1)
+        with self.assertRaises(SystemExit):
+            with source:
+                Converter(source).inspect()
+                raise SystemExit(1)
         self.assertTrue(source.closed)
 
-    def test_injected_source_remains_caller_owned_on_success_and_failure(self):
+    def test_converter_leaves_source_caller_owned_on_success_and_failure(self):
         for fail in (False, True):
-            source = make_source()
-            self.addCleanup(source.close)
-            try:
-                with ODB2VTK("job.odb", "", source=source) as converter:
-                    if fail:
-                        raise ValueError("caller handles this")
-            except ValueError:
-                pass
-            converter.close()
-            self.assertFalse(source.closed)
-            self.assertEqual(source.close_calls, 0)
-            with source:
-                self.assertEqual(source.instance_names, ("A", "B"))
+            with make_source() as source:
+                converter = Converter(source)
+                if fail:
+                    with self.assertRaises(SelectionError):
+                        converter.validate_frames(
+                            Selection(["UNKNOWN"], {"Step-1": [0]}),
+                            OutputOptions(".", "job"),
+                        )
+                else:
+                    converter.inspect()
+                self.assertFalse(source.closed)
+                self.assertEqual(source.close_calls, 0)
             self.assertTrue(source.closed)
 
 

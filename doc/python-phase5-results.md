@@ -1,5 +1,12 @@
 # Phase 5 results: cleanup and design verification
 
+Historical record for commit `8f0d58e`. After Phase 5, the user explicitly
+abandoned the old interface. The script shims, facade, and native compatibility
+reader described here have since been removed. Use the current
+[migration guide](python-architecture.md#interface-migration) and
+[package commands](python-cli.md). Baseline benchmark reproduction uses the
+tooling at that recorded commit, not a current compatibility mode.
+
 Completed on 2026-10-26. The five-phase Python refactor is complete within the
 [plan's scope](python-refactor-plan.md). Source lifetime, immutable requests,
 plain-data conversion, streaming writers, shared CLI behavior, and worker
