@@ -1,23 +1,36 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.20)
+project(ODB2VTK LANGUAGES CXX)
 
-project(ODB2VTK)
+include(CTest)
+option(ODB2VTK_BUILD_NATIVE "Build the Abaqus executable and native smoke test" OFF)
+set(ODB2VTK_TEST_ODB "" CACHE FILEPATH "Compatible ODB for the native smoke test")
 
-include(GNUInstallDirs)
+add_library(odb2vtk_core STATIC core/mesh.cpp)
+target_include_directories(odb2vtk_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_features(odb2vtk_core PUBLIC cxx_std_17)
+set_target_properties(odb2vtk_core PROPERTIES CXX_EXTENSIONS OFF)
 
-if(WIN32)
-    add_definitions(-D_WINDOWS_SOURCE)
-    # Or for a specific target:
-    # target_compile_definitions(MyExecutable PRIVATE -D_WINDOWS_SOURCE)
+if(BUILD_TESTING)
+  add_executable(odb2vtk_core_tests tests/test_mesh.cpp)
+  target_link_libraries(odb2vtk_core_tests PRIVATE odb2vtk_core)
+  add_test(NAME core.mesh COMMAND odb2vtk_core_tests)
 endif()
 
-# find Abaqus SDK
-list(INSERT CMAKE_MODULE_PATH 0
-${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-
-find_package(AbqSDK)
-
-set(SOURCES main.cpp odb2vtk.cpp)
-set(HEADERS odb2vtk.h)
-
-add_executable(ODB2VTK ${SOURCES} ${HEADERS})
-target_link_libraries(ODB2VTK ${ABQ_LIB_TARGETS})
+if(ODB2VTK_BUILD_NATIVE)
+  list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+  find_package(AbqSDK REQUIRED)
+  add_executable(ODB2VTK main.cpp odb2vtk.cpp odb2vtk.h)
+  target_link_libraries(ODB2VTK PRIVATE odb2vtk_core AbqSDK::Odb)
+  if(BUILD_TESTING)
+    add_executable(odb2vtk_sdk_smoke tests/sdk_smoke.cpp)
+    target_link_libraries(odb2vtk_sdk_smoke PRIVATE AbqSDK::Odb)
+    target_compile_features(odb2vtk_sdk_smoke PRIVATE cxx_std_17)
+    if(ODB2VTK_TEST_ODB)
+      if(NOT EXISTS "${ODB2VTK_TEST_ODB}")
+        message(FATAL_ERROR "ODB2VTK_TEST_ODB does not exist: ${ODB2VTK_TEST_ODB}")
+      endif()
+      add_test(NAME native.open_close COMMAND odb2vtk_sdk_smoke "${ODB2VTK_TEST_ODB}")
+      set_tests_properties(native.open_close PROPERTIES LABELS "native" TIMEOUT 60)
+    endif()
+  endif()
+endif()

@@ -1,0 +1,410 @@
+{
+  "date": "2026-10-27",
+  "python_reference_commit": "0fe548c",
+  "phase": 1,
+  "status": "Build/test foundation complete; full C++ parity pending",
+  "platform": {
+    "os": "Windows x64",
+    "cmake": "4.0.2",
+    "visual_studio": "2022 17.11",
+    "msvc": "19.41.34120",
+    "windows_sdk": "10.0.22000.0",
+    "abaqus": "2025 HF1",
+    "language": "C++17",
+    "configuration": "Release"
+  },
+  "build": {
+    "pure": true,
+    "native": true,
+    "missing_sdk_fails": true,
+    "pure_cache_has_no_sdk_discovery": true,
+    "pure_executable_has_no_sdk_dll_imports": true,
+    "direct_sdk_libraries": [
+      "ABQSMAOdbApi",
+      "ABQSMAOdbCore",
+      "ABQSMABasCoreUtils",
+      "ABQSMABasAlloc",
+      "ABQSMABasShared"
+    ]
+  },
+  "tests": {
+    "pure_ctest": {
+      "passed": 1,
+      "mapping_cases": 18
+    },
+    "native_ctest": {
+      "passed": 2
+    },
+    "comparison_controls": {
+      "passed": 7
+    }
+  },
+  "sdk_smoke": {
+    "fixtures": [
+      {
+        "fixture": "Job-1",
+        "metadata": {
+          "instances": [
+            "L-SHAPE-PART-1"
+          ],
+          "steps": [
+            {
+              "name": "Step-1",
+              "frame_count": 2
+            }
+          ],
+          "closed": true
+        },
+        "input_unchanged": true
+      },
+      {
+        "fixture": "2d_planar",
+        "metadata": {
+          "instances": [
+            "PART-1-1"
+          ],
+          "steps": [
+            {
+              "name": "Step-1",
+              "frame_count": 2
+            }
+          ],
+          "closed": true
+        },
+        "input_unchanged": true
+      }
+    ],
+    "missing_arguments_status": 2,
+    "missing_odb_status": 1
+  },
+  "initial_writable_odb_runs": [
+    {
+      "fixture": "Job-1",
+      "initial_input_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "python_input_unchanged": true,
+      "original_input_unchanged": true,
+      "cpp_input_changed": true,
+      "cpp_input_sha256_after_each_command": {
+        "python": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+        "python-header": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+        "cpp-header": "69f8e0964ebb167f0299ba1fc5353223e58933ecc7f16cc6a433c6436b6ffd4e",
+        "cpp-frames": "31d9dbaf37d6aa75996f848899c9ff96b38fd9a14e64932e5611195528f848f2"
+      },
+      "processes_completed": true
+    },
+    {
+      "fixture": "2d_planar",
+      "initial_input_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "python_input_unchanged": true,
+      "original_input_unchanged": true,
+      "cpp_input_changed": true,
+      "cpp_input_sha256_after_each_command": {
+        "python": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+        "python-header": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+        "cpp-header": "40c837d085feb95b7de3dfeaeb246d557983c59adfef1aecdf94b6e3f99a3a68",
+        "cpp-frames": "a168aafbc4c2958d5e831ddaaf0ef859f2d0c7198cb52b019bbfa795b27e83ee"
+      },
+      "processes_completed": true
+    }
+  ],
+  "readonly_odb_runs": [
+    {
+      "fixture": "Job-1",
+      "initial_input_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "python_input_unchanged": true,
+      "original_input_unchanged": true,
+      "cpp_input_changed": false,
+      "cpp_input_sha256_after_each_command": {
+        "python": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+        "python-header": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+        "cpp-header": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+        "cpp-frames": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1"
+      },
+      "processes_completed": true
+    },
+    {
+      "fixture": "2d_planar",
+      "initial_input_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "python_input_unchanged": true,
+      "original_input_unchanged": true,
+      "cpp_input_changed": false,
+      "cpp_input_sha256_after_each_command": {
+        "python": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+        "python-header": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+        "cpp-header": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+        "cpp-frames": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf"
+      },
+      "processes_completed": true
+    }
+  ],
+  "readonly_output_regression": [
+    {
+      "fixture": "Job-1",
+      "file": "header.txt",
+      "byte_identical": true,
+      "sha256": "0c710b3ae19a5165bff44eb5843257265d88e2f9018d18089c2b1b2d0ddb529b"
+    },
+    {
+      "fixture": "Job-1",
+      "file": "Job-1_Step-1_0.vtu",
+      "byte_identical": true,
+      "sha256": "26b0fbf8cdb3faa7daefb9cfa30619ccc56fb851088f359b91d340de16416e64"
+    },
+    {
+      "fixture": "Job-1",
+      "file": "Job-1_Step-1_1.vtu",
+      "byte_identical": true,
+      "sha256": "d70a07e0e06cea669743c97123f796f4c857cad2894f6692bd43154a150f6e13"
+    },
+    {
+      "fixture": "2d_planar",
+      "file": "header.txt",
+      "byte_identical": true,
+      "sha256": "d3a472d07ca11935a732c4bfd2d400a30bcac392753d902f086ce16fa35f7d18"
+    },
+    {
+      "fixture": "2d_planar",
+      "file": "2d_planar_Step-1_0.vtu",
+      "byte_identical": true,
+      "sha256": "cc018bb3df5ad1b5f9731bae522702d4fa2be2c89732a215bac45124b1221b02"
+    },
+    {
+      "fixture": "2d_planar",
+      "file": "2d_planar_Step-1_1.vtu",
+      "byte_identical": true,
+      "sha256": "52694abfe13fe6779bbd5bc299323483f971d02d032895424d72f8b467434f28"
+    }
+  ],
+  "parity_inventory": {
+    "Job-1": {
+      "parity": false,
+      "frames_checked": 2,
+      "differences": [
+        {
+          "kind": "output_filename",
+          "python": "Step-1_0.vtu",
+          "cpp": "Job-1_Step-1_0.vtu"
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_0.vtu",
+          "array": "coordinates",
+          "differing_values": 8492,
+          "max_absolute_difference": 4.993896496330308e-07
+        },
+        {
+          "kind": "active_array",
+          "frame": "Step-1_0.vtu",
+          "association": "GetPointData",
+          "role": "GetVectors",
+          "python": "RF",
+          "cpp": null
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_0.vtu",
+          "array": "GetCellData/Material_Orientation",
+          "differing_values": 4193,
+          "max_absolute_difference": 5.066394805908203e-07
+        },
+        {
+          "kind": "output_filename",
+          "python": "Step-1_1.vtu",
+          "cpp": "Job-1_Step-1_1.vtu"
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "coordinates",
+          "differing_values": 8492,
+          "max_absolute_difference": 4.993896496330308e-07
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetPointData/RF",
+          "differing_values": 111,
+          "max_absolute_difference": 0.00048828125
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetPointData/U",
+          "differing_values": 7315,
+          "max_absolute_difference": 4.76837158203125e-07
+        },
+        {
+          "kind": "active_array",
+          "frame": "Step-1_1.vtu",
+          "association": "GetPointData",
+          "role": "GetVectors",
+          "python": "RF",
+          "cpp": null
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/E_Centroid",
+          "differing_values": 10558,
+          "max_absolute_difference": 7.450580596923828e-09
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/E_IntegrationPoints",
+          "differing_values": 10526,
+          "max_absolute_difference": 7.450580596923828e-09
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/S_Centroid",
+          "differing_values": 10458,
+          "max_absolute_difference": 0.00048828125
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/S_IntegrationPoints",
+          "differing_values": 10444,
+          "max_absolute_difference": 0.00048828125
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/Material_Orientation",
+          "differing_values": 4193,
+          "max_absolute_difference": 5.066394805908203e-07
+        },
+        {
+          "kind": "header_schema_or_values",
+          "error": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "kind": "missing_history"
+        },
+        {
+          "kind": "missing_collection"
+        }
+      ],
+      "float32_rounding": [],
+      "float32_ulp_limit": 1
+    },
+    "2d_planar": {
+      "parity": false,
+      "frames_checked": 2,
+      "differences": [
+        {
+          "kind": "output_filename",
+          "python": "Step-1_0.vtu",
+          "cpp": "2d_planar_Step-1_0.vtu"
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_0.vtu",
+          "array": "GetCellData/Material_Orientation",
+          "differing_values": 80,
+          "max_absolute_difference": 1.0
+        },
+        {
+          "kind": "output_filename",
+          "python": "Step-1_1.vtu",
+          "cpp": "2d_planar_Step-1_1.vtu"
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetPointData/RF",
+          "differing_values": 7,
+          "max_absolute_difference": 3.814697265625e-06
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetPointData/U",
+          "differing_values": 142,
+          "max_absolute_difference": 4.76837158203125e-07
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/E_Centroid",
+          "differing_values": 162,
+          "max_absolute_difference": 4.470348358154297e-08
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/E_IntegrationPoints",
+          "differing_values": 162,
+          "max_absolute_difference": 4.470348358154297e-08
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/S_Centroid",
+          "differing_values": 142,
+          "max_absolute_difference": 4.76837158203125e-06
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/S_IntegrationPoints",
+          "differing_values": 142,
+          "max_absolute_difference": 4.76837158203125e-06
+        },
+        {
+          "kind": "array_values",
+          "frame": "Step-1_1.vtu",
+          "array": "GetCellData/Material_Orientation",
+          "differing_values": 80,
+          "max_absolute_difference": 1.0
+        },
+        {
+          "kind": "header_schema_or_values",
+          "error": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "kind": "missing_history"
+        },
+        {
+          "kind": "missing_collection"
+        }
+      ],
+      "float32_rounding": [],
+      "float32_ulp_limit": 1
+    }
+  },
+  "inventory_counts": {
+    "Job-1": {
+      "output_filename": 2,
+      "array_values": 10,
+      "active_array": 2,
+      "header_schema_or_values": 1,
+      "missing_history": 1,
+      "missing_collection": 1
+    },
+    "2d_planar": {
+      "output_filename": 2,
+      "array_values": 8,
+      "header_schema_or_values": 1,
+      "missing_history": 1,
+      "missing_collection": 1
+    }
+  },
+  "scope": "No numerical, serialization or CLI redesign in this phase. Extract shared SDK-free element-family mapping while preserving the legacy unsupported-element behavior. Change legacy openOdb to read-only after observing input byte changes on temporary copies. This keeps the four covered VTUs and two headers byte-identical. Current C++ output is not Python-equivalent.",
+  "limitations": "Windows Release/Abaqus 2025 only. Two real fixtures/four frames. No performance parity claim, sparse/scaling coverage or full lifetime/CLI fixes. SDK-independent core currently contains mesh family mapping only.",
+  "code_sha256": {
+    "cpp/CMakeLists.txt": "fb64454e0adde17460dfa1db42b4dcbed4bd6978b6eba41dfed79a4f3558f7f2",
+    "cpp/cmake/FindAbqSDK.cmake": "c6108eb209e891d434b5b5672a5a87964d9b1c48b089b7c96244344588422bb7",
+    "cpp/odb2vtk.cpp": "1310719abdd468f67c80526da942254f398e9c8d4803e35ecc3b1c6905b4d1f2",
+    "cpp/main.cpp": "a0c35ee383c55835e0d665736eba2f767299c78f74daf9a128a25e9b381a7689",
+    "cpp/odb2vtk.h": "2ce529f9c9b5013d374e686b87cdb34f2b4656e7cb7941fa7bf80934aa327158",
+    "cpp/core/mesh.cpp": "8f0a34fca05f5bf56a40283d514fdb73b6d7dd75ec55edcd1a3c7b4a5195db63",
+    "cpp/include/odb2vtk_core/mesh.hpp": "9dc4848484de9bf4cea6a603af3cec0bd830d18d85d4bdadb6fda31902ba5de1",
+    "cpp/tests/test_mesh.cpp": "da9212ff0a02b60904d5179257d7bf92be6d470c5bd18374c35d0170d27a2e05",
+    "cpp/tests/sdk_smoke.cpp": "0c8367581f724459bb74b2d4f3a9fe5cb1f469d1aefb9ca634e2ab737e8c644e",
+    "cpp/validation/compare_exports.py": "a3a5f7a3c6ca1d05b8638e46af842287f095dddff76eaa4eeb4ca992736e7010",
+    "cpp/validation/tests/test_compare_exports.py": "7431ee1c437314f8cbe27516617975a07d66c45dcf99b516abb599c282697861"
+  }
+}

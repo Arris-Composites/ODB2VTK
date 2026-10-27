@@ -30,6 +30,8 @@
 
 #include "odb2vtk.h"
 #include "odb_Enum.h"
+#include "odb2vtk_core/mesh.hpp"
+#include <stdexcept>
 
 #include <fstream>
 #include <iostream>
@@ -43,37 +45,13 @@ namespace GLOBAL {
 /// <param name="abqElementType"></param>
 /// <returns></returns>
 int ABAQUS_VTK_CELL_MAP(const char *abqElementType) {
-  std::string type(abqElementType);
-  if (type.find("C3D4") != std::string::npos) {
-    return 10;
-  } else if (type.find("C3D6") != std::string::npos) {
-    return 13;
-  } else if (type.find("C3D8") != std::string::npos) {
-    return 12;
-  } else if (type.find("C3D10") != std::string::npos) {
-    return 24;
-  } else if (type.find("C3D15") != std::string::npos) {
-    return 26;
-  } else if (type.find("C3D20") != std::string::npos) {
-    return 25;
-  } else if (type.find("S3") != std::string::npos) {
-    return 5;
-  } else if (type.find("S4") != std::string::npos) {
-    return 9;
-  } else if (type.find("S8") != std::string::npos) {
-    return 23;
-  } else if (type.find("S9") != std::string::npos) {
-    return 28;
-  } else if (type.find("B31") != std::string::npos) {
-    return 3;
-  } else if (type.find("R3D3") != std::string::npos) {
-    return 5;
-  } else if (type.find("R3D4") != std::string::npos) {
-    return 9;
+  try {
+    return odb2vtk_core::vtk_cell_type(abqElementType);
+  } catch (const std::invalid_argument&) {
+    // Retain the legacy executable's unknown-element behavior in Phase 1.
+    std::cerr << abqElementType << " not supported by the converter." << std::endl;
+    return -1;
   }
-
-  std::cerr << type << " not supported by the converter." << std::endl;
-  return -1;
 }
 
 enum OutputDataType {
@@ -107,7 +85,8 @@ odb2vtk::odb2vtk(const char *odbFullname, const char *suffix) {
   m_odbFullName = std::string(odbFullname);
   m_odbPath = m_odbFullName.substr(0, m_odbFullName.find_last_of("/\\"));
   m_odbBaseName = m_odbFullName.substr(m_odbFullName.find_last_of("/\\") + 1);
-  m_odb = &openOdb(odbFile);
+  // Do not persist SDK metadata or extrapolated subsets into the input database.
+  m_odb = &openOdb(odbFile, true);
 }
 
 odb2vtk::~odb2vtk() { m_odb->close(); }
