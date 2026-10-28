@@ -33,3 +33,7 @@ bld/
 
 cpp/build/
 cpp/.vscode
+
+# Generated project installations; maintain the source packages in skills/.
+/.agents/skills/
+/.claude/skills/

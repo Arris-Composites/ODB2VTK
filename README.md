@@ -8,6 +8,38 @@ Abaqus output database (.odb extension) is a binary file native to Abaqus. To ac
 
 If you want to know more about the design of ODB2VTK, checkout this [article](https://www.sciencedirect.com/science/article/pii/S2352711023000274).
 
+## Agent skill
+
+The shared [odb2vtk skill](skills/odb2vtk/SKILL.md) lets Claude Code and Codex
+inspect and convert ODBs using `odb2vtk_core`. Keep `skills/odb2vtk` as the source
+package and copy the complete folder to the desired project's skill location:
+
+| Agent | Project installation | Explicit invocation |
+| --- | --- | --- |
+| Codex | `.agents/skills/odb2vtk/` | `$odb2vtk` |
+| Claude Code | `.claude/skills/odb2vtk/` | `/odb2vtk` |
+
+Install or update both agents' project-local copies with Make and `uv`:
+
+```sh
+make install-skills
+```
+
+On Windows without Make, run `uv run --no-project python tools/install_skills.py`.
+Use `--agent codex` or `--agent claude` with the script to select one agent, or
+`--project C:/work/another-project` to install into another existing project.
+Re-run installation after updating the source skills. Generated copies in this
+checkout are Git-ignored; other agent settings are left untouched. The package follows the
+[Agent Skills standard](https://agentskills.io/specification); installation
+locations are documented by [Codex](https://learn.chatgpt.com/docs/build-skills)
+and [Claude Code](https://code.claude.com/docs/en/skills).
+
+The converter checkout and Abaqus installation are separate prerequisites. If
+the agent is working elsewhere, supply the checkout path or set `ODB2VTK_ROOT`
+for it to find the backend; the [usage reference](skills/odb2vtk/references/usage.md)
+explains package discovery. For example: "Use odb2vtk to export Part-1, Step-1
+frames 0 and 1 from C:/work/Job-1.odb in binary format."
+
 ## Usage Python
 
 Run the following commands from the repository's `python` directory (`cd python`
