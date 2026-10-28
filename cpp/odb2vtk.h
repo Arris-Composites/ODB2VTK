@@ -30,14 +30,14 @@
 
 #pragma once
 #include "odb2vtk_core/source.hpp"
+#include "odb2vtk_core/outputs.hpp"
 #include <map>
 #include <memory>
 #include <optional>
 #include <string>
 #include <vector>
 
-// Temporary CLI/output adapter. Numerical work uses the maintained core.
-// Naming, XML formatting and publication are replaced in the writer/CLI phases.
+// Temporary CLI adapter. Conversion and publication use the maintained core.
 class odb2vtk {
 public:
   odb2vtk(const char* path,const char* suffix);
@@ -53,5 +53,5 @@ public:
 private:
   std::unique_ptr<odb2vtk_core::Source> source_;
   std::optional<odb2vtk_core::Selection> selection_;
-  std::string directory_, name_;
+  odb2vtk_core::OutputOptions outputs_;
 };

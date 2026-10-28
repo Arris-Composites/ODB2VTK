@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
     // let's log execution time
     clock_t tStart = clock();
 
-    odb2vtk converter(args_map[ArgumentType::ODBFILE].front(), "suffix");
+    odb2vtk converter(args_map[ArgumentType::ODBFILE].front(), "");
     if (strcmp(args_map[ArgumentType::HEADER].front(), "1") == 0) {
       converter.ExtractHeader();
       std::cout << "Header file is complete." << std::endl;

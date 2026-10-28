@@ -2,7 +2,8 @@
 #include "source.hpp"
 
 namespace odb2vtk_core {
-// Sinks borrow frame/array inputs for the duration of each synchronous call.
+// The mesh passed to begin_frame remains valid through end_frame. Other inputs
+// are borrowed only for the duration of each synchronous call.
 class FrameSink {
 public:
   virtual ~FrameSink() = default;
@@ -15,8 +16,9 @@ public:
   explicit Converter(Source& source) : source_(source) {}
   ConversionResult convert(const Selection& selection, FrameSink& sink) const;
   HistoryTable history(const Selection& selection) const;
-private:
+  // Metadata-only validation; does not read geometry or create outputs.
   void validate(const Selection&, bool frames) const;
+private:
   Source& source_;
 };
 }

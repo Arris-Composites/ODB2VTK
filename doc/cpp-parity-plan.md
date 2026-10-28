@@ -1,8 +1,8 @@
 # C++ alignment with the Python exporter
 
-Status: Phases 1 and 2 completed on 2026-10-27; Phases 3 through 5 remain pending.
-See [Phase 1 results](cpp-phase1-results.md), [Phase 2 results](cpp-phase2-results.md)
-and the [build guide](cpp-build.md).
+Status: Phases 1 through 3 completed on 2026-10-27; Phases 4 and 5 remain pending.
+See [Phase 1 results](cpp-phase1-results.md), [Phase 2 results](cpp-phase2-results.md),
+[Phase 3 results](cpp-phase3-results.md) and the [build guide](cpp-build.md).
 Python commit `0fe548c` is the reference for
 behavior, schemas, CLI modes and ASCII/binary output. This plan proposes matching
 both behavior and module separation, using idiomatic C++ rather than translating

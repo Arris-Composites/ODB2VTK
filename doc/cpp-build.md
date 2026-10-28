@@ -1,4 +1,4 @@
-# C++ build and Phase 1 validation
+# C++ build and validation
 
 Tested on 2026-10-27 with CMake 4.0.2, Visual Studio 2022/MSVC 19.41,
 Windows SDK 10.0.22000.0 and Abaqus 2025 HF1. The project requires CMake 3.20+
@@ -18,10 +18,10 @@ ctest --test-dir cpp/build/pure -C Release --output-on-failure
 ```
 
 The default `ODB2VTK_BUILD_NATIVE=OFF` builds the SDK-independent core and its
-tests. SDK discovery is not performed. The initial core module contains the
-element-family mapping used by the existing exporter; numerical extraction and
-the source interface follow in Phase 2. Tests cover all 13 families, matching
-precedence/suffix behavior and rejection of unsupported values (18 cases).
+tests. SDK discovery is not performed. Three CTest suites cover element-family
+mapping (18 checks), numerical/source behavior (62 checks) and serialization/
+publication (122 checks on Windows). `odb2vtk_writer_fixture` generates files for
+the independent VTK edge checks in the [writer guide](cpp-writers.md).
 
 ## Build with Abaqus 2025
 
@@ -41,11 +41,13 @@ smoke test is registered only when a fixture is supplied. The target executable
 is still built when native support/testing are enabled without a fixture.
 
 Native targets include `ODB2VTK` (the current exporter), `odb2vtk_sdk_smoke`,
-`odb2vtk_source_probe`, `odb2vtk_source_ownership` and `odb2vtk_double_fixture`.
-The last three are validation tools built when testing is enabled. With a test
+`odb2vtk_source_probe`, `odb2vtk_source_ownership`, `odb2vtk_double_fixture` and
+`odb2vtk_export_probe`. The probes and fixture creator are validation tools built
+when testing is enabled. With a test
 ODB supplied, CTest registers both native smoke and ownership tests alongside
-the two SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
-for the source contract and numerical comparison workflow.
+the three SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
+for the source contract and [Phase 3 results](cpp-phase3-results.md) for writer
+parity and publication behavior.
 Missing required SDK paths/libraries cause configuration to fail with an
 actionable message. For customized installations, the `AbqSDK_INCLUDE_DIR`,
 `AbqSDK_PUBLIC_INCLUDE_DIR` and per-library `AbqSDK_<component>_LIBRARY` cache
@@ -73,21 +75,21 @@ legacy exporter's CLI/status alignment remains pending.
 
 ## Compare Python and C++ output
 
-Use disposable compatible fixture copies and distinct output directories. The
-Phase 1 comparison deliberately reports remaining differences rather than
-claiming parity. The read-only fix prevents ODB changes, but the current exporter
-still lacks several Python behaviors and safe per-file publication.
+Use compatible fixture copies and distinct output directories. The maintained
+export interface now supports both formats, JSON/CSV/PVD and safe per-file
+publication. Run the complete format comparison from the [writer guide](cpp-writers.md).
+The normal executable's argument/default/status alignment remains Phase 4.
 
 Generate a Python reference report with `python/validation/profile_exports.py`,
 then run the C++ executable on the matching instance/step/frame selection.
-The current C++ output is flat, named `Job-1_Step-1_0.vtu`, while Python writes
-`Step-1_0.vtu` under the run directory. Current C++ header output is plain
-`header.txt`; history/PVD methods remain empty. Those gaps are expected inventory.
+Current output names follow Python: `Job-1/Step-1_0.vtu`, a collection under
+the run directory and the adjacent `Job-1.json` header. The validation probe also
+exports history through the maintained interface.
 
 In an ordinary Python environment with NumPy and VTK:
 
 ```text
-python cpp/validation/compare_exports.py --python-report C:/temp/python.json --cpp-vtu C:/temp/cpp/Job-1_Step-1_0.vtu C:/temp/cpp/Job-1_Step-1_1.vtu --reference-header C:/temp/python-header.json --cpp-header C:/temp/cpp/header.txt --report C:/temp/parity.json
+python cpp/validation/compare_exports.py --python-report C:/temp/python.json --cpp-vtu C:/temp/cpp/Job-1/Step-1_0.vtu C:/temp/cpp/Job-1/Step-1_1.vtu --reference-header C:/temp/python-header.json --cpp-header C:/temp/cpp/Job-1.json --cpp-history C:/temp/cpp/Job-1/Job-1.csv --cpp-pvd C:/temp/cpp/Job-1/Job-1.pvd --report C:/temp/parity.json --strict
 python -m unittest discover -s cpp/validation/tests -v
 ```
 

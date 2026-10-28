@@ -114,7 +114,9 @@ export duration/memory measurements.
 The C++ implementation is being aligned with the current Python exporter.
 [Phase 1](doc/cpp-phase1-results.md) establishes a C++17 build, SDK-independent
 tests, Abaqus 2025 integration probes and a semantic comparison harness.
-Behavioral parity is still pending; see the [alignment plan](doc/cpp-parity-plan.md).
+[Phase 2](doc/cpp-phase2-results.md) adds owned source records and numerical
+parity. [Phase 3](doc/cpp-phase3-results.md) adds ASCII/binary writers, JSON/CSV/PVD
+and safe publication. CLI parity remains pending; see the [alignment plan](doc/cpp-parity-plan.md).
 
 From the repository root, build the core without Abaqus:
 
@@ -132,17 +134,17 @@ runtime DLL paths and optional real-ODB tests. Native builds require an installe
 SDK; CMake no longer searches historical installation paths or links every SDK
 library.
 
-The existing native CLI still writes a plain `header.txt` and flat VTU files:
+The existing native CLI now writes `Job-1.json`, `Job-1/Step-1_0.vtu` and a PVD:
 
 ```text
 ODB2VTK.exe --header 1 --odbFile C:/temp/Job-1.odb
 ODB2VTK.exe --header 0 --odbFile C:/temp/Job-1.odb --instance L-SHAPE-PART-1 --step Step-1:0,1 --writeHistory 0
 ```
 
-ODB files must be compatible with the installed SDK. C++ history/PVD, binary
-serialization and Python-style CLI/output names are subsequent alignment phases.
-Current native ODB access is read-only; Phase 1 verified input hashes remain
-unchanged and existing VTU output is preserved.
+ODB files must be compatible with the installed SDK. History, collection-only
+and binary modes are available through the [maintained C++ interface and validation
+probe](doc/cpp-writers.md); their normal CLI flags/defaults will be aligned in
+Phase 4. Current native ODB access is read-only, with input hashes verified.
 
 ## Convert a range of frames by one command
 
