@@ -4,21 +4,14 @@
 
 ## Introduction
 
-Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project provides a converter implemented in Python and C++. The C++ version is considerably faster than the Python version but it needs proper configuration to successfully build from the source. This work is inspired by [Liujie](https://github.com/Liujie-SYSU/odb2vtk). And all other similar work doesn't satisfy my needs since I need a converter which is more general and extensible. So I ended up implement my own version of it. This converter will:
-
-1. Convert all the field outputs which exist in the ODB file.
-2. Convert data at integrations points / section points and material orientation.
-3. Map Abaqus element to VTK cell at your will.
+Abaqus output database (.odb extension) is a binary file native to Abaqus. To access the data from ODB file, without reverse engineering, is to use official Abaqus APIs which are provided in Python or C++. This project provides a converter implemented in Python and C++. I started this project before AI era and now it has been completely reworked with AI. See [architecture](/doc/python-architecture.md) and [refactor plan](/doc/python-refactor-plan.md), which included a 5 phase migration: [phase 1](/doc/python-phase1-results.md), [phase 2](/doc/python-phase2-results.md), [phase 3](/doc/python-phase3-results.md), [phase 4](/doc/python-phase4-results.md), [phase 5](/doc/python-phase5-results.md). The pipeline has been optimized with [ascii-write-optimization](/doc/python-ascii-write-optimization.md), [label-lookup-optimization](/doc/python-label-lookup-optimization.md), [mesh-snapshot-optimization](/doc/python-mesh-snapshot-optimization.md), [mesh-text-optimization](/doc/python-mesh-text-optimization.md), [row-format-optimization](/doc/python-row-format-optimization.md), and [source-cache-optimization](/doc/python-source-cache-optimization.md).
 
 If you want to know more about the design of ODB2VTK, checkout this [article](https://www.sciencedirect.com/science/article/pii/S2352711023000274).
 
 ## Usage Python
 
-![](res/odb2vtk_tutorial.gif)
 Run the following commands from the repository's `python` directory (`cd python`
-from the repository root). ODB access requires Abaqus Python. The package entry
-points replace the removed `odb2vtk.py` and `multiprocess.py` scripts; the old
-`ODB2VTK` and `ReadableOdb` library interfaces are no longer supported.
+from the repository root). ODB access requires Abaqus Python.
 
 For library use, import `AbaqusSource`, `Converter`, `Selection`, and
 `OutputOptions` from `odb2vtk_core`. See the [library guide](doc/python-converter-interface.md).
@@ -46,45 +39,41 @@ file sizes, precision and validation details.
 
 The above command will convert frame 0 to 1 in step 1, 0 to 5 in step 2, and 0 to 3 in step 3 for instance "Part-1" and "Part-2".
 
-`python -m odb2vtk_core.parallel --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
+Convert frames in parallel using ordinary Python, with the Abaqus command on
+`PATH`:
 
-The runner first validates the complete request in Abaqus, then converts one frame
-per worker. The two frame conversions below run in parallel; the final collection
-command runs only after both succeed. Use `--jobs 2` to limit concurrency and
-`--writeHistory 1` to export history once after the frame workers finish.
-
-`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb`
-
-`abaqus python -m odb2vtk_core --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1`
-
-The last command will generate a .pvd file.
-Suppose the odb directory looks like this
-
+```text
+python -m odb2vtk_core.parallel --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile ./Job-1.odb --jobs 2 --writeHistory 1 --format binary
 ```
 
-project
+The runner validates the request in Abaqus, converts one frame per worker, then
+exports history once and writes a PVD after all workers succeed. This command
+produces:
 
-│───Job-1.odb  
-
+```text
+project/
+|-- Job-1.odb
+`-- Job-1/
+    |-- Job-1.csv
+    |-- Job-1.pvd
+    |-- Step-1_1.vtu
+    `-- Step-3_2.vtu
 ```
 
-After `python -m odb2vtk_core.parallel --header 0 --instance "Part-1" "Part-2" --step "Step-1:1" "Step-3:2" --odbFile ./Job-1.odb` has been executed, we will get
+Serial frame export does not write a PVD automatically. Add `--writeHistory 1`
+for history CSV, or index already-exported VTUs with the same selection and
+`--writePVD 1`:
 
+```text
+abaqus python -m odb2vtk_core --header 0 --instance "Part-1" --step "Step-1:0,1" --odbFile <my_odb_file_path>/my_odb_file.odb --writePVD 1
 ```
 
-project
+Use `--suffix _name` to give separate selections their own output directories.
+Both implementations require explicit comma-separated frame indices; range
+syntax such as `Step-1:0-1000` is unsupported.
 
-│───Job-1.odb  
-└───Job-1
-    │____Job-1.pvd
-	│____Step-1_1.vtu
-	│____Step-3_2.vtu
-
-```
-
-If you are converting different instances from the odb with the same step and frame, use '--suffix name' to append 'name' to the folder to avoid name clash.
+See the [CLI and parallel runner guide](doc/python-cli.md) for all options,
+statuses and execution details.
 
 From the repository root, the numerical conversion and serialization modules in
 `python/odb2vtk_core` can be tested with ordinary Python and NumPy, without an
@@ -94,33 +83,17 @@ Abaqus installation:
 python -m unittest discover -s python/tests -v
 ```
 
-See the [Python refactor plan](doc/python-refactor-plan.md) and
-[Phase 1 results](doc/python-phase1-results.md) for the numerical module design.
-The [source interface](doc/python-source-interface.md) documents ODB ownership
-and source injection; [Phase 2 results](doc/python-phase2-results.md) records its validation.
-New library callers can use the [converter interface](doc/python-converter-interface.md)
-to export immutable requests without constructing maps. See
-[Phase 3 results](doc/python-phase3-results.md) for validation and publication behavior.
-The [CLI and parallel runner guide](doc/python-cli.md) documents statuses, shared
-argument validation, and verified worker completion; see
-[Phase 4 results](doc/python-phase4-results.md) for the integration checks.
-The [Python architecture guide](doc/python-architecture.md) describes the final
-module responsibilities, runtime support, and compatibility migration.
-[Phase 5 results](doc/python-phase5-results.md) records VTK reader checks and
-export duration/memory measurements.
+The [library guide](doc/python-converter-interface.md) describes complete export
+requests; the [source interface](doc/python-source-interface.md) covers ODB
+ownership and source injection. The [architecture guide](doc/python-architecture.md)
+describes the maintained modules and supported runtimes.
 
 ## Build C++ with CMake
 
-The C++ implementation is being aligned with the current Python exporter.
-[Phase 1](doc/cpp-phase1-results.md) establishes a C++17 build, SDK-independent
-tests, Abaqus 2025 integration probes and a semantic comparison harness.
-[Phase 2](doc/cpp-phase2-results.md) adds owned source records and numerical
-parity. [Phase 3](doc/cpp-phase3-results.md) adds ASCII/binary writers, JSON/CSV/PVD
-and safe publication. [Phase 4](doc/cpp-phase4-results.md) aligns the serial CLI;
-see the [CLI guide](doc/cpp-cli.md) and [alignment plan](doc/cpp-parity-plan.md).
-[Phase 5](doc/cpp-phase5-results.md) records final serial parity and performance:
-42 native VTUs/284 field arrays match Python, with both formats benchmarked on
-the same ODB bytes. See the [performance guide](doc/cpp-performance.md) to reproduce.
+The C++17 implementation supports the same serial export modes and formats as
+Python. Final validation covers 42 native VTUs and 284 field arrays matching
+Python on the same ODB bytes. See the [parity and performance results](doc/cpp-phase5-results.md),
+[CLI guide](doc/cpp-cli.md) and [performance guide](doc/cpp-performance.md).
 
 From the repository root, build the core without Abaqus:
 
@@ -135,8 +108,7 @@ To build the native executable, configure a separate directory with
 `-DABQ_SDK_ROOT=C:/ABAQUS/2025/EstProducts`. See the
 [build guide](doc/cpp-build.md) for complete commands, required SDK libraries,
 runtime DLL paths and optional real-ODB tests. Native builds require an installed
-SDK; CMake no longer searches historical installation paths or links every SDK
-library.
+SDK and an explicit SDK root.
 
 The native CLI writes `Job-1.json` for header mode and VTUs under `Job-1`:
 
@@ -153,28 +125,12 @@ with the installed SDK; access is read-only, with input hashes verified.
 The [maintained C++ interface](doc/cpp-writers.md) also supports injected sources
 and direct stream writers. Native parallel coordination remains a follow-up.
 
-## Convert a range of frames by one command
+## Validated runtimes
 
-Now a new parse rule which accepts a range of frames has been added to the C++ version. This will be convenient to convert a large quantity of consecutive frames by one command.
+Both native implementations are validated with Abaqus 2025 HF1 on Windows x64.
+Python conversion uses Abaqus Python 3.10 and bundled NumPy. The pure Python
+modules are also tested with CPython 3.12 and NumPy without Abaqus.
 
-```
-odb2vtk.exe --header 0 --odbFile C:/test/mixed_elements/collision.odb --instance PART-1-1 PART-2-1 --step  Step-1:0-1000 --writeHistory 0
-```
-
-converts frames ranging from 0 to 1000. So, it will generate 1001 individual vtu files. Do not mix it with single digit frame arguments.
-
-## Abaqus Version Updates
-Both the C++ and Python builds have been updated for Abaqus 2023.
-
-This describes the historical release. The refactored Python exporter is
-validated with Abaqus 2025 HF1 / Python 3.10 on Windows. Its pure conversion
-modules are also tested with CPython 3.12. Python 2 is unsupported; Abaqus 2023
-has not been revalidated. See the [runtime details](doc/python-architecture.md#supported-and-validated-runtimes).
-
-The C++ Phase 1 Release build and native SDK probes are also validated with
-Abaqus 2025 HF1 on Windows; full output parity remains pending.
-
-## TODOS
-
-- [ ] implement writeHistory for C++ version.
-- [ ] implement writePVD for C++ version.
+ODB files must be compatible with the installed Abaqus SDK. See the
+[Python runtime details](doc/python-architecture.md#supported-and-validated-runtimes)
+and [C++ build guide](doc/cpp-build.md) for the validated environments.
