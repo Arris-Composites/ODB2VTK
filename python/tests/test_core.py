@@ -90,6 +90,9 @@ class MeshTests(unittest.TestCase):
             ("B31", 3),
             ("R3D3", 5),
             ("R3D4", 9),
+            ("CAX3", 5),
+            ("RNODE3D", 1),
+            ("M3D6", 22),
         ):
             with self.subTest(element=name):
                 self.assertEqual(vtk_cell_type(name), expected)
