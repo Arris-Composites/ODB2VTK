@@ -46,7 +46,6 @@ enum class ArgumentType {
 
 int main(int argc, char *argv[]) {
 
-  odb_initializeAPI();
 
   // Ok I tried to pull some argument parse libraries but their dependencies
   // such as <algorithm> will give me INT64_MAX: identifier not found not sure
@@ -199,12 +198,11 @@ int main(int argc, char *argv[]) {
                 << " seconds" << std::endl;
     }
 
-  } catch (odb_BaseException &exc) {
-    std::cout << "Abaqus error message: " << exc.UserReport().CStr()
+  } catch (const std::exception &exc) {
+    std::cout << "Conversion error: " << exc.what()
               << std::endl;
   } catch (...) {
     std::cout << "Unknown Exception.\n";
   }
-  odb_finalizeAPI();
   return 0;
 }

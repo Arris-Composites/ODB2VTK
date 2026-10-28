@@ -40,7 +40,12 @@ the checked-in historical fixtures need upgrading for Abaqus 2025. The native
 smoke test is registered only when a fixture is supplied. The target executable
 is still built when native support/testing are enabled without a fixture.
 
-Native targets are `ODB2VTK` (the current exporter) and `odb2vtk_sdk_smoke`.
+Native targets include `ODB2VTK` (the current exporter), `odb2vtk_sdk_smoke`,
+`odb2vtk_source_probe`, `odb2vtk_source_ownership` and `odb2vtk_double_fixture`.
+The last three are validation tools built when testing is enabled. With a test
+ODB supplied, CTest registers both native smoke and ownership tests alongside
+the two SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
+for the source contract and numerical comparison workflow.
 Missing required SDK paths/libraries cause configuration to fail with an
 actionable message. For customized installations, the `AbqSDK_INCLUDE_DIR`,
 `AbqSDK_PUBLIC_INCLUDE_DIR` and per-library `AbqSDK_<component>_LIBRARY` cache
