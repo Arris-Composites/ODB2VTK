@@ -10,7 +10,8 @@ If you want to know more about the design of ODB2VTK, checkout this [article](ht
 
 ## Agent skill
 
-[Watch the odb2vtk_core skills video](res/odb2vtk_core%20skills%202026-10-27%20232500.mp4)
+https://github.com/user-attachments/assets/32a6a8d7-bc99-4964-9e1c-d356e353db95
+
 
 The shared [odb2vtk skill](skills/odb2vtk/SKILL.md) lets Claude Code and Codex
 inspect and convert ODBs using `odb2vtk_core`. Keep `skills/odb2vtk` as the source
@@ -44,7 +45,8 @@ frames 0 and 1 from C:/work/Job-1.odb in binary format."
 
 ## Usage Python
 
-![odb2vtk_core demo](res/odb2vtk_core%20demo%202026-10-27%20231221.gif)
+<img width="1914" height="574" alt="odb2vtk_core demo 2026-10-27 231221" src="https://github.com/user-attachments/assets/eb0892ad-64c1-4f6f-8162-67b413145443" />
+
 
 Run the following commands from the repository's `python` directory (`cd python`
 from the repository root). ODB access requires Abaqus Python.
