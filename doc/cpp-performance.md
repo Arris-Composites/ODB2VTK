@@ -69,7 +69,8 @@ bounded writes; no complete field text buffers are retained.
 
 To reproduce the older stream-formatting baseline, apply
 [the validation patch](validation/cpp-ascii-stream-baseline.patch) to an isolated
-copy of this revision and build its profiling target. The patch restores only
+checkout of the original Phase 5 revision, `c76f485`, and build its profiling
+target. The patch targets that revision's source formatting. It restores only
 ASCII numerical formatting and retains the same profiling/assembly/publication
 code. It is a benchmark artifact, not an alternate supported writer. Pass that
 executable as `--baseline-cpp-profile PATH` when benchmarking the optimized build.

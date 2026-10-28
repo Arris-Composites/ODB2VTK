@@ -18,16 +18,19 @@ struct CliRequest {
   OutputOptions outputs;
   bool write_history;
 };
-using SourceFactory = std::function<std::unique_ptr<Source>(const std::filesystem::path&)>;
+using SourceFactory =
+    std::function<std::unique_ptr<Source>(const std::filesystem::path &)>;
 
 // nullopt means help was requested. Parsing validates the input file and builds
 // a complete request without constructing a Source or initializing the SDK.
-std::optional<CliRequest> parse_request(const std::vector<std::string>& arguments);
-void print_help(std::ostream&);
+std::optional<CliRequest>
+parse_request(const std::vector<std::string> &arguments);
+void print_help(std::ostream &);
 
 // Owns the factory-created source. All modes close explicitly before returning;
 // on failure cleanup preserves the originating error and completed receipts.
-ExportResult execute_request(const CliRequest&, const SourceFactory&, Progress = {});
-int cli_main(const std::vector<std::string>& arguments, const SourceFactory&,
-             std::ostream& output, std::ostream& errors);
-}
+ExportResult execute_request(const CliRequest &, const SourceFactory &,
+                             Progress = {});
+int cli_main(const std::vector<std::string> &arguments, const SourceFactory &,
+             std::ostream &output, std::ostream &errors);
+} // namespace odb2vtk_core

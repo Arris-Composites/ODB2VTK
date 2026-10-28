@@ -79,6 +79,34 @@ arguments and 1 for a failed ODB open. These statuses describe the probe; the
 normal executable now uses the same 0/2/1 success/argument/runtime status policy;
 see the [CLI guide](cpp-cli.md) for flags, defaults and mode selection.
 
+## Format C++ locally
+
+GitHub's [style workflow](../.github/workflows/style-checks.yml) checks `.cpp`,
+`.h` and `.hpp` files with clang-format 14. The root `.clang-format` selects LLVM
+style; the executable version is selected separately.
+
+With Make and `uv` installed, run from the repository root:
+
+```text
+make format
+make format-check
+```
+
+`format` applies formatting; `format-check` checks without modifying files and
+returns a nonzero status on violations. Plain `make` defaults to the check.
+The wrapper pins clang-format 14.0.6 and selects tracked files, excluding
+generated build files. Git must also be available on PATH.
+
+On Windows without Make, invoke the same wrapper directly:
+
+```powershell
+uv run --no-project python tools/format_cpp.py
+uv run --no-project python tools/format_cpp.py --check
+```
+
+With Python and `uvx` already on PATH, `python tools/format_cpp.py --check` also
+works. The wrapper locates the repository independently of the working directory.
+
 ## Compare Python and C++ output
 
 Use compatible fixture copies and distinct output directories. The maintained

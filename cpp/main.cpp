@@ -33,21 +33,25 @@
 #include <iostream>
 
 namespace {
-int run(const std::vector<std::string>& arguments) {
-  return odb2vtk_core::cli_main(arguments,
-      [](const std::filesystem::path& path) -> std::unique_ptr<odb2vtk_core::Source> {
+int run(const std::vector<std::string> &arguments) {
+  return odb2vtk_core::cli_main(
+      arguments,
+      [](const std::filesystem::path &path)
+          -> std::unique_ptr<odb2vtk_core::Source> {
         return std::make_unique<odb2vtk_core::AbaqusSource>(path.string());
-      }, std::cout, std::cerr);
+      },
+      std::cout, std::cerr);
 }
-}
+} // namespace
 #ifdef _WIN32
-int wmain(int argc, wchar_t** argv) {
+int wmain(int argc, wchar_t **argv) {
   std::vector<std::string> arguments;
-  for (int i=1; i<argc; ++i) arguments.push_back(std::filesystem::path(argv[i]).u8string());
+  for (int i = 1; i < argc; ++i)
+    arguments.push_back(std::filesystem::path(argv[i]).u8string());
   return run(arguments);
 }
 #else
-int main(int argc, char** argv) {
-  return run(std::vector<std::string>(argv+1, argv+argc));
+int main(int argc, char **argv) {
+  return run(std::vector<std::string>(argv + 1, argv + argc));
 }
 #endif

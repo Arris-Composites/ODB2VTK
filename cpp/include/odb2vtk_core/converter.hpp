@@ -7,18 +7,20 @@ namespace odb2vtk_core {
 class FrameSink {
 public:
   virtual ~FrameSink() = default;
-  virtual void begin_frame(const FrameInfo&, const MeshData&, const std::vector<FieldMetadata>&) = 0;
-  virtual void field(const FieldArray&) = 0;
+  virtual void begin_frame(const FrameInfo &, const MeshData &,
+                           const std::vector<FieldMetadata> &) = 0;
+  virtual void field(const FieldArray &) = 0;
   virtual void end_frame() = 0;
 };
 class Converter {
 public:
-  explicit Converter(Source& source) : source_(source) {}
-  ConversionResult convert(const Selection& selection, FrameSink& sink) const;
-  HistoryTable history(const Selection& selection) const;
+  explicit Converter(Source &source) : source_(source) {}
+  ConversionResult convert(const Selection &selection, FrameSink &sink) const;
+  HistoryTable history(const Selection &selection) const;
   // Metadata-only validation; does not read geometry or create outputs.
-  void validate(const Selection&, bool frames) const;
+  void validate(const Selection &, bool frames) const;
+
 private:
-  Source& source_;
+  Source &source_;
 };
-}
+} // namespace odb2vtk_core
