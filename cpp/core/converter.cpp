@@ -1,4 +1,5 @@
 #include "odb2vtk_core/converter.hpp"
+#include "profiling.hpp"
 #include "odb2vtk_core/conversion.hpp"
 #include <algorithm>
 #include <unordered_map>
@@ -13,6 +14,7 @@ struct Plan {
 };
 std::vector<Plan> plans(Source& source, const FrameInfo& frame,
     const std::vector<std::string>& instances, std::vector<Diagnostic>& diagnostics) {
+  detail::PhaseScope timing(detail::Phase::field_discovery);
   std::vector<Plan> result;
   const auto names = source.field_names(frame.step, frame.index);
   for (const auto& name : names) {
@@ -51,9 +53,11 @@ std::vector<Plan> plans(Source& source, const FrameInfo& frame,
 }
 FieldArray read(Source& source, const Plan& plan, const FrameInfo& frame,
     const Selection& selection, const PreparedMesh& prepared) {
+  detail::PhaseScope timing(detail::Phase::field_assembly);
   if (plan.source.empty()) {
     Matrix quaternions(prepared.geometry.offsets.size(), 4);
     source.orientation_blocks(frame.step, frame.index, selection.instances(), [&](OrientationBlock block) {
+      detail::PhaseScope assembly(detail::Phase::field_assembly);
       if (block.labels.size() != block.quaternions.rows() || !block.quaternions.columns() || block.quaternions.columns() > 4)
         throw SourceError("Invalid orientation block shape");
       const auto found = prepared.elements.find(block.instance);
@@ -82,6 +86,7 @@ FieldArray read(Source& source, const Plan& plan, const FrameInfo& frame,
 }
 }
 void Converter::validate(const Selection& selection, bool frames) const {
+  detail::PhaseScope timing(detail::Phase::validation);
   if (source_.closed()) throw SourceError("ODB source is closed");
   if (frames && selection.instances().empty()) throw SelectionError("Select at least one instance");
   const auto names = selection.instances().empty() ? std::vector<std::string>{} : source_.instance_names();
@@ -99,14 +104,16 @@ void Converter::validate(const Selection& selection, bool frames) const {
 }
 ConversionResult Converter::convert(const Selection& selection, FrameSink& sink) const {
   validate(selection,true);
-  std::vector<InstanceMesh> snapshots;
-  for (const auto& name : selection.instances()) {
-    auto mesh = source_.mesh(name);
-    if (mesh.name != name) throw SourceError("Mesh instance identity differs from request");
-    snapshots.push_back(std::move(mesh));
-  }
-  const auto prepared = prepare_mesh(snapshots);
-  snapshots.clear(); // Geometry and maps own their storage, independently of source snapshots.
+  const auto prepared = [&] {
+    detail::PhaseScope timing(detail::Phase::mesh_preparation);
+    std::vector<InstanceMesh> snapshots;
+    for (const auto& name : selection.instances()) {
+      auto mesh = source_.mesh(name);
+      if (mesh.name != name) throw SourceError("Mesh instance identity differs from request");
+      snapshots.push_back(std::move(mesh));
+    }
+    return prepare_mesh(snapshots);
+  }();
   ConversionResult result;
   for (const auto& step : selection.steps()) for (auto index : step.frames) {
     const FrameInfo frame{step.name, static_cast<std::size_t>(index), source_.frame_time(step.name,static_cast<std::size_t>(index))};

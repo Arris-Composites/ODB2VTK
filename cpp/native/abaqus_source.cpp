@@ -1,4 +1,5 @@
 #include "odb2vtk_core/abaqus_source.hpp"
+#include "../core/profiling.hpp"
 #include <algorithm>
 #include <atomic>
 #include <filesystem>
@@ -154,12 +155,14 @@ struct AbaqusSource::Impl {
 };
 
 AbaqusSource::AbaqusSource(const std::string& path) {
+  detail::PhaseScope timing(detail::Phase::odb_open);
   if (path.empty() || path.find('\0') != std::string::npos) throw SourceError("Invalid ODB path");
   impl_ = std::make_unique<Impl>(path);
 }
 AbaqusSource::~AbaqusSource() noexcept { try { close(); } catch (...) {} }
 bool AbaqusSource::closed() const noexcept { return !impl_ || !impl_->db; }
 void AbaqusSource::close() {
+  detail::PhaseScope timing(detail::Phase::odb_close);
   if (closed()) return;
   impl_->clear_frame();
   impl_->db=nullptr;
@@ -252,6 +255,7 @@ FieldInfo AbaqusSource::describe_field(const std::string& step,std::size_t frame
 void AbaqusSource::field_blocks(const std::string& step,std::size_t frame,const std::string& name,
     const std::string& instance,const std::string& position,const std::optional<SectionPoint>& point,
     const BlockVisitor& visit) const {
+  detail::PhaseScope timing(detail::Phase::field_read);
   impl_->require_open(); auto lifetime=impl_->database;
   sdk([&] {
     auto field=impl_->field(step,frame,name);
@@ -277,6 +281,7 @@ void AbaqusSource::field_blocks(const std::string& step,std::size_t frame,const 
 }
 void AbaqusSource::orientation_blocks(const std::string& step,std::size_t frame,
     const std::vector<std::string>& instances,const OrientationVisitor& visit) const {
+  detail::PhaseScope timing(detail::Phase::field_read);
   impl_->require_open(); auto lifetime=impl_->database;
   sdk([&] {
     const auto names=field_names(step,frame);

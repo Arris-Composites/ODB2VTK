@@ -1,5 +1,6 @@
 #include "odb2vtk_core/outputs.hpp"
 #include "atomic_file.hpp"
+#include "profiling.hpp"
 #include <algorithm>
 #include <atomic>
 #include <cerrno>
@@ -109,6 +110,7 @@ void validate_destinations(const std::vector<fs::path>& paths) {
 }
 
 detail::AtomicFile::AtomicFile(const fs::path& path) {
+  PhaseScope timing(Phase::file_publication);
   try {
     destination_ = fs::absolute(path).lexically_normal();
     check_directory(destination_);
@@ -123,10 +125,12 @@ detail::AtomicFile::AtomicFile(const fs::path& path) {
   }
 }
 detail::AtomicFile::~AtomicFile() noexcept {
+  PhaseScope timing(Phase::file_publication);
   try { if (stream_.is_open()) stream_.close(); } catch (...) {}
   if (!temporary_.empty()) { std::error_code ignored; fs::remove(temporary_, ignored); }
 }
 void detail::AtomicFile::publish() {
+  PhaseScope timing(Phase::file_publication);
   if (temporary_.empty()) throw OutputError("Output already published");
   try { stream_.flush(); stream_.close(); }
   catch (const std::exception& error) { throw OutputError(std::string("Cannot complete output: ") + error.what()); }

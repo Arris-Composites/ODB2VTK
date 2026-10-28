@@ -18,9 +18,10 @@ ctest --test-dir cpp/build/pure -C Release --output-on-failure
 ```
 
 The default `ODB2VTK_BUILD_NATIVE=OFF` builds the SDK-independent core and its
-tests. SDK discovery is not performed. Four CTest suites cover element-family
+tests. SDK discovery is not performed. Five CTest suites cover element-family
 mapping (18 checks), numerical/source behavior (62 checks) and serialization/
-publication (122 checks on Windows), plus CLI/execution (103 checks).
+publication (123 checks on Windows), CLI/execution (103 checks) and exclusive
+profiling/session accounting.
 `odb2vtk_writer_fixture` generates files for
 the independent VTK edge checks in the [writer guide](cpp-writers.md).
 
@@ -43,12 +44,15 @@ is still built when native support/testing are enabled without a fixture.
 
 Native targets include `ODB2VTK` (the current exporter), `odb2vtk_sdk_smoke`,
 `odb2vtk_source_probe`, `odb2vtk_source_ownership`, `odb2vtk_double_fixture` and
-`odb2vtk_export_probe`. The probes and fixture creator are validation tools built
+`odb2vtk_export_probe` and `odb2vtk_profile_exports`. The probes and fixture creator are validation tools built
 when testing is enabled. With a test
 ODB supplied, CTest registers both native smoke and ownership tests alongside
-the four SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
+the five SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
 for the source contract and [Phase 3 results](cpp-phase3-results.md) for writer
 parity and publication behavior.
+The [performance guide](cpp-performance.md) describes the profiling target and
+alternating Python/native benchmark commands; [Phase 5](cpp-phase5-results.md)
+records final parity, timings and limits.
 Missing required SDK paths/libraries cause configuration to fail with an
 actionable message. For customized installations, the `AbqSDK_INCLUDE_DIR`,
 `AbqSDK_PUBLIC_INCLUDE_DIR` and per-library `AbqSDK_<component>_LIBRARY` cache

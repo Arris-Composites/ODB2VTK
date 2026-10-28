@@ -1,0 +1,1175 @@
+{
+  "phase": 5,
+  "date": "2026-10-27",
+  "phase4_commit": "4acbc7e",
+  "python_reference_commit": "0fe548c",
+  "environment": {
+    "cpu": "Intel Core i5-13400F",
+    "physical_cores": 10,
+    "logical_processors": 16,
+    "physical_memory_bytes": 34163941376,
+    "build": "Windows x64 Release, MSVC 19.41, Abaqus 2025 HF1, VTK 9.7.1"
+  },
+  "native_ctest": {
+    "passed": 7,
+    "total": 7
+  },
+  "sdk_independent_ctest": {
+    "passed": 5,
+    "total": 5
+  },
+  "writer_publication_checks": 123,
+  "numerical_source_checks": 62,
+  "cli_execution_checks": 103,
+  "element_mapping_checks": 18,
+  "final_cli_process_cases": 48,
+  "prior_phase4_process_cases": 192,
+  "native_vtu_files": 42,
+  "field_arrays": 284,
+  "parity_matrix": [
+    {
+      "fixture": "Job-1",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "implementation": "cpp",
+        "format": "ascii"
+      },
+      "input_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 3840,
+          "cells": 2604,
+          "field_arrays": 7,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 3840,
+          "cells": 2604,
+          "field_arrays": 7,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "Job-1",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "implementation": "cpp",
+        "format": "binary"
+      },
+      "input_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 3840,
+          "cells": 2604,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 673960,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 3840,
+          "cells": 2604,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 673960,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "compact",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "implementation": "cpp",
+        "format": "ascii"
+      },
+      "input_sha256": "083b46bc2b4bfc63f3aca205c8f34698a260ea1321b1d6791b9626a0742348c4",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_2.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_3.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "compact",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "implementation": "cpp",
+        "format": "binary"
+      },
+      "input_sha256": "083b46bc2b4bfc63f3aca205c8f34698a260ea1321b1d6791b9626a0742348c4",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_2.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_3.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "sparse",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "implementation": "cpp",
+        "format": "ascii"
+      },
+      "input_sha256": "acdaf8c6d721205ce49e4cf267e11e78daa14594f2dc800cfff67b414a5b0876",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_2.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_3.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "sparse",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "implementation": "cpp",
+        "format": "binary"
+      },
+      "input_sha256": "acdaf8c6d721205ce49e4cf267e11e78daa14594f2dc800cfff67b414a5b0876",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_2.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_3.vtu",
+          "points": 160000,
+          "cells": 20000,
+          "field_arrays": 9,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 13,
+            "payload_bytes": 13040104,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "planar",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "ascii",
+        "input_unchanged": true
+      },
+      "input_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 99,
+          "cells": 80,
+          "field_arrays": 7,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 99,
+          "cells": 80,
+          "field_arrays": 7,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "planar",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "binary",
+        "input_unchanged": true,
+        "binary_layout": [
+          {
+            "arrays": 11,
+            "payload_bytes": 13968,
+            "exact_layout": true
+          },
+          {
+            "arrays": 11,
+            "payload_bytes": 13968,
+            "exact_layout": true
+          }
+        ]
+      },
+      "input_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 99,
+          "cells": 80,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 13968,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 99,
+          "cells": 80,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 13968,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "mixed",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "ascii",
+        "input_unchanged": true
+      },
+      "input_sha256": "64a6d1b1b2ac79435943586f43c3ae672aeab0bd9d3495e5127f1730016a3a47",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "mixed",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "binary",
+        "input_unchanged": true,
+        "binary_layout": [
+          {
+            "arrays": 11,
+            "payload_bytes": 6840,
+            "exact_layout": true
+          },
+          {
+            "arrays": 11,
+            "payload_bytes": 6840,
+            "exact_layout": true
+          }
+        ]
+      },
+      "input_sha256": "64a6d1b1b2ac79435943586f43c3ae672aeab0bd9d3495e5127f1730016a3a47",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 6840,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 6840,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "no-stress",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "ascii",
+        "input_unchanged": true
+      },
+      "input_sha256": "9ab744952516f50d3621144678fc4ed11d67e35c99aad254a13713da3e64ea36",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 2,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 2,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "no-stress",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 2,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "binary",
+        "input_unchanged": true,
+        "binary_layout": [
+          {
+            "arrays": 6,
+            "payload_bytes": 3248,
+            "exact_layout": true
+          },
+          {
+            "arrays": 6,
+            "payload_bytes": 3248,
+            "exact_layout": true
+          }
+        ]
+      },
+      "input_sha256": "9ab744952516f50d3621144678fc4ed11d67e35c99aad254a13713da3e64ea36",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 2,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 6,
+            "payload_bytes": 3248,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 2,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 6,
+            "payload_bytes": 3248,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "double",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 1,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "ascii",
+        "input_unchanged": true
+      },
+      "input_sha256": "071d5dc7ff4ddc5a1a104685220f072a0731a0d20d59fefba11d59920d518845",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 3840,
+          "cells": 2604,
+          "field_arrays": 8,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "double",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 1,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "binary",
+        "input_unchanged": true,
+        "binary_layout": [
+          {
+            "arrays": 12,
+            "payload_bytes": 720048,
+            "exact_layout": true
+          }
+        ]
+      },
+      "input_sha256": "071d5dc7ff4ddc5a1a104685220f072a0731a0d20d59fefba11d59920d518845",
+      "frames": [
+        {
+          "file": "Step-1_0.vtu",
+          "points": 3840,
+          "cells": 2604,
+          "field_arrays": 8,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 12,
+            "payload_bytes": 720048,
+            "exact_layout": true
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "two-step",
+      "format": "ascii",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "ascii"
+      },
+      "input_sha256": "33fa25a370b2f22ef288eb1f9a5744b6635f3e969559313a9d2e3c5cc3f8f9aa",
+      "frames": [
+        {
+          "file": "Step-2_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 1,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-2_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 1,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": []
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": []
+        }
+      ]
+    },
+    {
+      "fixture": "two-step",
+      "format": "binary",
+      "comparison": {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "binary"
+      },
+      "input_sha256": "33fa25a370b2f22ef288eb1f9a5744b6635f3e969559313a9d2e3c5cc3f8f9aa",
+      "frames": [
+        {
+          "file": "Step-2_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 1,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 5,
+            "payload_bytes": 2984,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-2_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 1,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 5,
+            "payload_bytes": 2984,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_0.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 6840,
+            "exact_layout": true
+          }
+        },
+        {
+          "file": "Step-1_1.vtu",
+          "points": 64,
+          "cells": 8,
+          "field_arrays": 7,
+          "reader_messages": [],
+          "binary_layout": {
+            "arrays": 11,
+            "payload_bytes": 6840,
+            "exact_layout": true
+          }
+        }
+      ]
+    }
+  ],
+  "header_checks": [
+    {
+      "fixture": "Job-1",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "compact",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "sparse",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "planar",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "mixed",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "no-stress",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "double",
+      "header_exact": true,
+      "input_unchanged": true
+    },
+    {
+      "fixture": "two-step",
+      "header_exact": true,
+      "input_unchanged": true
+    }
+  ],
+  "edge_validation": {
+    "passed": true,
+    "fixtures": [
+      {
+        "format": "ascii",
+        "fixture": "special",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 2
+      },
+      {
+        "format": "ascii",
+        "fixture": "empty",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 0
+      },
+      {
+        "format": "binary",
+        "fixture": "special",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 0,
+        "binary_layout": {
+          "arrays": 5,
+          "payload_bytes": 456,
+          "exact_layout": true
+        }
+      },
+      {
+        "format": "binary",
+        "fixture": "empty",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 0,
+        "binary_layout": {
+          "arrays": 5,
+          "payload_bytes": 40,
+          "exact_layout": true
+        }
+      }
+    ],
+    "unicode_and_control_escaping": true,
+    "json_schema": true,
+    "csv_quoting": true,
+    "pvd_schema": true,
+    "python_ascii_behavior_matches": true,
+    "ascii_negative_infinity_reader_limitation": true
+  },
+  "cli_validation": {
+    "passed": true,
+    "input_sha256": "33fa25a370b2f22ef288eb1f9a5744b6635f3e969559313a9d2e3c5cc3f8f9aa",
+    "input_unchanged": true,
+    "cases": [
+      {
+        "implementation": "cpp",
+        "case": "help",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "header",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "help",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "header",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "ascii_frames_history",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "ascii_collection_only",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "ascii_frames_history",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "ascii_collection_only",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "binary_frames_history",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "binary_collection_only",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "binary_frames_history",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "binary_collection_only",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "default_frames",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "cpp",
+        "case": "missing_header",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "missing_value",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "unknown_flag",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "extra_value",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "bad_format",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "bad_history",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "bad_collection",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "bad_suffix",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "no_selection",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "ranged_frames",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "duplicate_frames",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "out_of_range",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "missing_collection",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "cpp",
+        "case": "preflight_conflict",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "cpp",
+        "case": "invalid_odb",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "cpp",
+        "case": "locked_second_frame",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "python",
+        "case": "default_frames",
+        "expected_code": 0,
+        "actual_code": 0
+      },
+      {
+        "implementation": "python",
+        "case": "missing_header",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "missing_value",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "unknown_flag",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "extra_value",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "bad_format",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "bad_history",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "bad_collection",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "bad_suffix",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "no_selection",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "ranged_frames",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "duplicate_frames",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "out_of_range",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "python",
+        "case": "missing_collection",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "python",
+        "case": "preflight_conflict",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "python",
+        "case": "invalid_odb",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "python",
+        "case": "locked_second_frame",
+        "expected_code": 1,
+        "actual_code": 1
+      },
+      {
+        "implementation": "cpp",
+        "case": "repeated_flag",
+        "expected_code": 2,
+        "actual_code": 2
+      },
+      {
+        "implementation": "cpp",
+        "case": "abbreviated_flag",
+        "expected_code": 2,
+        "actual_code": 2
+      }
+    ],
+    "comparisons": [
+      {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "ascii"
+      },
+      {
+        "parity": true,
+        "frames_checked": 4,
+        "differences": [],
+        "float32_rounding": [],
+        "float32_ulp_limit": 1,
+        "format": "binary"
+      }
+    ],
+    "default_ascii": true,
+    "default_no_history_or_collection": true,
+    "ordered_steps": [
+      "Step-2:1,0",
+      "Step-1:0,1"
+    ],
+    "collection_preserves_vtu_bytes_and_mtime": true,
+    "unicode_suffix_and_spaced_paths": true
+  },
+  "benchmark_processes": {
+    "measured": 54,
+    "warmup": 18,
+    "phase_probes": 18
+  },
+  "ascii_numeric_chunk_bytes": 65536,
+  "binary_numeric_chunk_bytes": 65536,
+  "baseline_vtu_byte_identity": true,
+  "source_and_writer_interfaces_unchanged": true,
+  "parallel_coordination": "Not added; serial parity complete",
+  "platform_limits": [
+    "Other Abaqus SDK versions",
+    "POSIX publication path",
+    "Debug builds"
+  ],
+  "code_sha256_lf": {
+    "cpp/CMakeLists.txt": "31addcea07c59ec187ccfae48a0dfa82a040d69cac25bbdf7a93ea8b489007bf",
+    "cpp/core/conversion.cpp": "bf9a6b63e6e8015f3b3bffbb0b8796814f1a03bd1cb74de1e2448d152d0b4be3",
+    "cpp/core/converter.cpp": "0fdbd9c6807a91f0de06bfbb1f08487abfef2d9d82bb0c21d4f238f733617447",
+    "cpp/core/exporter.cpp": "29a725c29eeb3756c6b8c4dab725cdb5f5bbab2ca25c5950d213ed60d5d0cf62",
+    "cpp/core/outputs.cpp": "e5f1b76f0a12376fdf03bb9619bf8f15a49f3fb85d75ad562f7a6ab92275bb31",
+    "cpp/core/writers.cpp": "d39602c8c6f099e7a0bc409e38a1ba05b98895dd9b3d8ad198a354229200cc3c",
+    "cpp/native/abaqus_source.cpp": "84e5e7ea9da1becde8b2740bf361ffb1cce64fab398f99e07f5752a4967a21b7",
+    "cpp/tests/test_writers.cpp": "e3938d93ffec54d693ecc2a241dbd92a6f8893dda021b1c0beb3b4c34cc7946f",
+    "cpp/core/profiling.cpp": "aefd2b451b4fc99f7aa60f09283198bbd30fb4e5d1f28395e9235d3092e41181",
+    "cpp/core/profiling.hpp": "c890482c6552ebb8abe13d433e545e1600f25abe3ed30a032d4332fd4c7bbd09",
+    "cpp/tests/test_profiling.cpp": "46f638f96b122559058db312fea610dbe9749d83718eb9a92a88ef6956832e76",
+    "cpp/validation/benchmark_exports.py": "5c829a4112e05f9a1ae8f359e611765b3991c8de0931c32597ccf769e0631ab5",
+    "cpp/validation/profile_exports.cpp": "570e1e8a3f1115f115ca2d6cd49b93b0c266d07709b8898bf0e9f61d54fac2d9"
+  },
+  "baseline_reproduction": {
+    "patch": "doc/validation/cpp-ascii-stream-baseline.patch",
+    "patch_sha256": "bb1db9a3c6044764d0d8571c2e817e7102f721acdb5c98e31f41f9da039465e9",
+    "writer_sha256_lf": "acf4eee68b0078de4fdd4ac9bfd255546e0f270d49c467d3bd1b0bbd1ec191f3",
+    "provenance": "4acbc7e numerical ASCII formatting with the same internal phase instrumentation; no runtime legacy branch"
+  }
+}

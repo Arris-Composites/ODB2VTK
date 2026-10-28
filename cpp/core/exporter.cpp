@@ -1,5 +1,6 @@
 #include "odb2vtk_core/exporter.hpp"
 #include "atomic_file.hpp"
+#include "profiling.hpp"
 #include <memory>
 
 namespace odb2vtk_core {
@@ -67,6 +68,7 @@ void Exporter::report(const std::string& kind, const std::filesystem::path& path
   if (progress_) progress_({kind, path, completed, total});
 }
 std::vector<FrameExport> Exporter::validate_frames(const Selection& selection, const OutputOptions& outputs) const {
+  detail::PhaseScope timing(detail::Phase::validation);
   Converter(source_).validate(selection, true);
   std::vector<FrameExport> frames;
   std::vector<std::filesystem::path> paths;
@@ -94,6 +96,7 @@ ExportResult Exporter::export_frames(const Selection& selection, const OutputOpt
     });
     result.diagnostics = Converter(source_).convert(selection, sink).diagnostics;
     if (outputs.write_pvd()) {
+      detail::PhaseScope timing(detail::Phase::collection);
       const auto entries = collection_entries(result.frames);
       const auto path = outputs.collection_path();
       atomic_output(path, [&](std::ostream& out) { write_collection(out, entries); });
@@ -118,6 +121,7 @@ ExportResult Exporter::export_header(const OutputOptions& outputs) const {
   return result;
 }
 ExportResult Exporter::export_history(const Selection& selection, const OutputOptions& outputs) const {
+  detail::PhaseScope timing(detail::Phase::history);
   validate_history(selection, outputs);
   const auto path = outputs.history_path();
   ExportResult result;
@@ -130,10 +134,12 @@ ExportResult Exporter::export_history(const Selection& selection, const OutputOp
   return result;
 }
 void Exporter::validate_history(const Selection& selection, const OutputOptions& outputs) const {
+  detail::PhaseScope timing(detail::Phase::validation);
   Converter(source_).validate(selection, false);
   validate_destinations({outputs.history_path()});
 }
 std::vector<FrameExport> Exporter::validate_collection(const Selection& selection, const OutputOptions& outputs) const {
+  detail::PhaseScope timing(detail::Phase::validation);
   const auto frames = validate_frames(selection, outputs);
   const auto path = outputs.collection_path();
   validate_destinations({path});
@@ -145,6 +151,7 @@ std::vector<FrameExport> Exporter::validate_collection(const Selection& selectio
   return frames;
 }
 ExportResult Exporter::export_collection(const Selection& selection, const OutputOptions& outputs) const {
+  detail::PhaseScope timing(detail::Phase::collection);
   const auto frames = validate_collection(selection, outputs);
   const auto path = outputs.collection_path();
   ExportResult result;

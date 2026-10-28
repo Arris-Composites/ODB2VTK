@@ -121,13 +121,15 @@ struct CountBuffer : std::stringbuf {
   }
 };
 void bounded_binary() {
-  CountBuffer buffer; std::ostream stream(&buffer);
-  const MeshData geometry{Matrix(40000,3),{},{},{}};
-  const FieldMetadata meta{"v","PointData","Vectors",{},3};
-  VtuWriter writer(stream,VtuFormat::binary);
-  writer.begin_frame({"Step",0,0},geometry,{meta});
-  writer.field({meta,Matrix(40000,3)}); writer.end_frame();
-  check(buffer.maximum <= 64*1024, "Binary writer made an unbounded write");
+  for (auto format : {VtuFormat::ascii,VtuFormat::binary}) {
+    CountBuffer buffer; std::ostream stream(&buffer);
+    const MeshData geometry{Matrix(40000,3),{},{},{}};
+    const FieldMetadata meta{"v","PointData","Vectors",{},3};
+    VtuWriter writer(stream,format);
+    writer.begin_frame({"Step",0,0},geometry,{meta});
+    writer.field({meta,Matrix(40000,3)}); writer.end_frame();
+    check(buffer.maximum <= 64*1024, "Numerical writer made an unbounded write");
+  }
 }
 InMemorySource sample(bool bad_second = false) {
   const InstanceMesh part{"A",{10,20},mesh().points,{{7,{10,20},"B31"}}};

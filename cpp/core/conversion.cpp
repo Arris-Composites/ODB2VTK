@@ -1,5 +1,6 @@
 #include "odb2vtk_core/conversion.hpp"
 #include "odb2vtk_core/mesh.hpp"
+#include "profiling.hpp"
 #include <algorithm>
 #include <limits>
 #include <unordered_set>
@@ -56,6 +57,7 @@ PreparedMesh prepare_mesh(const std::vector<InstanceMesh>& instances) {
   return result;
 }
 void place_points(const FieldBlock& block, const LabelLookup& lookup, Matrix& output) {
+  detail::PhaseScope timing(detail::Phase::field_assembly);
   if (block.labels.size() != block.values.rows() || block.values.columns() != output.columns())
     throw SourceError("Point field shape mismatch");
   const auto rows = lookup.rows(block.labels);
@@ -64,6 +66,7 @@ void place_points(const FieldBlock& block, const LabelLookup& lookup, Matrix& ou
     for (std::size_t c = 0; c < output.columns(); ++c) output(rows[i], c) = block.values(i, c);
 }
 void place_cells(const FieldBlock& block, const LabelLookup& lookup, Matrix& output) {
+  detail::PhaseScope timing(detail::Phase::field_assembly);
   if (block.position != "INTEGRATION_POINT" && block.integration_points.empty()) {
     place_points(block, lookup, output); return;
   }

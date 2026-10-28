@@ -1,6 +1,8 @@
 #include "odb2vtk_core/writers.hpp"
+#include "profiling.hpp"
 #include <algorithm>
 #include <array>
+#include <charconv>
 #include <cmath>
 #include <cstring>
 #include <iomanip>
@@ -107,16 +109,47 @@ void binary_array(std::ostream& out, const Values& values, std::size_t item_size
   if (used) out.write(reinterpret_cast<const char*>(buffer.data()), static_cast<std::streamsize>(used));
   checked(out);
 }
-void ascii_matrix(std::ostream& out, const Matrix& matrix) {
-  for (std::size_t row = 0; row < matrix.rows(); ++row) {
-    for (std::size_t c = 0; c < matrix.columns(); ++c) {
-      if (c) out << ' ';
-      out << matrix(row,c);
-    }
-    out << '\n';
-    if (row % 4096 == 0) checked(out);
+class AsciiChunk {
+public:
+  explicit AsciiChunk(std::ostream& out) : out_(out) {}
+  void number(double value) {
+    char text[128];
+    const auto result = std::to_chars(text, text + sizeof(text), value,
+        std::chars_format::general, std::numeric_limits<double>::max_digits10);
+    append(text, result);
   }
-  checked(out);
+  void number(std::int64_t value) {
+    char text[32];
+    append(text, std::to_chars(text, text + sizeof(text), value));
+  }
+  void separator(char value) {
+    if (used_ == buffer_.size()) flush();
+    buffer_[used_++] = value;
+  }
+  void flush() {
+    if (used_) out_.write(buffer_.data(), static_cast<std::streamsize>(used_));
+    checked(out_); used_ = 0;
+  }
+private:
+  void append(const char* begin, const std::to_chars_result& result) {
+    if (result.ec != std::errc{}) throw OutputError("Cannot format ASCII number");
+    const auto length = static_cast<std::size_t>(result.ptr - begin);
+    if (length > buffer_.size() - used_) flush();
+    std::memcpy(buffer_.data() + used_, begin, length); used_ += length;
+  }
+  std::ostream& out_;
+  std::array<char, 64 * 1024> buffer_{};
+  std::size_t used_ = 0;
+};
+void ascii_matrix(std::ostream& out, const Matrix& matrix) {
+  AsciiChunk chunk(out);
+  std::size_t column = 0;
+  for (auto value : matrix.values()) {
+    chunk.number(value);
+    if (++column == matrix.columns()) { chunk.separator('\n'); column = 0; }
+    else chunk.separator(' ');
+  }
+  chunk.flush();
 }
 bool same(const FieldMetadata& a, const FieldMetadata& b) {
   return a.name == b.name && a.association == b.association && a.kind == b.kind &&
@@ -189,7 +222,9 @@ struct VtuWriter::Impl {
     for (std::size_t i = 0; i < 3; ++i) {
       array("Int64", arrays[i]->size(), 1, 8, &names[i], {}, false);
       if (!binary()) {
-        for (auto value : *arrays[i]) out << value << '\n';
+        AsciiChunk chunk(out);
+        for (auto value : *arrays[i]) { chunk.number(value); chunk.separator('\n'); }
+        chunk.flush();
         out << "</DataArray>\n";
       }
     }
@@ -202,6 +237,7 @@ VtuWriter::VtuWriter(std::ostream& stream, VtuFormat format)
 VtuWriter::~VtuWriter() = default;
 void VtuWriter::begin_frame(const FrameInfo&, const MeshData& mesh,
                             const std::vector<FieldMetadata>& metadata) {
+  detail::PhaseScope timing(detail::Phase::vtu_serialization);
   auto& s = *impl_;
   if (s.mesh) throw OutputError("Previous VTU frame is incomplete");
   validate_mesh(mesh);
@@ -237,6 +273,7 @@ void VtuWriter::begin_frame(const FrameInfo&, const MeshData& mesh,
   checked(s.out);
 }
 void VtuWriter::field(const FieldArray& field) {
+  detail::PhaseScope timing(detail::Phase::vtu_serialization);
   auto& s = *impl_;
   if (!s.mesh || s.next >= s.metadata.size() || !same(field.metadata, s.metadata[s.next]))
     throw OutputError("VTU field differs from declared metadata/order");
@@ -254,6 +291,7 @@ void VtuWriter::field(const FieldArray& field) {
   ++s.next; checked(s.out);
 }
 void VtuWriter::end_frame() {
+  detail::PhaseScope timing(detail::Phase::vtu_serialization);
   auto& s = *impl_;
   if (!s.mesh || s.next != s.metadata.size()) throw OutputError("VTU frame has missing fields");
   if (s.binary()) {

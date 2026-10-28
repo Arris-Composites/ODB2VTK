@@ -118,6 +118,9 @@ tests, Abaqus 2025 integration probes and a semantic comparison harness.
 parity. [Phase 3](doc/cpp-phase3-results.md) adds ASCII/binary writers, JSON/CSV/PVD
 and safe publication. [Phase 4](doc/cpp-phase4-results.md) aligns the serial CLI;
 see the [CLI guide](doc/cpp-cli.md) and [alignment plan](doc/cpp-parity-plan.md).
+[Phase 5](doc/cpp-phase5-results.md) records final serial parity and performance:
+42 native VTUs/284 field arrays match Python, with both formats benchmarked on
+the same ODB bytes. See the [performance guide](doc/cpp-performance.md) to reproduce.
 
 From the repository root, build the core without Abaqus:
 
