@@ -1,0 +1,228 @@
+"""Shared source contracts and ownership tests without Abaqus import stubs."""
+
+import os
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from odb2vtk_core import Converter, OutputOptions, Selection
+from odb2vtk_core.models import SectionPoint
+from odb2vtk_core.source import AbaqusSource
+from odb2vtk_core.errors import SelectionError
+from support import CONSTANTS, NativeOdb, make_source
+
+
+class SourceContract:
+    def setUp(self):
+        self.source, self.handle = self.make_subject()
+        self.addCleanup(self.source.close)
+
+    def test_metadata_and_mesh_preserve_instance_identity_and_order(self):
+        self.assertEqual(self.source.instance_names, ("A", "B"))
+        self.assertEqual(
+            [(step.name, step.frame_count) for step in self.source.steps],
+            [("Step-1", 1)],
+        )
+        self.assertEqual(self.source.frame_time("Step-1", 0), 0.5)
+        self.assertEqual(self.source.mesh("A").node_labels, (3, 1, 4, 2))
+        self.assertEqual(tuple(e.label for e in self.source.mesh("B").elements), (7,))
+        mesh = self.source.mesh("B")
+        np.testing.assert_array_equal(mesh.coordinates[0], (3, 100, 0))
+        self.assertEqual(mesh.elements[0].connectivity, (1, 2, 3, 4))
+
+    def test_field_metadata_and_sections_are_plain_records(self):
+        self.assertEqual(self.source.field_names("Step-1", 0), ("U", "TEMP", "S"))
+        info = self.source.describe_field("Step-1", 0, "S", ["A", "B"])
+        self.assertEqual(info.layout.position, "INTEGRATION_POINT")
+        self.assertEqual(info.layout.component_names, ("S11", "S22"))
+        self.assertEqual(
+            info.section_points, (SectionPoint(1, "Top"), SectionPoint(2, "Bottom"))
+        )
+        self.assertEqual(info.max_integration_point, 2)
+        scalar = self.source.describe_field("Step-1", 0, "TEMP", ["A"])
+        self.assertEqual(scalar.layout.component_names, ("0",))
+
+    def test_field_subset_and_centroid_values_are_preserved(self):
+        info = self.source.describe_field("Step-1", 0, "S", ["A", "B"])
+        (block,) = self.source.field_blocks(
+            "Step-1", 0, "S", "B", "CENTROID", info.section_points[0]
+        )
+        self.assertEqual(block.instance_name, "B")
+        self.assertEqual(block.position, "CENTROID")
+        self.assertIsNone(block.integration_points)
+        self.assertEqual(block.section_point, SectionPoint(1, "Top"))
+        np.testing.assert_array_equal(block.labels, [7])
+        np.testing.assert_array_equal(block.values, [[190, 191]])
+
+    def test_returned_arrays_do_not_alias_the_source(self):
+        mesh = self.source.mesh("A")
+        mesh.coordinates.fill(-1)
+        np.testing.assert_array_equal(self.source.mesh("A").coordinates[0], [3, 0, 0])
+        (block,) = self.source.field_blocks("Step-1", 0, "U", "A", "NODAL")
+        block.values.fill(-1)
+        block.labels.fill(-1)
+        (again,) = self.source.field_blocks("Step-1", 0, "U", "A", "NODAL")
+        np.testing.assert_array_equal(again.labels, [1, 2, 3, 4])
+        np.testing.assert_array_equal(again.values[:, 0], [1, 2, 3, 4])
+        ip = next(self.source.field_blocks("Step-1", 0, "S", "A", "INTEGRATION_POINT"))
+        ip.integration_points.fill(99)
+        again = next(
+            self.source.field_blocks("Step-1", 0, "S", "A", "INTEGRATION_POINT")
+        )
+        np.testing.assert_array_equal(again.integration_points, [1, 2])
+
+    def test_snapshots_remain_usable_after_close(self):
+        mesh = self.source.mesh("A")
+        field = next(self.source.field_blocks("Step-1", 0, "U", "A", "NODAL"))
+        orientation = next(self.source.orientation_blocks("Step-1", 0, ["A", "B"]))
+        history = next(self.source.history("Step-1"))
+        self.source.close()
+        self.assertEqual(mesh.node_labels, (3, 1, 4, 2))
+        np.testing.assert_array_equal(mesh.coordinates[0], (3, 0, 0))
+        self.assertEqual(mesh.elements[0].connectivity, (1, 2, 3, 4))
+        np.testing.assert_array_equal(field.labels, [1, 2, 3, 4])
+        np.testing.assert_array_equal(field.values[:, 0], [1, 2, 3, 4])
+        np.testing.assert_array_equal(orientation.quaternions, [[0, 0, 0, 1]])
+        np.testing.assert_array_equal(history.timestamps, [0, 1])
+        np.testing.assert_array_equal(history.values, [11, 12])
+
+    def test_closed_source_rejects_queries_and_reentry(self):
+        self.source.close()
+        for query in (
+            lambda: self.source.instance_names,
+            lambda: self.source.steps,
+            lambda: self.source.mesh("A"),
+            lambda: self.source.frame_time("Step-1", 0),
+            lambda: self.source.field_names("Step-1", 0),
+            lambda: self.source.describe_field("Step-1", 0, "U", ["A"]),
+            lambda: list(self.source.field_blocks("Step-1", 0, "U", "A", "NODAL")),
+            lambda: list(self.source.orientation_blocks("Step-1", 0, ["A"])),
+            lambda: list(self.source.history("Step-1")),
+            self.source.__enter__,
+        ):
+            with self.subTest(query=query):
+                with self.assertRaisesRegex(RuntimeError, "source is closed"):
+                    query()
+
+    def test_partly_consumed_iterators_reject_reads_after_close(self):
+        factories = (
+            lambda source: source.field_blocks(
+                "Step-1", 0, "S", "A", "INTEGRATION_POINT"
+            ),
+            lambda source: source.orientation_blocks("Step-1", 0, ["A", "B"]),
+            lambda source: source.history("Step-1"),
+        )
+        for factory in factories:
+            source, _ = self.make_subject()
+            self.addCleanup(source.close)
+            iterator = factory(source)
+            next(iterator)
+            source.close()
+            with self.assertRaisesRegex(RuntimeError, "source is closed"):
+                next(iterator)
+
+    def test_context_closes_once_and_preserves_the_original_exception(self):
+        with self.assertRaisesRegex(ValueError, "export failed"):
+            with self.source:
+                raise ValueError("export failed")
+        self.source.close()
+        self.assertTrue(self.source.closed)
+        self.assertEqual(self.handle.close_calls, 1)
+
+
+class InMemorySourceContractTests(SourceContract, unittest.TestCase):
+    def make_subject(self):
+        source = make_source()
+        return source, source
+
+
+class AbaqusSourceContractTests(SourceContract, unittest.TestCase):
+    def make_subject(self):
+        native = NativeOdb(make_source(), invalidate_on_close=True)
+        return AbaqusSource(native, CONSTANTS), native
+
+    def test_bad_bulk_shapes_are_rejected_at_the_source(self):
+        field = self.handle.steps["Step-1"].frames[0].fieldOutputs["U"]
+        field.blocks[0][2].data = np.zeros((1, 3))
+        with self.assertRaisesRegex(ValueError, "matching lengths"):
+            list(self.source.field_blocks("Step-1", 0, "U", "A", "NODAL"))
+
+    def test_mesh_snapshot_traverses_native_nodes_and_elements_once(self):
+        class Collection(list):
+            traversals = 0
+
+            def __iter__(self):
+                self.traversals += 1
+                return super().__iter__()
+
+        native = self.handle.rootAssembly.instances["A"]
+        native.nodes = Collection(native.nodes)
+        native.elements = Collection(native.elements)
+        mesh = self.source.mesh("A")
+        self.assertEqual(native.nodes.traversals, 1)
+        self.assertEqual(native.elements.traversals, 1)
+        self.assertEqual(mesh.node_labels, (3, 1, 4, 2))
+
+
+class ConverterOwnershipTests(unittest.TestCase):
+    def test_source_context_closes_after_success(self):
+        source = make_source()
+        with patch.object(AbaqusSource, "open", return_value=source) as factory:
+            with AbaqusSource.open("job.odb") as owned:
+                converter = Converter(owned)
+                self.assertIs(converter.source, source)
+                self.assertEqual(converter.inspect()["instances"], ["A", "B"])
+            factory.assert_called_once_with("job.odb")
+        self.assertTrue(source.closed)
+        self.assertEqual(source.close_calls, 1)
+
+    def test_source_dependency_cannot_be_reassigned(self):
+        with make_source() as source, make_source() as other:
+            converter = Converter(source)
+            with self.assertRaises(AttributeError):
+                converter.source = other
+
+    def test_source_context_closes_after_selection_failure(self):
+        source = make_source()
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(SelectionError):
+                with source:
+                    Converter(source).export_frames(
+                        Selection(["UNKNOWN"], {"Step-1": [0]}),
+                        OutputOptions(directory, "job"),
+                    )
+        self.assertTrue(source.closed)
+        self.assertEqual(source.close_calls, 1)
+
+    def test_source_context_closes_on_system_exit(self):
+        source = make_source()
+        with self.assertRaises(SystemExit):
+            with source:
+                Converter(source).inspect()
+                raise SystemExit(1)
+        self.assertTrue(source.closed)
+
+    def test_converter_leaves_source_caller_owned_on_success_and_failure(self):
+        for fail in (False, True):
+            with make_source() as source:
+                converter = Converter(source)
+                if fail:
+                    with self.assertRaises(SelectionError):
+                        converter.validate_frames(
+                            Selection(["UNKNOWN"], {"Step-1": [0]}),
+                            OutputOptions(".", "job"),
+                        )
+                else:
+                    converter.inspect()
+                self.assertFalse(source.closed)
+                self.assertEqual(source.close_calls, 0)
+            self.assertTrue(source.closed)
+
+
+if __name__ == "__main__":
+    unittest.main()

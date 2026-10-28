@@ -1,0 +1,2013 @@
+{
+  "runs": [
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.07636060000004363,
+      "seconds": 0.4143166999965615,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 110239744,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_baseline.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "baseline",
+      "repeat": 0,
+      "process_seconds": 0.9455839000002015
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06392369999957737,
+      "seconds": 0.42002579999825684,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109707264,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_scalar.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "scalar",
+      "repeat": 0,
+      "process_seconds": 0.8889353000013216
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06384350000007544,
+      "seconds": 0.4023695000032603,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 110456832,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_three.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "three",
+      "repeat": 0,
+      "process_seconds": 0.8311102999978175
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.05764320000162115,
+      "seconds": 0.4045622000012372,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109780992,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_both.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "both",
+      "repeat": 0,
+      "process_seconds": 0.8153242000007594
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.058378300000185845,
+      "seconds": 0.41007799999715644,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 110149632,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_three.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "three",
+      "repeat": 1,
+      "process_seconds": 0.8169266000004427
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06592969999837806,
+      "seconds": 0.3911740000003192,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 110080000,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_both.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "both",
+      "repeat": 1,
+      "process_seconds": 0.8144578999999794
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.060292199999821605,
+      "seconds": 0.4274693999977899,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109596672,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_baseline.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "baseline",
+      "repeat": 1,
+      "process_seconds": 0.9710456000029808
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06592939999973169,
+      "seconds": 0.41618020000169054,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109981696,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_scalar.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "scalar",
+      "repeat": 1,
+      "process_seconds": 0.8386417000001529
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.05853940000088187,
+      "seconds": 0.39945300000181305,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109797376,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_both.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "both",
+      "repeat": 2,
+      "process_seconds": 0.80541760000051
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.05927079999673879,
+      "seconds": 0.3923743999985163,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109899776,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_three.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "three",
+      "repeat": 2,
+      "process_seconds": 0.7998647000022174
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.062148000000888715,
+      "seconds": 0.4241747000014584,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109600768,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_scalar.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "scalar",
+      "repeat": 2,
+      "process_seconds": 0.9397031000007701
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.0594176000013249,
+      "seconds": 0.4160628000026918,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109998080,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_rowfmt_7dcecda7_baseline.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "variant": "baseline",
+      "repeat": 2,
+      "process_seconds": 0.8606368000000657
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.058397599997988436,
+      "seconds": 0.11855310000100872,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109182976,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_baseline.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "baseline",
+      "repeat": 0,
+      "process_seconds": 0.6799565000001166
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06240639999668929,
+      "seconds": 0.11430800000016461,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109101056,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_scalar.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "scalar",
+      "repeat": 0,
+      "process_seconds": 0.5365550999995321
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.058745900001667906,
+      "seconds": 0.11419459999888204,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109563904,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_three.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "three",
+      "repeat": 0,
+      "process_seconds": 0.5178254000020388
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.05985570000120788,
+      "seconds": 0.11753790000148001,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109604864,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_both.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "both",
+      "repeat": 0,
+      "process_seconds": 0.5137724000014714
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.059559099998296006,
+      "seconds": 0.11643439999897964,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109531136,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_three.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "three",
+      "repeat": 1,
+      "process_seconds": 0.6793787999995402
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06336600000213366,
+      "seconds": 0.1311466000006476,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109293568,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_both.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "both",
+      "repeat": 1,
+      "process_seconds": 0.5512043999988236
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.058934700002282625,
+      "seconds": 0.11584270000093966,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109309952,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_baseline.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "baseline",
+      "repeat": 1,
+      "process_seconds": 0.5522171999982675
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06483179999850108,
+      "seconds": 0.11875860000145622,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109477888,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_scalar.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "scalar",
+      "repeat": 1,
+      "process_seconds": 0.5859492000017781
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.062263899999379646,
+      "seconds": 0.11576190000050701,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109355008,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_both.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "both",
+      "repeat": 2,
+      "process_seconds": 0.5490426999967895
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06421440000121947,
+      "seconds": 0.11642349999965518,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109219840,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_three.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "three",
+      "repeat": 2,
+      "process_seconds": 0.5900775000009162
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.06117710000035004,
+      "seconds": 0.11277770000015153,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109522944,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_scalar.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "scalar",
+      "repeat": 2,
+      "process_seconds": 0.5459585999997216
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.059977699998853495,
+      "seconds": 0.11826210000072024,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109293568,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_rowfmt_7dcecda7_baseline.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "variant": "baseline",
+      "repeat": 2,
+      "process_seconds": 0.5326953000003414
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.06066079999800422,
+      "seconds": 6.367576600001485,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133128192,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "baseline",
+      "repeat": 0,
+      "process_seconds": 6.807020399999601
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.061170999997557374,
+      "seconds": 5.540105899999617,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133795840,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "scalar",
+      "repeat": 0,
+      "process_seconds": 5.987291400000686
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.058857700001681224,
+      "seconds": 5.778006699998514,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133660672,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "three",
+      "repeat": 0,
+      "process_seconds": 6.216346500001237
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.05946620000031544,
+      "seconds": 4.97528980000061,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133668864,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "both",
+      "repeat": 0,
+      "process_seconds": 5.3860485999975936
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.059019299998908537,
+      "seconds": 6.050993400000152,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 134012928,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "three",
+      "repeat": 1,
+      "process_seconds": 6.496927899999719
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.059692300001188414,
+      "seconds": 4.979148299997178,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133595136,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "both",
+      "repeat": 1,
+      "process_seconds": 5.394813700000668
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.05947590000141645,
+      "seconds": 6.402409099999204,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133697536,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "baseline",
+      "repeat": 1,
+      "process_seconds": 6.838633799998206
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.06779929999902379,
+      "seconds": 5.559363000000303,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133046272,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "scalar",
+      "repeat": 1,
+      "process_seconds": 5.988599800002703
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.057962499999121064,
+      "seconds": 4.932952199997089,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133652480,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_both.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "both",
+      "repeat": 2,
+      "process_seconds": 5.34619080000266
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.06017640000209212,
+      "seconds": 5.865339399999357,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133816320,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_three.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "three",
+      "repeat": 2,
+      "process_seconds": 6.302407699997275
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.06164390000049025,
+      "seconds": 5.5544874999977765,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 132993024,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_scalar.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "scalar",
+      "repeat": 2,
+      "process_seconds": 5.9797684000004665
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.06238669999947888,
+      "seconds": 6.452041999997164,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133963776,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_7dcecda7_baseline.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "variant": "baseline",
+      "repeat": 2,
+      "process_seconds": 6.931309100000362
+    }
+  ],
+  "summary": [
+    {
+      "fixture": "Job-1",
+      "variants": {
+        "baseline": {
+          "seconds": 0.4160628000026918,
+          "peak_mib": 104.90234375,
+          "min_seconds": 0.4143166999965615,
+          "max_seconds": 0.4274693999977899
+        },
+        "scalar": {
+          "seconds": 0.42002579999825684,
+          "peak_mib": 104.625,
+          "min_seconds": 0.41618020000169054,
+          "max_seconds": 0.4241747000014584
+        },
+        "three": {
+          "seconds": 0.4023695000032603,
+          "peak_mib": 105.046875,
+          "min_seconds": 0.3923743999985163,
+          "max_seconds": 0.41007799999715644
+        },
+        "both": {
+          "seconds": 0.39945300000181305,
+          "peak_mib": 104.7109375,
+          "min_seconds": 0.3911740000003192,
+          "max_seconds": 0.4045622000012372
+        }
+      }
+    },
+    {
+      "fixture": "2d_planar",
+      "variants": {
+        "baseline": {
+          "seconds": 0.11826210000072024,
+          "peak_mib": 104.23046875,
+          "min_seconds": 0.11584270000093966,
+          "max_seconds": 0.11855310000100872
+        },
+        "scalar": {
+          "seconds": 0.11430800000016461,
+          "peak_mib": 104.40625,
+          "min_seconds": 0.11277770000015153,
+          "max_seconds": 0.11875860000145622
+        },
+        "three": {
+          "seconds": 0.11642349999965518,
+          "peak_mib": 104.45703125,
+          "min_seconds": 0.11419459999888204,
+          "max_seconds": 0.11643439999897964
+        },
+        "both": {
+          "seconds": 0.11753790000148001,
+          "peak_mib": 104.2890625,
+          "min_seconds": 0.11576190000050701,
+          "max_seconds": 0.1311466000006476
+        }
+      }
+    },
+    {
+      "fixture": "scaling",
+      "variants": {
+        "baseline": {
+          "seconds": 6.402409099999204,
+          "peak_mib": 127.50390625,
+          "min_seconds": 6.367576600001485,
+          "max_seconds": 6.452041999997164
+        },
+        "scalar": {
+          "seconds": 5.5544874999977765,
+          "peak_mib": 126.8828125,
+          "min_seconds": 5.540105899999617,
+          "max_seconds": 5.559363000000303
+        },
+        "three": {
+          "seconds": 5.865339399999357,
+          "peak_mib": 127.6171875,
+          "min_seconds": 5.778006699998514,
+          "max_seconds": 6.050993400000152
+        },
+        "both": {
+          "seconds": 4.97528980000061,
+          "peak_mib": 127.4609375,
+          "min_seconds": 4.932952199997089,
+          "max_seconds": 4.979148299997178
+        }
+      }
+    }
+  ],
+  "fixture_sha256": {
+    "Job-1.odb": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+    "2d_planar.odb": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+    "scaling.odb": "f0ec42d6d8021efab3b688e917b4d5bc978c9eda8e139e61b011c5e5788c496a"
+  },
+  "phase_probes": {
+    "baseline": {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.05947970000124769,
+      "seconds": 6.727412299998832,
+      "phases_seconds": {
+        "odb_open": 0.010849300000700168,
+        "validation": 0.006467400002293289,
+        "mesh_preparation": 1.4184356999976444,
+        "field_discovery": 0.38505569999688305,
+        "field_read": 0.5024332999928447,
+        "field_assembly": 0.4602197000021988,
+        "vtu_serialization": 3.84654700000101,
+        "file_publication": 0.006868899996334221,
+        "history": 0.0,
+        "collection": 0.0001112000027205795,
+        "odb_close": 0.06143750000046566,
+        "orchestration": 0.028986600005737273
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.012171900001703762,
+          "field_assembly": 0.01732579999952577,
+          "vtu_serialization": 0.1378870000007737
+        },
+        "Step-1:0/TEMP0": {
+          "field_read": 0.010666000001947396,
+          "field_assembly": 0.01668449999851873,
+          "vtu_serialization": 0.10319209999943268
+        },
+        "Step-1:0/TEMP1": {
+          "field_read": 0.010354400001233444,
+          "field_assembly": 0.01723419999689213,
+          "vtu_serialization": 0.11286290000134613
+        },
+        "Step-1:0/TEMP2": {
+          "field_read": 0.011996599994745338,
+          "field_assembly": 0.024739300006331177,
+          "vtu_serialization": 0.12085950000255252
+        },
+        "Step-1:0/TEMP3": {
+          "field_read": 0.01051970000116853,
+          "field_assembly": 0.01697999999669264,
+          "vtu_serialization": 0.11012579999805894
+        },
+        "Step-1:0/U": {
+          "field_read": 0.012410600000293925,
+          "field_assembly": 0.0169677000012598,
+          "vtu_serialization": 0.14103219999742578
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.014853399999992689,
+          "field_assembly": 0.003619700000854209,
+          "vtu_serialization": 0.028911599998536985
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.015981200001988327,
+          "field_assembly": 0.0040137999967555515,
+          "vtu_serialization": 0.022809900001448113
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.024847699998645112,
+          "field_assembly": 0.00031230000240611844,
+          "vtu_serialization": 0.01285970000026282
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.012931899997056462,
+          "field_assembly": 0.017803900002036244,
+          "vtu_serialization": 0.14192579999871668
+        },
+        "Step-1:1/TEMP0": {
+          "field_read": 0.012764700000843732,
+          "field_assembly": 0.018781099999614526,
+          "vtu_serialization": 0.10759809999944991
+        },
+        "Step-1:1/TEMP1": {
+          "field_read": 0.012415499997587176,
+          "field_assembly": 0.017970299999433337,
+          "vtu_serialization": 0.10672609999892302
+        },
+        "Step-1:1/TEMP2": {
+          "field_read": 0.011979500002780696,
+          "field_assembly": 0.017082699996535666,
+          "vtu_serialization": 0.11403910000080941
+        },
+        "Step-1:1/TEMP3": {
+          "field_read": 0.011041000001569046,
+          "field_assembly": 0.016682900000887457,
+          "vtu_serialization": 0.10726049999720999
+        },
+        "Step-1:1/U": {
+          "field_read": 0.012609399997018045,
+          "field_assembly": 0.01748570000199834,
+          "vtu_serialization": 0.14627269999982673
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.013693300003069453,
+          "field_assembly": 0.002395199997408781,
+          "vtu_serialization": 0.022964200001297286
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.01091670000096201,
+          "field_assembly": 0.002822099999320926,
+          "vtu_serialization": 0.022978699998930097
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.025936299996828893,
+          "field_assembly": 0.0003818000004685018,
+          "vtu_serialization": 0.014938399999664398
+        },
+        "Step-1:2/RF": {
+          "field_read": 0.013859499998943647,
+          "field_assembly": 0.019478300000628224,
+          "vtu_serialization": 0.14006679999874905
+        },
+        "Step-1:2/TEMP0": {
+          "field_read": 0.011762699996324955,
+          "field_assembly": 0.017116500002885005,
+          "vtu_serialization": 0.11329389999809791
+        },
+        "Step-1:2/TEMP1": {
+          "field_read": 0.011940399999730289,
+          "field_assembly": 0.01899740000226302,
+          "vtu_serialization": 0.114328799998475
+        },
+        "Step-1:2/TEMP2": {
+          "field_read": 0.01381740000215359,
+          "field_assembly": 0.017697999996016733,
+          "vtu_serialization": 0.10993660000167438
+        },
+        "Step-1:2/TEMP3": {
+          "field_read": 0.011021700000128476,
+          "field_assembly": 0.01717389999976149,
+          "vtu_serialization": 0.1113461000022653
+        },
+        "Step-1:2/U": {
+          "field_read": 0.013063400001556147,
+          "field_assembly": 0.01791429999866523,
+          "vtu_serialization": 0.14425889999984065
+        },
+        "Step-1:2/S_Centroid": {
+          "field_read": 0.012626700001419522,
+          "field_assembly": 0.0024914999958127737,
+          "vtu_serialization": 0.02229340000121738
+        },
+        "Step-1:2/S_IntegrationPoints": {
+          "field_read": 0.0126708999996481,
+          "field_assembly": 0.0029135999975551385,
+          "vtu_serialization": 0.026260200000251643
+        },
+        "Step-1:2/Material_Orientation": {
+          "field_read": 0.025938000002497574,
+          "field_assembly": 0.00027159999808645807,
+          "vtu_serialization": 0.013373199999477947
+        },
+        "Step-1:3/RF": {
+          "field_read": 0.011984600001596846,
+          "field_assembly": 0.0175463999985368,
+          "vtu_serialization": 0.14098100000046543
+        },
+        "Step-1:3/TEMP0": {
+          "field_read": 0.010794900001201313,
+          "field_assembly": 0.01704289999906905,
+          "vtu_serialization": 0.10668270000314806
+        },
+        "Step-1:3/TEMP1": {
+          "field_read": 0.018132999997760635,
+          "field_assembly": 0.024611900000309106,
+          "vtu_serialization": 0.11000979999880656
+        },
+        "Step-1:3/TEMP2": {
+          "field_read": 0.010838799997145543,
+          "field_assembly": 0.01645940000526025,
+          "vtu_serialization": 0.10366640000211191
+        },
+        "Step-1:3/TEMP3": {
+          "field_read": 0.012171200000011595,
+          "field_assembly": 0.016517100000783103,
+          "vtu_serialization": 0.10468610000316403
+        },
+        "Step-1:3/U": {
+          "field_read": 0.012853499996708706,
+          "field_assembly": 0.019030100003874395,
+          "vtu_serialization": 0.16433099999994738
+        },
+        "Step-1:3/S_Centroid": {
+          "field_read": 0.013806299997668248,
+          "field_assembly": 0.0025623000037739985,
+          "vtu_serialization": 0.023509599999670172
+        },
+        "Step-1:3/S_IntegrationPoints": {
+          "field_read": 0.0114343999994162,
+          "field_assembly": 0.0028574999996635597,
+          "vtu_serialization": 0.022746099999494618
+        },
+        "Step-1:3/Material_Orientation": {
+          "field_read": 0.025626099999499274,
+          "field_assembly": 0.00025400000231456943,
+          "vtu_serialization": 0.016891399998712586
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 1.291923199998564
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 1.2939704999989772
+        },
+        {
+          "step": "Step-1",
+          "frame": 2,
+          "seconds": 1.3074582000008377
+        },
+        {
+          "step": "Step-1",
+          "frame": 3,
+          "seconds": 1.3010973000018566
+        }
+      ],
+      "mesh": {
+        "points": 80000,
+        "cells": 10000
+      },
+      "peak_rss_bytes": 133742592,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_phase_baseline.pvd"
+      ],
+      "cprofile": null
+    },
+    "optimized": {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.1953209000021161,
+      "seconds": 5.009360700001707,
+      "phases_seconds": {
+        "odb_open": 0.011772999998356681,
+        "validation": 0.007091199997375952,
+        "mesh_preparation": 1.4024499999977706,
+        "field_discovery": 0.36414959999819985,
+        "field_read": 0.4633572000057029,
+        "field_assembly": 0.44696919999842066,
+        "vtu_serialization": 2.2198585999940406,
+        "file_publication": 0.008039899992581923,
+        "history": 0.0,
+        "collection": 0.00010450000263517722,
+        "odb_close": 0.059162899997318164,
+        "orchestration": 0.02640460001930478
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.02008110000679153,
+          "field_assembly": 0.02720799999224255,
+          "vtu_serialization": 0.09382140000161598
+        },
+        "Step-1:0/TEMP0": {
+          "field_read": 0.011367199997039279,
+          "field_assembly": 0.016679200001817662,
+          "vtu_serialization": 0.051652199999807635
+        },
+        "Step-1:0/TEMP1": {
+          "field_read": 0.010335599999962142,
+          "field_assembly": 0.017233200000191573,
+          "vtu_serialization": 0.05151350000232924
+        },
+        "Step-1:0/TEMP2": {
+          "field_read": 0.0110716000017419,
+          "field_assembly": 0.017097499996452825,
+          "vtu_serialization": 0.05004230000122334
+        },
+        "Step-1:0/TEMP3": {
+          "field_read": 0.010793999997986248,
+          "field_assembly": 0.016812199999549193,
+          "vtu_serialization": 0.04936260000249604
+        },
+        "Step-1:0/U": {
+          "field_read": 0.011645200000202749,
+          "field_assembly": 0.01733349999994971,
+          "vtu_serialization": 0.09262939999825903
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.012274799995793728,
+          "field_assembly": 0.0024465000024065375,
+          "vtu_serialization": 0.020690100001957035
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.009730000001582084,
+          "field_assembly": 0.0026467999996384606,
+          "vtu_serialization": 0.021109100001922343
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.02294650000112597,
+          "field_assembly": 0.0002741999996942468,
+          "vtu_serialization": 0.007442600002832478
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.01127440000345814,
+          "field_assembly": 0.017622299998038216,
+          "vtu_serialization": 0.09036740000010468
+        },
+        "Step-1:1/TEMP0": {
+          "field_read": 0.010770200002298225,
+          "field_assembly": 0.017356699998344993,
+          "vtu_serialization": 0.05111390000092797
+        },
+        "Step-1:1/TEMP1": {
+          "field_read": 0.010217600003670668,
+          "field_assembly": 0.01734299999588984,
+          "vtu_serialization": 0.05158250000022235
+        },
+        "Step-1:1/TEMP2": {
+          "field_read": 0.010828699992998736,
+          "field_assembly": 0.017573900007846532,
+          "vtu_serialization": 0.051954700000351295
+        },
+        "Step-1:1/TEMP3": {
+          "field_read": 0.01061670000126469,
+          "field_assembly": 0.017111499997554347,
+          "vtu_serialization": 0.05044899999847985
+        },
+        "Step-1:1/U": {
+          "field_read": 0.010889600001974031,
+          "field_assembly": 0.01764040000125533,
+          "vtu_serialization": 0.08826079999926151
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.01249189999725786,
+          "field_assembly": 0.002366900003835326,
+          "vtu_serialization": 0.020912399999360787
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.009303700000600656,
+          "field_assembly": 0.002583600002253661,
+          "vtu_serialization": 0.021202700001595076
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.02263149999998859,
+          "field_assembly": 0.00022779999926569872,
+          "vtu_serialization": 0.008740400000533555
+        },
+        "Step-1:2/RF": {
+          "field_read": 0.011945699996431358,
+          "field_assembly": 0.017772500003047753,
+          "vtu_serialization": 0.09213900000031572
+        },
+        "Step-1:2/TEMP0": {
+          "field_read": 0.01037420000648126,
+          "field_assembly": 0.017293099994276417,
+          "vtu_serialization": 0.052071099999011494
+        },
+        "Step-1:2/TEMP1": {
+          "field_read": 0.011120300001493888,
+          "field_assembly": 0.01750969999920926,
+          "vtu_serialization": 0.05041949999940698
+        },
+        "Step-1:2/TEMP2": {
+          "field_read": 0.01105269999607117,
+          "field_assembly": 0.016632100006972905,
+          "vtu_serialization": 0.05053849999967497
+        },
+        "Step-1:2/TEMP3": {
+          "field_read": 0.011056100000132574,
+          "field_assembly": 0.01740069999868865,
+          "vtu_serialization": 0.05119149999882211
+        },
+        "Step-1:2/U": {
+          "field_read": 0.011845799996081041,
+          "field_assembly": 0.018228800003271317,
+          "vtu_serialization": 0.0896044000000984
+        },
+        "Step-1:2/S_Centroid": {
+          "field_read": 0.012466700001823483,
+          "field_assembly": 0.002438299998175353,
+          "vtu_serialization": 0.021207999998296145
+        },
+        "Step-1:2/S_IntegrationPoints": {
+          "field_read": 0.010902500001975568,
+          "field_assembly": 0.002768800000922056,
+          "vtu_serialization": 0.02102250000098138
+        },
+        "Step-1:2/Material_Orientation": {
+          "field_read": 0.0235828999975638,
+          "field_assembly": 0.00022780000290367752,
+          "vtu_serialization": 0.007690599999477854
+        },
+        "Step-1:3/RF": {
+          "field_read": 0.011444800002209377,
+          "field_assembly": 0.0163388999972085,
+          "vtu_serialization": 0.08511670000007143
+        },
+        "Step-1:3/TEMP0": {
+          "field_read": 0.01067930000135675,
+          "field_assembly": 0.017748299997037975,
+          "vtu_serialization": 0.051228600001195446
+        },
+        "Step-1:3/TEMP1": {
+          "field_read": 0.011004299998603528,
+          "field_assembly": 0.016487600001710234,
+          "vtu_serialization": 0.05036780000227736
+        },
+        "Step-1:3/TEMP2": {
+          "field_read": 0.010160900001210393,
+          "field_assembly": 0.017085200001019984,
+          "vtu_serialization": 0.05117729999983567
+        },
+        "Step-1:3/TEMP3": {
+          "field_read": 0.010614199996780371,
+          "field_assembly": 0.018059600002743537,
+          "vtu_serialization": 0.05030120000083116
+        },
+        "Step-1:3/U": {
+          "field_read": 0.011228100000153063,
+          "field_assembly": 0.017402499997842824,
+          "vtu_serialization": 0.09304649999830872
+        },
+        "Step-1:3/S_Centroid": {
+          "field_read": 0.01653430000078515,
+          "field_assembly": 0.002941799997643102,
+          "vtu_serialization": 0.021595199999865144
+        },
+        "Step-1:3/S_IntegrationPoints": {
+          "field_read": 0.009555100004945416,
+          "field_assembly": 0.0027494999958435073,
+          "vtu_serialization": 0.030626999996457016
+        },
+        "Step-1:3/Material_Orientation": {
+          "field_read": 0.02851899999586749,
+          "field_assembly": 0.0003268000036769081,
+          "vtu_serialization": 0.00909490000049118
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.8860867000003054
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.8602200999994238
+        },
+        {
+          "step": "Step-1",
+          "frame": 2,
+          "seconds": 0.8684388000001491
+        },
+        {
+          "step": "Step-1",
+          "frame": 3,
+          "seconds": 0.8797756999992998
+        }
+      ],
+      "mesh": {
+        "points": 80000,
+        "cells": 10000
+      },
+      "peak_rss_bytes": 134029312,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_rowfmt_phase_optimized.pvd"
+      ],
+      "cprofile": null
+    }
+  },
+  "date": "2026-10-26",
+  "baseline_commit": "530ed9d64bddc7676542a952383e21eb6396ef83",
+  "platform": "Windows x64, Abaqus 2025 HF1, Python 3.10.5 / NumPy 1.22.4",
+  "selected_variant": "both",
+  "chunk_rows": 4096,
+  "method": "Three fresh processes per variant per fixture, sequential rotated order. All variants use 4096-row chunks, current converter/source, same ODB bytes/selection, and PVD. Bundled fixtures also export history. Imports/SDK startup excluded; detailed phase instrumentation disabled for these 36 timing samples. No cold OS cache guarantee.",
+  "variants": {
+    "baseline": "General row formatter",
+    "scalar": "Specialize width 1 only",
+    "three": "Specialize width 3 only",
+    "both": "Specialize widths 1 and 3"
+  },
+  "validation": "Every final variant output set matched baseline byte-for-byte; input hashes unchanged; eight baseline/both VTU pairs loaded through VTK with equal coordinates and field arrays.",
+  "readers": {
+    "vtu_pairs": 8,
+    "passed": true
+  },
+  "tests": {
+    "discovered": 108,
+    "ordinary": {
+      "passed": 105,
+      "skipped": 3
+    },
+    "abaqus": {
+      "passed": 106,
+      "skipped": 2
+    },
+    "vtk": {
+      "passed": 107,
+      "skipped": 1
+    }
+  },
+  "code_sha256": {
+    "baseline_writers.py": "09836bf436914e3d13ed6ba84e96bf964ad53913df025145a847188f6a9b5a99",
+    "optimized_writers.py": "28a1b5486d90c5e9a33b957c6f6c1b6b78567be384844d6e9d0f1f80fecfb9a0",
+    "benchmark_row_formatting.py": "baaa97df2125c8685de421df7549a9ae44adb9db43342883b4a6c7f9f0ddcb3a"
+  }
+}

@@ -1,0 +1,1338 @@
+{
+  "phase": 4,
+  "date": "2026-10-27",
+  "phase3_commit": "c4750f0",
+  "python_reference_commit": "0fe548c",
+  "platform": "Windows x64 Release, MSVC 19.41, Abaqus 2025 HF1, VTK 9.7.1",
+  "native_ctest": {
+    "passed": 6,
+    "total": 6
+  },
+  "sdk_independent_ctest": {
+    "passed": 4,
+    "total": 4
+  },
+  "cli_execution_checks": 103,
+  "numerical_source_checks": 62,
+  "writer_publication_checks": 122,
+  "element_mapping_checks": 18,
+  "process_cases": 192,
+  "native_vtu_comparisons": 20,
+  "comparisons": [
+    {
+      "passed": true,
+      "input_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "input_unchanged": true,
+      "cases": [
+        {
+          "implementation": "cpp",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "repeated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "abbreviated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        }
+      ],
+      "comparisons": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii"
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary"
+        }
+      ],
+      "default_ascii": true,
+      "default_no_history_or_collection": true,
+      "collection_preserves_vtu_bytes_and_mtime": true,
+      "unicode_suffix_and_spaced_paths": true,
+      "fixture": "Job-1",
+      "ordered_steps": [
+        "Step-1:1,0"
+      ]
+    },
+    {
+      "passed": true,
+      "input_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "input_unchanged": true,
+      "cases": [
+        {
+          "implementation": "cpp",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "repeated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "abbreviated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        }
+      ],
+      "comparisons": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii"
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary"
+        }
+      ],
+      "default_ascii": true,
+      "default_no_history_or_collection": true,
+      "ordered_steps": [
+        "Step-1:1,0"
+      ],
+      "collection_preserves_vtu_bytes_and_mtime": true,
+      "unicode_suffix_and_spaced_paths": true,
+      "fixture": "planar"
+    },
+    {
+      "passed": true,
+      "input_sha256": "9ab744952516f50d3621144678fc4ed11d67e35c99aad254a13713da3e64ea36",
+      "input_unchanged": true,
+      "cases": [
+        {
+          "implementation": "cpp",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "repeated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "abbreviated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        }
+      ],
+      "comparisons": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii"
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary"
+        }
+      ],
+      "default_ascii": true,
+      "default_no_history_or_collection": true,
+      "ordered_steps": [
+        "Step-1:1,0"
+      ],
+      "collection_preserves_vtu_bytes_and_mtime": true,
+      "unicode_suffix_and_spaced_paths": true,
+      "fixture": "no-stress"
+    },
+    {
+      "passed": true,
+      "input_sha256": "33fa25a370b2f22ef288eb1f9a5744b6635f3e969559313a9d2e3c5cc3f8f9aa",
+      "input_unchanged": true,
+      "cases": [
+        {
+          "implementation": "cpp",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "help",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "header",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "ascii_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_frames_history",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "binary_collection_only",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "default_frames",
+          "expected_code": 0,
+          "actual_code": 0
+        },
+        {
+          "implementation": "python",
+          "case": "missing_header",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "unknown_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "extra_value",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_format",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_history",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_collection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "bad_suffix",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "no_selection",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "ranged_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "duplicate_frames",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "out_of_range",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "python",
+          "case": "missing_collection",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "preflight_conflict",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "invalid_odb",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "python",
+          "case": "locked_second_frame",
+          "expected_code": 1,
+          "actual_code": 1
+        },
+        {
+          "implementation": "cpp",
+          "case": "repeated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        },
+        {
+          "implementation": "cpp",
+          "case": "abbreviated_flag",
+          "expected_code": 2,
+          "actual_code": 2
+        }
+      ],
+      "comparisons": [
+        {
+          "parity": true,
+          "frames_checked": 4,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii"
+        },
+        {
+          "parity": true,
+          "frames_checked": 4,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary"
+        }
+      ],
+      "default_ascii": true,
+      "default_no_history_or_collection": true,
+      "ordered_steps": [
+        "Step-2:1,0",
+        "Step-1:0,1"
+      ],
+      "collection_preserves_vtu_bytes_and_mtime": true,
+      "unicode_suffix_and_spaced_paths": true,
+      "fixture": "two-step"
+    }
+  ],
+  "help_and_parse_errors_before_source_creation": true,
+  "source_closed_and_destroyed_before_success": true,
+  "history_preflight_before_publication": true,
+  "partial_receipts_merge_prior_history": true,
+  "windows_wide_argument_entry": true,
+  "python_reference_argument_transport": "JSON to preserve Unicode across the Abaqus batch launcher; public Python CLI main is unchanged",
+  "intentional_stricter_native_rules": [
+    "Reject repeated flags",
+    "Reject abbreviated flags"
+  ],
+  "retired_files": [
+    "cpp/odb2vtk.cpp",
+    "cpp/odb2vtk.h"
+  ],
+  "parallel_coordination": "Deferred; no native scheduler or worker receipt protocol",
+  "remaining": [
+    "Phase 5 final integration and performance report"
+  ],
+  "code_sha256_lf": {
+    "cpp/CMakeLists.txt": "f56ee048526cf19e907cbfcd57ee16864a66d8c3d03fbe9382dcc71a249815ac",
+    "cpp/core/cli.cpp": "20781f7e9631a5567551b4a3aa8e99d7a347a2d900a9f7cb287aa86da2b0a7b5",
+    "cpp/core/exporter.cpp": "0235e7fca887b354bbf491a6d3a788cd588aa8c475d6244a96d557436d24480a",
+    "cpp/include/odb2vtk_core/cli.hpp": "8b2d9d72b8422e28eaa8b9c30be1acf4b2241c5baf132a9f2b8d7976f3749fc3",
+    "cpp/include/odb2vtk_core/exporter.hpp": "aa6b6c324512a410ac8aa463cabccbfb28b471f7ddee7e4e443e75f06b7910ba",
+    "cpp/main.cpp": "dd4f061845ffb0ed0fc509dd9eac649770b1ed5ac2ac68f5eb52714e9d35d11a",
+    "cpp/tests/test_cli.cpp": "77b7d76aef31b63680f24666461b70013542976bc28d360450e0fda31f6ef419",
+    "cpp/validation/python_cli_reference.py": "14262ed54d0bf64502b6668174ce17e05933b2cd4cca238268f35b36acceb879",
+    "cpp/validation/validate_cli.py": "a6f01dce134b5af31fe1bf5f7de804986c760dedc56427af3eb72f70b45e53f3",
+    "cpp/validation/create_cli_fixture.py": "7ef762700fae1e281085f50f44901dedab460d54d0e0de8eafd42dcfa20c50c7"
+  }
+}
