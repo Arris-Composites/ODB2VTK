@@ -35,10 +35,13 @@ public:
   ExportResult export_header(const OutputOptions&) const;
   ExportResult export_history(const Selection&, const OutputOptions&) const;
   ExportResult export_collection(const Selection&, const OutputOptions&) const;
+  // Preflight complete requests without geometry reads or output creation.
+  std::vector<FrameExport> validate_frames(const Selection&, const OutputOptions&) const;
+  void validate_history(const Selection&, const OutputOptions&) const;
+  std::vector<FrameExport> validate_collection(const Selection&, const OutputOptions&) const;
 private:
   void report(const std::string&, const std::filesystem::path&,
               std::size_t completed, std::size_t total) const;
-  std::vector<FrameExport> validate_frames(const Selection&, const OutputOptions&) const;
   Source& source_;
   Progress progress_;
 };

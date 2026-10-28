@@ -116,7 +116,8 @@ The C++ implementation is being aligned with the current Python exporter.
 tests, Abaqus 2025 integration probes and a semantic comparison harness.
 [Phase 2](doc/cpp-phase2-results.md) adds owned source records and numerical
 parity. [Phase 3](doc/cpp-phase3-results.md) adds ASCII/binary writers, JSON/CSV/PVD
-and safe publication. CLI parity remains pending; see the [alignment plan](doc/cpp-parity-plan.md).
+and safe publication. [Phase 4](doc/cpp-phase4-results.md) aligns the serial CLI;
+see the [CLI guide](doc/cpp-cli.md) and [alignment plan](doc/cpp-parity-plan.md).
 
 From the repository root, build the core without Abaqus:
 
@@ -134,17 +135,20 @@ runtime DLL paths and optional real-ODB tests. Native builds require an installe
 SDK; CMake no longer searches historical installation paths or links every SDK
 library.
 
-The existing native CLI now writes `Job-1.json`, `Job-1/Step-1_0.vtu` and a PVD:
+The native CLI writes `Job-1.json` for header mode and VTUs under `Job-1`:
 
 ```text
 ODB2VTK.exe --header 1 --odbFile C:/temp/Job-1.odb
-ODB2VTK.exe --header 0 --odbFile C:/temp/Job-1.odb --instance L-SHAPE-PART-1 --step Step-1:0,1 --writeHistory 0
+ODB2VTK.exe --header 0 --odbFile C:/temp/Job-1.odb --instance L-SHAPE-PART-1 --step Step-1:0,1 --format binary --writeHistory 1
+ODB2VTK.exe --header 0 --odbFile C:/temp/Job-1.odb --instance L-SHAPE-PART-1 --step Step-1:0,1 --writePVD 1
 ```
 
-ODB files must be compatible with the installed SDK. History, collection-only
-and binary modes are available through the [maintained C++ interface and validation
-probe](doc/cpp-writers.md); their normal CLI flags/defaults will be aligned in
-Phase 4. Current native ODB access is read-only, with input hashes verified.
+ASCII is the default. History defaults to off, and normal frame export writes
+no PVD. `--writePVD 1` indexes existing VTUs without rewriting them. Suffixes and
+explicit instance/step/frame order follow Python. ODB files must be compatible
+with the installed SDK; access is read-only, with input hashes verified.
+The [maintained C++ interface](doc/cpp-writers.md) also supports injected sources
+and direct stream writers. Native parallel coordination remains a follow-up.
 
 ## Convert a range of frames by one command
 

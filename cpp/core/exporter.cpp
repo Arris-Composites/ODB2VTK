@@ -118,9 +118,8 @@ ExportResult Exporter::export_header(const OutputOptions& outputs) const {
   return result;
 }
 ExportResult Exporter::export_history(const Selection& selection, const OutputOptions& outputs) const {
-  Converter(source_).validate(selection, false);
+  validate_history(selection, outputs);
   const auto path = outputs.history_path();
-  validate_destinations({path});
   ExportResult result;
   try {
     const auto table = Converter(source_).history(selection);
@@ -130,7 +129,11 @@ ExportResult Exporter::export_history(const Selection& selection, const OutputOp
   } catch (...) { failed("History export failed", std::move(result)); }
   return result;
 }
-ExportResult Exporter::export_collection(const Selection& selection, const OutputOptions& outputs) const {
+void Exporter::validate_history(const Selection& selection, const OutputOptions& outputs) const {
+  Converter(source_).validate(selection, false);
+  validate_destinations({outputs.history_path()});
+}
+std::vector<FrameExport> Exporter::validate_collection(const Selection& selection, const OutputOptions& outputs) const {
   const auto frames = validate_frames(selection, outputs);
   const auto path = outputs.collection_path();
   validate_destinations({path});
@@ -139,6 +142,11 @@ ExportResult Exporter::export_collection(const Selection& selection, const Outpu
     if (!std::filesystem::is_regular_file(frame.path, error) || error)
       throw OutputError("Cannot write collection; VTU file is missing: " + frame.path.u8string());
   }
+  return frames;
+}
+ExportResult Exporter::export_collection(const Selection& selection, const OutputOptions& outputs) const {
+  const auto frames = validate_collection(selection, outputs);
+  const auto path = outputs.collection_path();
   ExportResult result;
   try {
     const auto entries = collection_entries(frames);

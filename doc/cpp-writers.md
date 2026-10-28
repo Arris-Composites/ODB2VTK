@@ -49,8 +49,9 @@ cpp/build/native/Release/odb2vtk_export_probe.exe C:/work/Job-1.odb C:/temp/cpp-
 ```
 
 This probe writes header, history, frames and collection, then explicitly closes
-the source. It currently targets `Step-1`; it is validation tooling, not the
-replacement CLI. Normal `ODB2VTK --format` parsing is Phase 4.
+the source. It currently targets `Step-1` and remains focused validation tooling.
+The normal executable now supports `--format` and the other serial flags; see
+the [CLI guide](cpp-cli.md).
 
 With Abaqus on PATH and an ordinary Python environment containing NumPy/VTK:
 

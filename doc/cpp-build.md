@@ -18,9 +18,10 @@ ctest --test-dir cpp/build/pure -C Release --output-on-failure
 ```
 
 The default `ODB2VTK_BUILD_NATIVE=OFF` builds the SDK-independent core and its
-tests. SDK discovery is not performed. Three CTest suites cover element-family
+tests. SDK discovery is not performed. Four CTest suites cover element-family
 mapping (18 checks), numerical/source behavior (62 checks) and serialization/
-publication (122 checks on Windows). `odb2vtk_writer_fixture` generates files for
+publication (122 checks on Windows), plus CLI/execution (103 checks).
+`odb2vtk_writer_fixture` generates files for
 the independent VTK edge checks in the [writer guide](cpp-writers.md).
 
 ## Build with Abaqus 2025
@@ -45,7 +46,7 @@ Native targets include `ODB2VTK` (the current exporter), `odb2vtk_sdk_smoke`,
 `odb2vtk_export_probe`. The probes and fixture creator are validation tools built
 when testing is enabled. With a test
 ODB supplied, CTest registers both native smoke and ownership tests alongside
-the three SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
+the four SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
 for the source contract and [Phase 3 results](cpp-phase3-results.md) for writer
 parity and publication behavior.
 Missing required SDK paths/libraries cause configuration to fail with an
@@ -71,14 +72,17 @@ The smoke probe opens the ODB read-only, reports instance names and step/frame
 counts as JSON, explicitly closes the database and finalizes the API before
 printing success. RAII guards cover failure cleanup. It returns 2 for missing
 arguments and 1 for a failed ODB open. These statuses describe the probe; the
-legacy exporter's CLI/status alignment remains pending.
+normal executable now uses the same 0/2/1 success/argument/runtime status policy;
+see the [CLI guide](cpp-cli.md) for flags, defaults and mode selection.
 
 ## Compare Python and C++ output
 
 Use compatible fixture copies and distinct output directories. The maintained
 export interface now supports both formats, JSON/CSV/PVD and safe per-file
 publication. Run the complete format comparison from the [writer guide](cpp-writers.md).
-The normal executable's argument/default/status alignment remains Phase 4.
+The normal executable's serial argument/default/status alignment is validated
+in [Phase 4](cpp-phase4-results.md). Normal frame mode writes no PVD; use
+`--writePVD 1` to index existing VTUs after conversion.
 
 Generate a Python reference report with `python/validation/profile_exports.py`,
 then run the C++ executable on the matching instance/step/frame selection.
