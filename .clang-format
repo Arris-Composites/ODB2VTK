@@ -1,0 +1,2 @@
+# Match the clang-format 14 check in .github/workflows/style-checks.yml.
+BasedOnStyle: LLVM

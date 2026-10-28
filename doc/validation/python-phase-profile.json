@@ -1,0 +1,2944 @@
+{
+  "runs": [
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.18151559999932942,
+      "seconds": 0.4629722000008769,
+      "phases_seconds": {
+        "odb_open": 0.013668600000528386,
+        "validation": 0.003930000000764267,
+        "mesh_preparation": 0.12115569999878062,
+        "field_discovery": 0.016265700000076322,
+        "field_read": 0.040125599998646067,
+        "field_assembly": 0.011426799996115733,
+        "vtu_serialization": 0.19299180000416527,
+        "file_publication": 0.006635500001721084,
+        "history": 0.0035552999997889856,
+        "collection": 0.00013609999950858764,
+        "odb_close": 0.04952630000116187,
+        "orchestration": 0.0035547999996197177
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.0017824999995355029,
+          "field_assembly": 0.0009466999999858672,
+          "vtu_serialization": 0.007088400001521222
+        },
+        "Step-1:0/U": {
+          "field_read": 0.0017572999986441573,
+          "field_assembly": 0.0009000000009109499,
+          "vtu_serialization": 0.007023300000582822
+        },
+        "Step-1:0/E_Centroid": {
+          "field_read": 0.003142999996271101,
+          "field_assembly": 0.000621300003331271,
+          "vtu_serialization": 0.0061838000001444016
+        },
+        "Step-1:0/E_IntegrationPoints": {
+          "field_read": 0.0018787000008160248,
+          "field_assembly": 0.0008573999984946568,
+          "vtu_serialization": 0.006191800001033698
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.0031406999987666495,
+          "field_assembly": 0.0006280000015976839,
+          "vtu_serialization": 0.00623249999989639
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.0019200000006094342,
+          "field_assembly": 0.0007385999997495674,
+          "vtu_serialization": 0.006204700001035235
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.0062789000003249384,
+          "field_assembly": 0.0007052000000840053,
+          "vtu_serialization": 0.006666499999482767
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.001746100000673323,
+          "field_assembly": 0.0009026999978232197,
+          "vtu_serialization": 0.007948399999804678
+        },
+        "Step-1:1/U": {
+          "field_read": 0.002239499999632244,
+          "field_assembly": 0.0011660000000119908,
+          "vtu_serialization": 0.01242909999928088
+        },
+        "Step-1:1/E_Centroid": {
+          "field_read": 0.003125700000964571,
+          "field_assembly": 0.0006244999985938193,
+          "vtu_serialization": 0.014506700001220452
+        },
+        "Step-1:1/E_IntegrationPoints": {
+          "field_read": 0.0018489999984012684,
+          "field_assembly": 0.0007664000004297122,
+          "vtu_serialization": 0.014060900000913534
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.0031129000017244834,
+          "field_assembly": 0.0006974999978410779,
+          "vtu_serialization": 0.01272160000007716
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.001806700001907302,
+          "field_assembly": 0.0008264999978564447,
+          "vtu_serialization": 0.012614799999937532
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.006344600000375067,
+          "field_assembly": 0.001045999999405467,
+          "vtu_serialization": 0.00704070000028878
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.11304999999993015
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.14783609999904002
+        }
+      ],
+      "mesh": {
+        "points": 3840,
+        "cells": 2604
+      },
+      "peak_rss_bytes": 111407104,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_profile_phase-profiles-5bb35423_phases.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "mode": "phases",
+      "repeat": 0,
+      "process_seconds": 0.8864976999993814,
+      "outer_timer_bookkeeping_seconds": 1.2900001820526086e-05
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.17139970000062021,
+      "seconds": 0.4762224999994942,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 110587904,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_profile_phase-profiles-5bb35423_control.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "mode": "control",
+      "repeat": 0,
+      "process_seconds": 0.8808055000008608
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.1859970000004978,
+      "seconds": 0.464031999999861,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 110882816,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_profile_phase-profiles-5bb35423_control.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "mode": "control",
+      "repeat": 1,
+      "process_seconds": 0.8885956000012811
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.2449849999993603,
+      "seconds": 0.4663149000007252,
+      "phases_seconds": {
+        "odb_open": 0.013656499999342486,
+        "validation": 0.0036989000018365914,
+        "mesh_preparation": 0.12105780000092636,
+        "field_discovery": 0.01651519999904849,
+        "field_read": 0.041681300001073396,
+        "field_assembly": 0.011523899995154352,
+        "vtu_serialization": 0.1962476000062452,
+        "file_publication": 0.005156199998964439,
+        "history": 0.003078300000197487,
+        "collection": 8.789999992586672e-05,
+        "odb_close": 0.05004019999978482,
+        "orchestration": 0.003571099998225691
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.0018302000007679453,
+          "field_assembly": 0.0010535999990679557,
+          "vtu_serialization": 0.006833299999925657
+        },
+        "Step-1:0/U": {
+          "field_read": 0.00174459999834653,
+          "field_assembly": 0.0009780000018508872,
+          "vtu_serialization": 0.015060400000947993
+        },
+        "Step-1:0/E_Centroid": {
+          "field_read": 0.005348499998945044,
+          "field_assembly": 0.0007222000003821449,
+          "vtu_serialization": 0.006435100000089733
+        },
+        "Step-1:0/E_IntegrationPoints": {
+          "field_read": 0.0019488999987515854,
+          "field_assembly": 0.0008631000018795021,
+          "vtu_serialization": 0.006724700000631856
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.0032128000020748004,
+          "field_assembly": 0.000678999998854124,
+          "vtu_serialization": 0.00633910000033211
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.0020282000023144064,
+          "field_assembly": 0.0007779999959893757,
+          "vtu_serialization": 0.006105500000558095
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.005939599999692291,
+          "field_assembly": 0.0008928999995987397,
+          "vtu_serialization": 0.006713099999615224
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.0017996999995375518,
+          "field_assembly": 0.0009761000001162756,
+          "vtu_serialization": 0.006938700000318931
+        },
+        "Step-1:1/U": {
+          "field_read": 0.0018233000009786338,
+          "field_assembly": 0.0011368999985279515,
+          "vtu_serialization": 0.011861200000566896
+        },
+        "Step-1:1/E_Centroid": {
+          "field_read": 0.003729399999429006,
+          "field_assembly": 0.0006826000008004485,
+          "vtu_serialization": 0.013574399999924935
+        },
+        "Step-1:1/E_IntegrationPoints": {
+          "field_read": 0.0018407999996270519,
+          "field_assembly": 0.0007187999999587191,
+          "vtu_serialization": 0.01320320000013453
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.0031233999998221407,
+          "field_assembly": 0.0006463000008807285,
+          "vtu_serialization": 0.01300470000023779
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.0017983000016101869,
+          "field_assembly": 0.0007638999977643834,
+          "vtu_serialization": 0.012785599999915576
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.005513599999176222,
+          "field_assembly": 0.000632499999483116,
+          "vtu_serialization": 0.006129999999757274
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.12358949999907054
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.14246469999852707
+        }
+      ],
+      "mesh": {
+        "points": 3840,
+        "cells": 2604
+      },
+      "peak_rss_bytes": 110870528,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_profile_phase-profiles-5bb35423_phases.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "mode": "phases",
+      "repeat": 1,
+      "process_seconds": 1.0680687000003672,
+      "outer_timer_bookkeeping_seconds": 1.2000002243439667e-05
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.1773747999995976,
+      "seconds": 0.45494460000008985,
+      "phases_seconds": {
+        "odb_open": 0.013728900001297006,
+        "validation": 0.003683499999169726,
+        "mesh_preparation": 0.1167633000004571,
+        "field_discovery": 0.01622989999850688,
+        "field_read": 0.03937160000350559,
+        "field_assembly": 0.011272099995039753,
+        "vtu_serialization": 0.19144000000051165,
+        "file_publication": 0.005071600000519538,
+        "history": 0.0031117000016820384,
+        "collection": 9.359999967273325e-05,
+        "odb_close": 0.050804500000595,
+        "orchestration": 0.0033738999991328456
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.001719900001262431,
+          "field_assembly": 0.0009792999971978134,
+          "vtu_serialization": 0.0068542999997589504
+        },
+        "Step-1:0/U": {
+          "field_read": 0.0017637999990256503,
+          "field_assembly": 0.0008833000010781689,
+          "vtu_serialization": 0.006821400000262656
+        },
+        "Step-1:0/E_Centroid": {
+          "field_read": 0.0031882999992376426,
+          "field_assembly": 0.0006775000001653098,
+          "vtu_serialization": 0.006392999999661697
+        },
+        "Step-1:0/E_IntegrationPoints": {
+          "field_read": 0.0018288999981450615,
+          "field_assembly": 0.0008151000020006904,
+          "vtu_serialization": 0.006068400000003749
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.0034435999987181276,
+          "field_assembly": 0.0006183000004966743,
+          "vtu_serialization": 0.006067599999369122
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.001660500000070897,
+          "field_assembly": 0.0007082000010996126,
+          "vtu_serialization": 0.006638799999564071
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.006223200000022189,
+          "field_assembly": 0.0007599999989906792,
+          "vtu_serialization": 0.006944599999769707
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.0016468000012537232,
+          "field_assembly": 0.0008933999979490181,
+          "vtu_serialization": 0.006807800000387942
+        },
+        "Step-1:1/U": {
+          "field_read": 0.001580500002091867,
+          "field_assembly": 0.0008769999985815957,
+          "vtu_serialization": 0.012596399999893038
+        },
+        "Step-1:1/E_Centroid": {
+          "field_read": 0.003033899998627021,
+          "field_assembly": 0.000623400001131813,
+          "vtu_serialization": 0.013572100000601495
+        },
+        "Step-1:1/E_IntegrationPoints": {
+          "field_read": 0.00198860000273271,
+          "field_assembly": 0.001247499996679835,
+          "vtu_serialization": 0.01307509999969625
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.003199300002961536,
+          "field_assembly": 0.0006920999967405805,
+          "vtu_serialization": 0.01247470000089379
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.0021498999994946644,
+          "field_assembly": 0.0007883000016590813,
+          "vtu_serialization": 0.01325139999971725
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.005944399999862071,
+          "field_assembly": 0.0007087000012688804,
+          "vtu_serialization": 0.0071661999991192715
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.11263640000106534
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.14575189999959548
+        }
+      ],
+      "mesh": {
+        "points": 3840,
+        "cells": 2604
+      },
+      "peak_rss_bytes": 110153728,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_profile_phase-profiles-5bb35423_phases.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "mode": "phases",
+      "repeat": 2,
+      "process_seconds": 0.8708136999994167,
+      "outer_timer_bookkeeping_seconds": 1.2399999832268804e-05
+    },
+    {
+      "odb": "Job-1.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "L-SHAPE-PART-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.1853491000001668,
+      "seconds": 0.4601964000012231,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 111005696,
+      "output_bytes": 2884353,
+      "paths": [
+        "Job-1_profile_phase-profiles-5bb35423_control.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "Job-1",
+      "mode": "control",
+      "repeat": 2,
+      "process_seconds": 0.8973812000003818
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.1758906000013667,
+      "seconds": 0.12568850000025122,
+      "phases_seconds": {
+        "odb_open": 0.013600899999801186,
+        "validation": 0.003521500000715605,
+        "mesh_preparation": 0.004009800000858377,
+        "field_discovery": 0.012050799999997253,
+        "field_read": 0.02008679999744345,
+        "field_assembly": 0.001359400001092581,
+        "vtu_serialization": 0.004887000000962871,
+        "file_publication": 0.006221200001164107,
+        "history": 0.0034707999984675553,
+        "collection": 8.679999882588163e-05,
+        "odb_close": 0.05366400000093563,
+        "orchestration": 0.0027294999999867287
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.001153299997895374,
+          "field_assembly": 8.67000017024111e-05,
+          "vtu_serialization": 0.00018729999828792643
+        },
+        "Step-1:0/U": {
+          "field_read": 0.0011448000022937777,
+          "field_assembly": 7.029999687802047e-05,
+          "vtu_serialization": 0.00017769999976735562
+        },
+        "Step-1:0/E_Centroid": {
+          "field_read": 0.0013616000014735619,
+          "field_assembly": 6.269999903452117e-05,
+          "vtu_serialization": 0.00019299999985378236
+        },
+        "Step-1:0/E_IntegrationPoints": {
+          "field_read": 0.0011784999987867195,
+          "field_assembly": 0.00032300000202667434,
+          "vtu_serialization": 0.00019429999883868732
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.0012721000002784422,
+          "field_assembly": 6.13999982306268e-05,
+          "vtu_serialization": 0.0001976000003196532
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.0011019999983545858,
+          "field_assembly": 7.88000015745638e-05,
+          "vtu_serialization": 0.0001756999990902841
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.0026115000018762657,
+          "field_assembly": 8.999999772640876e-05,
+          "vtu_serialization": 0.00016909999976633117
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.0011570000006031478,
+          "field_assembly": 0.00012210000022605527,
+          "vtu_serialization": 0.00020229999972798396
+        },
+        "Step-1:1/U": {
+          "field_read": 0.001326999998127576,
+          "field_assembly": 6.87000010657357e-05,
+          "vtu_serialization": 0.0002841000004991656
+        },
+        "Step-1:1/E_Centroid": {
+          "field_read": 0.0013663999998243526,
+          "field_assembly": 7.120000009308569e-05,
+          "vtu_serialization": 0.0002960999991046265
+        },
+        "Step-1:1/E_IntegrationPoints": {
+          "field_read": 0.0012045999992551515,
+          "field_assembly": 0.0001007999999274034,
+          "vtu_serialization": 0.00042639999992388766
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.0013568999984272523,
+          "field_assembly": 7.070000174280722e-05,
+          "vtu_serialization": 0.0002902000014728401
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.0011170000016136328,
+          "field_assembly": 8.099999831756577e-05,
+          "vtu_serialization": 0.00035460000071907416
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.00273409999863361,
+          "field_assembly": 7.200000254670158e-05,
+          "vtu_serialization": 0.00017190000107802916
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.019028499998967163
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.01941889999943669
+        }
+      ],
+      "mesh": {
+        "points": 99,
+        "cells": 80
+      },
+      "peak_rss_bytes": 110247936,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_profile_phase-profiles-5bb35423_phases.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "mode": "phases",
+      "repeat": 0,
+      "process_seconds": 0.6248694000005344,
+      "outer_timer_bookkeeping_seconds": 1.6599999071331695e-05
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.17132649999985006,
+      "seconds": 0.11926930000117864,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 108396544,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_profile_phase-profiles-5bb35423_control.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "mode": "control",
+      "repeat": 0,
+      "process_seconds": 0.5311739999997371
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.18284899999889603,
+      "seconds": 0.11386209999909624,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 108711936,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_profile_phase-profiles-5bb35423_control.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "mode": "control",
+      "repeat": 1,
+      "process_seconds": 0.5315060000011727
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.17711509999935515,
+      "seconds": 0.12208579999969515,
+      "phases_seconds": {
+        "odb_open": 0.013027400000282796,
+        "validation": 0.0031935999995766906,
+        "mesh_preparation": 0.0036467000008997275,
+        "field_discovery": 0.010494599999219645,
+        "field_read": 0.017729099998177844,
+        "field_assembly": 0.0010671999989426695,
+        "vtu_serialization": 0.004721600002085324,
+        "file_publication": 0.00478310000289639,
+        "history": 0.003205500001058681,
+        "collection": 8.119999984046444e-05,
+        "odb_close": 0.057664300000396906,
+        "orchestration": 0.002471499996318016
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.0010528999991947785,
+          "field_assembly": 8.010000055946875e-05,
+          "vtu_serialization": 0.0001799000001483364
+        },
+        "Step-1:0/U": {
+          "field_read": 0.0010261999996146187,
+          "field_assembly": 9.450000106880907e-05,
+          "vtu_serialization": 0.00018979999913426582
+        },
+        "Step-1:0/E_Centroid": {
+          "field_read": 0.0014262000022426946,
+          "field_assembly": 7.219999861263204e-05,
+          "vtu_serialization": 0.0002506000000721542
+        },
+        "Step-1:0/E_IntegrationPoints": {
+          "field_read": 0.0011413000011089025,
+          "field_assembly": 0.00011819999781437218,
+          "vtu_serialization": 0.0002210000002378365
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.0013434999982564477,
+          "field_assembly": 9.000000136438757e-05,
+          "vtu_serialization": 0.00019600000086938962
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.0010874999989027856,
+          "field_assembly": 8.150000212481245e-05,
+          "vtu_serialization": 0.00018140000065614004
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.0023847000011301134,
+          "field_assembly": 7.729999924777076e-05,
+          "vtu_serialization": 0.0001810000012483215
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.0009499999996478437,
+          "field_assembly": 6.310000026132911e-05,
+          "vtu_serialization": 0.00016620000133116264
+        },
+        "Step-1:1/U": {
+          "field_read": 0.0009320999997726176,
+          "field_assembly": 6.55999992886791e-05,
+          "vtu_serialization": 0.0002437999992253026
+        },
+        "Step-1:1/E_Centroid": {
+          "field_read": 0.0011770000000979053,
+          "field_assembly": 5.9899999541812576e-05,
+          "vtu_serialization": 0.0002997999999934109
+        },
+        "Step-1:1/E_IntegrationPoints": {
+          "field_read": 0.0010218999996141065,
+          "field_assembly": 7.879999975557439e-05,
+          "vtu_serialization": 0.0003600000000005821
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.0011515999995026505,
+          "field_assembly": 5.5700000302749686e-05,
+          "vtu_serialization": 0.00029230000109237153
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.0009406000008311821,
+          "field_assembly": 7.20999978511827e-05,
+          "vtu_serialization": 0.00029969999923196156
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.0020935999982611975,
+          "field_assembly": 5.8200001149089076e-05,
+          "vtu_serialization": 0.000170899998920504
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.017386999999871477
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.016674300000886433
+        }
+      ],
+      "mesh": {
+        "points": 99,
+        "cells": 80
+      },
+      "peak_rss_bytes": 110231552,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_profile_phase-profiles-5bb35423_phases.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "mode": "phases",
+      "repeat": 1,
+      "process_seconds": 0.5442106999998941,
+      "outer_timer_bookkeeping_seconds": 1.2900000001536682e-05
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.1957276000011916,
+      "seconds": 0.11631750000015018,
+      "phases_seconds": {
+        "odb_open": 0.012885199999800534,
+        "validation": 0.003290799999376759,
+        "mesh_preparation": 0.003721400000358699,
+        "field_discovery": 0.010569400001259055,
+        "field_read": 0.018138399993404164,
+        "field_assembly": 0.0010464000079082325,
+        "vtu_serialization": 0.0048231999990093755,
+        "file_publication": 0.005480899997564848,
+        "history": 0.0032793000027595554,
+        "collection": 0.00010800000018207356,
+        "odb_close": 0.05035160000079486,
+        "orchestration": 0.00262289999773202
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.0010645000002114102,
+          "field_assembly": 8.69999985297909e-05,
+          "vtu_serialization": 0.00017799999841372482
+        },
+        "Step-1:0/U": {
+          "field_read": 0.001047199999447912,
+          "field_assembly": 6.440000106522348e-05,
+          "vtu_serialization": 0.00018060000002151355
+        },
+        "Step-1:0/E_Centroid": {
+          "field_read": 0.0014666000006400282,
+          "field_assembly": 7.430000005115289e-05,
+          "vtu_serialization": 0.00022589999935007654
+        },
+        "Step-1:0/E_IntegrationPoints": {
+          "field_read": 0.0012140999988332624,
+          "field_assembly": 0.00011650000124063808,
+          "vtu_serialization": 0.00023529999998572748
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.0012301000006118556,
+          "field_assembly": 6.169999869598541e-05,
+          "vtu_serialization": 0.00019050000082643237
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.0010285999978805194,
+          "field_assembly": 7.680000271648169e-05,
+          "vtu_serialization": 0.00017759999900590628
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.0022712999998475425,
+          "field_assembly": 7.889999869803432e-05,
+          "vtu_serialization": 0.00017590000061318278
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.0010347999996156432,
+          "field_assembly": 7.170000208134297e-05,
+          "vtu_serialization": 0.0001816000003600493
+        },
+        "Step-1:1/U": {
+          "field_read": 0.001030499999615131,
+          "field_assembly": 6.130000110715628e-05,
+          "vtu_serialization": 0.00026500000058149453
+        },
+        "Step-1:1/E_Centroid": {
+          "field_read": 0.0011737999993783887,
+          "field_assembly": 5.8400000852998346e-05,
+          "vtu_serialization": 0.0003040999999939231
+        },
+        "Step-1:1/E_IntegrationPoints": {
+          "field_read": 0.0010479000011400785,
+          "field_assembly": 8.039999920583796e-05,
+          "vtu_serialization": 0.0003936000011890428
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.001223299999765004,
+          "field_assembly": 6.970000140427146e-05,
+          "vtu_serialization": 0.00027769999906013254
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.0010171999983867863,
+          "field_assembly": 7.88000015745638e-05,
+          "vtu_serialization": 0.0003321999993204372
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.002288499998030602,
+          "field_assembly": 6.650000068475492e-05,
+          "vtu_serialization": 0.0002069000001938548
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 0.017297500000495347
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 0.0173333000002458
+        }
+      ],
+      "mesh": {
+        "points": 99,
+        "cells": 80
+      },
+      "peak_rss_bytes": 109969408,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_profile_phase-profiles-5bb35423_phases.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "mode": "phases",
+      "repeat": 2,
+      "process_seconds": 0.5553455999997823,
+      "outer_timer_bookkeeping_seconds": 1.2099999366910197e-05
+    },
+    {
+      "odb": "2d_planar.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "history": true,
+      "sdk_and_package_imports_seconds": 0.17254200000024866,
+      "seconds": 0.11619249999966996,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 109395968,
+      "output_bytes": 48444,
+      "paths": [
+        "2d_planar_profile_phase-profiles-5bb35423_control.csv",
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "2d_planar",
+      "mode": "control",
+      "repeat": 2,
+      "process_seconds": 0.6271255000010569
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.1882277000004251,
+      "seconds": 7.9283472999995865,
+      "phases_seconds": {
+        "odb_open": 0.011108200000307988,
+        "validation": 0.006547900000441587,
+        "mesh_preparation": 1.4241483000005246,
+        "field_discovery": 0.38164859999778855,
+        "field_read": 0.4670152000071539,
+        "field_assembly": 0.4400920999869413,
+        "vtu_serialization": 5.106867300006343,
+        "file_publication": 0.00840769999922486,
+        "history": 0.0,
+        "collection": 0.0001140000003942987,
+        "odb_close": 0.0573101999998471,
+        "orchestration": 0.02508780000061961
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.012266099998669233,
+          "field_assembly": 0.01790660000187927,
+          "vtu_serialization": 0.18462039999940316
+        },
+        "Step-1:0/TEMP0": {
+          "field_read": 0.011549099997864687,
+          "field_assembly": 0.01705260000198905,
+          "vtu_serialization": 0.14285760000166192
+        },
+        "Step-1:0/TEMP1": {
+          "field_read": 0.01118730000234791,
+          "field_assembly": 0.016420199997810414,
+          "vtu_serialization": 0.15974809999897843
+        },
+        "Step-1:0/TEMP2": {
+          "field_read": 0.01596619999872928,
+          "field_assembly": 0.017666300000200863,
+          "vtu_serialization": 0.1534241999997903
+        },
+        "Step-1:0/TEMP3": {
+          "field_read": 0.01129669999863836,
+          "field_assembly": 0.018128300001990283,
+          "vtu_serialization": 0.15500479999900563
+        },
+        "Step-1:0/U": {
+          "field_read": 0.011982500000158325,
+          "field_assembly": 0.018202999999630265,
+          "vtu_serialization": 0.18809049999981653
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.012471699999878183,
+          "field_assembly": 0.00243399999999383,
+          "vtu_serialization": 0.027316499999869848
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.00999940000292554,
+          "field_assembly": 0.0026749999979074346,
+          "vtu_serialization": 0.027655899999444955
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.022781300000133342,
+          "field_assembly": 0.00021519999972952064,
+          "vtu_serialization": 0.01796959999956016
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.011471800000435906,
+          "field_assembly": 0.017119199999797274,
+          "vtu_serialization": 0.1779534999986936
+        },
+        "Step-1:1/TEMP0": {
+          "field_read": 0.012050400000589434,
+          "field_assembly": 0.01737449999927776,
+          "vtu_serialization": 0.1428314999993745
+        },
+        "Step-1:1/TEMP1": {
+          "field_read": 0.011467500002254383,
+          "field_assembly": 0.017603699996470823,
+          "vtu_serialization": 0.14151759999913338
+        },
+        "Step-1:1/TEMP2": {
+          "field_read": 0.0101375000031112,
+          "field_assembly": 0.01736739999614656,
+          "vtu_serialization": 0.14856850000069244
+        },
+        "Step-1:1/TEMP3": {
+          "field_read": 0.009884500001135166,
+          "field_assembly": 0.016531299997950555,
+          "vtu_serialization": 0.16198870000152965
+        },
+        "Step-1:1/U": {
+          "field_read": 0.020172399999864865,
+          "field_assembly": 0.020907799998894916,
+          "vtu_serialization": 0.17904319999979634
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.011907699998118915,
+          "field_assembly": 0.002372900002228562,
+          "vtu_serialization": 0.02720500000032189
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.009880400000838563,
+          "field_assembly": 0.002606099998956779,
+          "vtu_serialization": 0.02696280000054685
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.02408620000096562,
+          "field_assembly": 0.00019659999816212803,
+          "vtu_serialization": 0.01801570000134234
+        },
+        "Step-1:2/RF": {
+          "field_read": 0.010869600000660284,
+          "field_assembly": 0.01589559999956691,
+          "vtu_serialization": 0.17222399999991467
+        },
+        "Step-1:2/TEMP0": {
+          "field_read": 0.010538200000155484,
+          "field_assembly": 0.01692650000040885,
+          "vtu_serialization": 0.14753409999866562
+        },
+        "Step-1:2/TEMP1": {
+          "field_read": 0.010805900001287227,
+          "field_assembly": 0.017387299998517847,
+          "vtu_serialization": 0.14370249999956286
+        },
+        "Step-1:2/TEMP2": {
+          "field_read": 0.009603500000594067,
+          "field_assembly": 0.017007200000080047,
+          "vtu_serialization": 0.14466929999980493
+        },
+        "Step-1:2/TEMP3": {
+          "field_read": 0.010830599998371326,
+          "field_assembly": 0.016902900000786758,
+          "vtu_serialization": 0.1459781000012299
+        },
+        "Step-1:2/U": {
+          "field_read": 0.011926600000151666,
+          "field_assembly": 0.020032200000059674,
+          "vtu_serialization": 0.17946409999967727
+        },
+        "Step-1:2/S_Centroid": {
+          "field_read": 0.013639799999509705,
+          "field_assembly": 0.002812300001096446,
+          "vtu_serialization": 0.026947499998641433
+        },
+        "Step-1:2/S_IntegrationPoints": {
+          "field_read": 0.009112800000366406,
+          "field_assembly": 0.002844099999492755,
+          "vtu_serialization": 0.02611380000053032
+        },
+        "Step-1:2/Material_Orientation": {
+          "field_read": 0.02507560000049125,
+          "field_assembly": 0.00024420000045211054,
+          "vtu_serialization": 0.018609400000059395
+        },
+        "Step-1:3/RF": {
+          "field_read": 0.012328999997407664,
+          "field_assembly": 0.016259400003036717,
+          "vtu_serialization": 0.17916600000171456
+        },
+        "Step-1:3/TEMP0": {
+          "field_read": 0.01081739999972342,
+          "field_assembly": 0.017553899999256828,
+          "vtu_serialization": 0.14673750000110886
+        },
+        "Step-1:3/TEMP1": {
+          "field_read": 0.010776700000860728,
+          "field_assembly": 0.0171859999991284,
+          "vtu_serialization": 0.14697569999952975
+        },
+        "Step-1:3/TEMP2": {
+          "field_read": 0.010794699999678414,
+          "field_assembly": 0.016825699998662458,
+          "vtu_serialization": 0.1570341999995435
+        },
+        "Step-1:3/TEMP3": {
+          "field_read": 0.011113600001408486,
+          "field_assembly": 0.016737499998271232,
+          "vtu_serialization": 0.1461674000001949
+        },
+        "Step-1:3/U": {
+          "field_read": 0.012325599998803227,
+          "field_assembly": 0.01738850000037928,
+          "vtu_serialization": 0.19704099999944447
+        },
+        "Step-1:3/S_Centroid": {
+          "field_read": 0.011810900001364644,
+          "field_assembly": 0.0023693999992246972,
+          "vtu_serialization": 0.026311100000384613
+        },
+        "Step-1:3/S_IntegrationPoints": {
+          "field_read": 0.01075450000098499,
+          "field_assembly": 0.0027051999986724695,
+          "vtu_serialization": 0.02527399999962654
+        },
+        "Step-1:3/Material_Orientation": {
+          "field_read": 0.02333149999867601,
+          "field_assembly": 0.00023350000083155464,
+          "vtu_serialization": 0.017293400000198744
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 1.6422662999993918
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 1.590792999999394
+        },
+        {
+          "step": "Step-1",
+          "frame": 2,
+          "seconds": 1.5654701000003115
+        },
+        {
+          "step": "Step-1",
+          "frame": 3,
+          "seconds": 1.597266500000842
+        }
+      ],
+      "mesh": {
+        "points": 80000,
+        "cells": 10000
+      },
+      "peak_rss_bytes": 133832704,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "mode": "phases",
+      "repeat": 0,
+      "process_seconds": 8.45935819999977,
+      "outer_timer_bookkeeping_seconds": 1.1599999197642319e-05
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.1838249000011274,
+      "seconds": 7.819557200000418,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133447680,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "mode": "control",
+      "repeat": 0,
+      "process_seconds": 8.245330399999148
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.17874689999916882,
+      "seconds": 7.78682900000058,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133443584,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "mode": "control",
+      "repeat": 1,
+      "process_seconds": 8.210747199998877
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.18279489999986254,
+      "seconds": 7.813889400000335,
+      "phases_seconds": {
+        "odb_open": 0.011201699999219272,
+        "validation": 0.006675100001302781,
+        "mesh_preparation": 1.3967690999998013,
+        "field_discovery": 0.36341920000268146,
+        "field_read": 0.43672019999030454,
+        "field_assembly": 0.4340330000140966,
+        "vtu_serialization": 5.073074299996733,
+        "file_publication": 0.012425300001268624,
+        "history": 0.0,
+        "collection": 0.00011509999967529438,
+        "odb_close": 0.05488620000141964,
+        "orchestration": 0.02457019999383192
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.012359599999399506,
+          "field_assembly": 0.01694850000058068,
+          "vtu_serialization": 0.1802614000007452
+        },
+        "Step-1:0/TEMP0": {
+          "field_read": 0.009977199999411823,
+          "field_assembly": 0.016277200000331504,
+          "vtu_serialization": 0.1476937999996153
+        },
+        "Step-1:0/TEMP1": {
+          "field_read": 0.009916200000589015,
+          "field_assembly": 0.016830599999593687,
+          "vtu_serialization": 0.14805750000050466
+        },
+        "Step-1:0/TEMP2": {
+          "field_read": 0.009805300000152783,
+          "field_assembly": 0.01666799999838986,
+          "vtu_serialization": 0.14004249999925378
+        },
+        "Step-1:0/TEMP3": {
+          "field_read": 0.010243700000501121,
+          "field_assembly": 0.01679590000094322,
+          "vtu_serialization": 0.15781860000060988
+        },
+        "Step-1:0/U": {
+          "field_read": 0.011454899999080226,
+          "field_assembly": 0.01773730000059004,
+          "vtu_serialization": 0.1842569000000367
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.012289899999814224,
+          "field_assembly": 0.0026197000006504823,
+          "vtu_serialization": 0.028134999998655985
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.009391399999003625,
+          "field_assembly": 0.0026728000011644326,
+          "vtu_serialization": 0.026682599998821388
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.023275800000192248,
+          "field_assembly": 0.00022399999943445437,
+          "vtu_serialization": 0.017874299999675713
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.010921399998551351,
+          "field_assembly": 0.01700380000147561,
+          "vtu_serialization": 0.18626909999875352
+        },
+        "Step-1:1/TEMP0": {
+          "field_read": 0.01067460000012943,
+          "field_assembly": 0.018645900001502014,
+          "vtu_serialization": 0.14244920000055572
+        },
+        "Step-1:1/TEMP1": {
+          "field_read": 0.010114099999555037,
+          "field_assembly": 0.0180424000009225,
+          "vtu_serialization": 0.14292209999985062
+        },
+        "Step-1:1/TEMP2": {
+          "field_read": 0.010944400000880705,
+          "field_assembly": 0.01667019999877084,
+          "vtu_serialization": 0.14467789999980596
+        },
+        "Step-1:1/TEMP3": {
+          "field_read": 0.010184999997363775,
+          "field_assembly": 0.017167100002552615,
+          "vtu_serialization": 0.14848929999971006
+        },
+        "Step-1:1/U": {
+          "field_read": 0.0115823999967688,
+          "field_assembly": 0.01762540000163426,
+          "vtu_serialization": 0.1839404000002105
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.011202600000615348,
+          "field_assembly": 0.0026552999988780357,
+          "vtu_serialization": 0.02542369999900984
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.009050899998328532,
+          "field_assembly": 0.0029052000027149916,
+          "vtu_serialization": 0.02690939999956754
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.021991599998727906,
+          "field_assembly": 0.00021910000214120373,
+          "vtu_serialization": 0.018650699999852804
+        },
+        "Step-1:2/RF": {
+          "field_read": 0.010868500001379289,
+          "field_assembly": 0.016671799998221104,
+          "vtu_serialization": 0.17135870000129216
+        },
+        "Step-1:2/TEMP0": {
+          "field_read": 0.010811000000103377,
+          "field_assembly": 0.017157399999632617,
+          "vtu_serialization": 0.14927600000009988
+        },
+        "Step-1:2/TEMP1": {
+          "field_read": 0.010513800001717755,
+          "field_assembly": 0.017338599998765858,
+          "vtu_serialization": 0.16388740000002144
+        },
+        "Step-1:2/TEMP2": {
+          "field_read": 0.010378200000559445,
+          "field_assembly": 0.01684919999934209,
+          "vtu_serialization": 0.14592700000139303
+        },
+        "Step-1:2/TEMP3": {
+          "field_read": 0.011655700000119396,
+          "field_assembly": 0.017426700000214623,
+          "vtu_serialization": 0.14005750000069384
+        },
+        "Step-1:2/U": {
+          "field_read": 0.010762899997644126,
+          "field_assembly": 0.01739380000253732,
+          "vtu_serialization": 0.1807790999991994
+        },
+        "Step-1:2/S_Centroid": {
+          "field_read": 0.011720500000592438,
+          "field_assembly": 0.0023218999995151535,
+          "vtu_serialization": 0.026804299999639625
+        },
+        "Step-1:2/S_IntegrationPoints": {
+          "field_read": 0.010001700000429992,
+          "field_assembly": 0.0026734999992186204,
+          "vtu_serialization": 0.02664120000008552
+        },
+        "Step-1:2/Material_Orientation": {
+          "field_read": 0.022956900000281166,
+          "field_assembly": 0.00018180000006395858,
+          "vtu_serialization": 0.017651499998464715
+        },
+        "Step-1:3/RF": {
+          "field_read": 0.011974599998211488,
+          "field_assembly": 0.017915600001288112,
+          "vtu_serialization": 0.18467240000063612
+        },
+        "Step-1:3/TEMP0": {
+          "field_read": 0.01036270000076911,
+          "field_assembly": 0.017400499998984742,
+          "vtu_serialization": 0.14415770000050543
+        },
+        "Step-1:3/TEMP1": {
+          "field_read": 0.010437900000397349,
+          "field_assembly": 0.015798200000062934,
+          "vtu_serialization": 0.14669920000051206
+        },
+        "Step-1:3/TEMP2": {
+          "field_read": 0.010869099998672027,
+          "field_assembly": 0.017018900001858128,
+          "vtu_serialization": 0.14625030000024708
+        },
+        "Step-1:3/TEMP3": {
+          "field_read": 0.011055199998736498,
+          "field_assembly": 0.017328800002360367,
+          "vtu_serialization": 0.14424310000140395
+        },
+        "Step-1:3/U": {
+          "field_read": 0.011798999999882653,
+          "field_assembly": 0.017136300000856863,
+          "vtu_serialization": 0.17672160000074655
+        },
+        "Step-1:3/S_Centroid": {
+          "field_read": 0.012201700001241989,
+          "field_assembly": 0.002618499998789048,
+          "vtu_serialization": 0.027224899999055197
+        },
+        "Step-1:3/S_IntegrationPoints": {
+          "field_read": 0.010343800000555348,
+          "field_assembly": 0.0028406000001268694,
+          "vtu_serialization": 0.02620260000003327
+        },
+        "Step-1:3/Material_Orientation": {
+          "field_read": 0.022625999999945634,
+          "field_assembly": 0.0002524999999877764,
+          "vtu_serialization": 0.017346800001178053
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 1.579198900000847
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 1.585077800000363
+        },
+        {
+          "step": "Step-1",
+          "frame": 2,
+          "seconds": 1.5762861000002886
+        },
+        {
+          "step": "Step-1",
+          "frame": 3,
+          "seconds": 1.5668700000005629
+        }
+      ],
+      "mesh": {
+        "points": 80000,
+        "cells": 10000
+      },
+      "peak_rss_bytes": 134070272,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "mode": "phases",
+      "repeat": 1,
+      "process_seconds": 8.267137400000138,
+      "outer_timer_bookkeeping_seconds": 1.2500000593718141e-05
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.2013094000012643,
+      "seconds": 7.842269700000543,
+      "phases_seconds": {
+        "odb_open": 0.011314699999275035,
+        "validation": 0.006209000001035747,
+        "mesh_preparation": 1.3807140000008076,
+        "field_discovery": 0.363537000001088,
+        "field_read": 0.44952769999872544,
+        "field_assembly": 0.4305661999969743,
+        "vtu_serialization": 5.10583680000309,
+        "file_publication": 0.013175100000808015,
+        "history": 0.0,
+        "collection": 0.00011389999963284936,
+        "odb_close": 0.05494639999960782,
+        "orchestration": 0.02632889999949839
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.01325399999950605,
+          "field_assembly": 0.01725299999998242,
+          "vtu_serialization": 0.1852497999989282
+        },
+        "Step-1:0/TEMP0": {
+          "field_read": 0.011163899998791749,
+          "field_assembly": 0.016487200002302416,
+          "vtu_serialization": 0.14674250000098255
+        },
+        "Step-1:0/TEMP1": {
+          "field_read": 0.011007399998561596,
+          "field_assembly": 0.017702700000882032,
+          "vtu_serialization": 0.14708149999933084
+        },
+        "Step-1:0/TEMP2": {
+          "field_read": 0.010541199999352102,
+          "field_assembly": 0.01650350000090839,
+          "vtu_serialization": 0.1474752999984048
+        },
+        "Step-1:0/TEMP3": {
+          "field_read": 0.010281100001520826,
+          "field_assembly": 0.016473599998789723,
+          "vtu_serialization": 0.13870909999968717
+        },
+        "Step-1:0/U": {
+          "field_read": 0.011936799997783964,
+          "field_assembly": 0.01658060000227124,
+          "vtu_serialization": 0.20125869999901624
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.011837100002594525,
+          "field_assembly": 0.0023416999974870123,
+          "vtu_serialization": 0.026896400000623544
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.009780899999896064,
+          "field_assembly": 0.002575799999249284,
+          "vtu_serialization": 0.02620070000011765
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.022814599999037455,
+          "field_assembly": 0.0002030000014201505,
+          "vtu_serialization": 0.018034099999567843
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.011515199999848846,
+          "field_assembly": 0.01959739999983867,
+          "vtu_serialization": 0.18109269999877142
+        },
+        "Step-1:1/TEMP0": {
+          "field_read": 0.010533499998928164,
+          "field_assembly": 0.017089600001781946,
+          "vtu_serialization": 0.14742310000110592
+        },
+        "Step-1:1/TEMP1": {
+          "field_read": 0.010010500000134925,
+          "field_assembly": 0.017995199999859324,
+          "vtu_serialization": 0.14710709999963
+        },
+        "Step-1:1/TEMP2": {
+          "field_read": 0.011211000002731453,
+          "field_assembly": 0.017053399997166707,
+          "vtu_serialization": 0.14811449999979232
+        },
+        "Step-1:1/TEMP3": {
+          "field_read": 0.011222100001759827,
+          "field_assembly": 0.01658339999812597,
+          "vtu_serialization": 0.15142799999921408
+        },
+        "Step-1:1/U": {
+          "field_read": 0.011494500002299901,
+          "field_assembly": 0.017141599997557933,
+          "vtu_serialization": 0.18137810000007448
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.012006900000415044,
+          "field_assembly": 0.0025015999999595806,
+          "vtu_serialization": 0.025662799998826813
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.008766499999182997,
+          "field_assembly": 0.0026675000008253846,
+          "vtu_serialization": 0.02544289999968896
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.023013000001810724,
+          "field_assembly": 0.00019039999824599363,
+          "vtu_serialization": 0.018586999998660758
+        },
+        "Step-1:2/RF": {
+          "field_read": 0.011886599999343161,
+          "field_assembly": 0.017776499998944928,
+          "vtu_serialization": 0.18122960000073363
+        },
+        "Step-1:2/TEMP0": {
+          "field_read": 0.011958999999478692,
+          "field_assembly": 0.016173699999853852,
+          "vtu_serialization": 0.1464228999993793
+        },
+        "Step-1:2/TEMP1": {
+          "field_read": 0.01088750000053551,
+          "field_assembly": 0.01704809999864665,
+          "vtu_serialization": 0.14611999999942782
+        },
+        "Step-1:2/TEMP2": {
+          "field_read": 0.010521000000153435,
+          "field_assembly": 0.01720469999963825,
+          "vtu_serialization": 0.1518765999990137
+        },
+        "Step-1:2/TEMP3": {
+          "field_read": 0.010587999999188469,
+          "field_assembly": 0.017768000001524342,
+          "vtu_serialization": 0.14159699999981967
+        },
+        "Step-1:2/U": {
+          "field_read": 0.011154499998156098,
+          "field_assembly": 0.01640370000131952,
+          "vtu_serialization": 0.18134310000095866
+        },
+        "Step-1:2/S_Centroid": {
+          "field_read": 0.012127800000598654,
+          "field_assembly": 0.0024678999980096705,
+          "vtu_serialization": 0.02791140000044834
+        },
+        "Step-1:2/S_IntegrationPoints": {
+          "field_read": 0.010034699998868746,
+          "field_assembly": 0.0030166000015015015,
+          "vtu_serialization": 0.026240099999995437
+        },
+        "Step-1:2/Material_Orientation": {
+          "field_read": 0.024005600000236882,
+          "field_assembly": 0.0004977999997208826,
+          "vtu_serialization": 0.019199099999241298
+        },
+        "Step-1:3/RF": {
+          "field_read": 0.011016299999027979,
+          "field_assembly": 0.01765510000041104,
+          "vtu_serialization": 0.1832192000001669
+        },
+        "Step-1:3/TEMP0": {
+          "field_read": 0.010923100000582053,
+          "field_assembly": 0.016707999999198364,
+          "vtu_serialization": 0.1467008999989048
+        },
+        "Step-1:3/TEMP1": {
+          "field_read": 0.010911500001384411,
+          "field_assembly": 0.01664100000016333,
+          "vtu_serialization": 0.14258960000006482
+        },
+        "Step-1:3/TEMP2": {
+          "field_read": 0.01141269999970973,
+          "field_assembly": 0.016584899998633773,
+          "vtu_serialization": 0.13771269999961078
+        },
+        "Step-1:3/TEMP3": {
+          "field_read": 0.010622699999657925,
+          "field_assembly": 0.016303700000207755,
+          "vtu_serialization": 0.14478479999888805
+        },
+        "Step-1:3/U": {
+          "field_read": 0.012172999999165768,
+          "field_assembly": 0.015917099999569473,
+          "vtu_serialization": 0.1790359000005992
+        },
+        "Step-1:3/S_Centroid": {
+          "field_read": 0.013148399999408866,
+          "field_assembly": 0.002517400000215275,
+          "vtu_serialization": 0.030436500001087552
+        },
+        "Step-1:3/S_IntegrationPoints": {
+          "field_read": 0.010219699999652221,
+          "field_assembly": 0.0026578000015433645,
+          "vtu_serialization": 0.025838900000962894
+        },
+        "Step-1:3/Material_Orientation": {
+          "field_read": 0.023545399999420624,
+          "field_assembly": 0.00028300000121816993,
+          "vtu_serialization": 0.02032389999840234
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 1.6017890999992233
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 1.580962100000761
+        },
+        {
+          "step": "Step-1",
+          "frame": 2,
+          "seconds": 1.5863625000001775
+        },
+        {
+          "step": "Step-1",
+          "frame": 3,
+          "seconds": 1.5805359999994835
+        }
+      ],
+      "mesh": {
+        "points": 80000,
+        "cells": 10000
+      },
+      "peak_rss_bytes": 134270976,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_phases.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "mode": "phases",
+      "repeat": 2,
+      "process_seconds": 8.417152199999691,
+      "outer_timer_bookkeeping_seconds": 1.5000001440057531e-05
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.18016539999916859,
+      "seconds": 7.857253199999832,
+      "phases_seconds": null,
+      "fields_seconds": {},
+      "frame_body_seconds": [],
+      "mesh": null,
+      "peak_rss_bytes": 133718016,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_control.pvd"
+      ],
+      "cprofile": null,
+      "fixture": "scaling",
+      "mode": "control",
+      "repeat": 2,
+      "process_seconds": 8.28312989999904
+    },
+    {
+      "odb": "scaling.odb",
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "instances": [
+        "PART-1-1"
+      ],
+      "frames": [
+        [
+          "Step-1",
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "history": false,
+      "sdk_and_package_imports_seconds": 0.1856631999999081,
+      "seconds": 10.299543500001164,
+      "phases_seconds": {
+        "odb_open": 0.012573499998325133,
+        "validation": 0.007312200001251767,
+        "mesh_preparation": 1.466513199999099,
+        "field_discovery": 0.3720152000005328,
+        "field_read": 0.46094270001049154,
+        "field_assembly": 0.4365339999912976,
+        "vtu_serialization": 7.440173899998626,
+        "file_publication": 0.008650900001157424,
+        "history": 0.0,
+        "collection": 0.00016249999862338882,
+        "odb_close": 0.06792879999920842,
+        "orchestration": 0.026736600002550404
+      },
+      "fields_seconds": {
+        "Step-1:0/RF": {
+          "field_read": 0.011303199997200863,
+          "field_assembly": 0.016934700002821046,
+          "vtu_serialization": 0.2648558000000776
+        },
+        "Step-1:0/TEMP0": {
+          "field_read": 0.010428999999930966,
+          "field_assembly": 0.01717850000022736,
+          "vtu_serialization": 0.2133310999997775
+        },
+        "Step-1:0/TEMP1": {
+          "field_read": 0.011947700000746408,
+          "field_assembly": 0.016745799999625888,
+          "vtu_serialization": 0.2152313000005961
+        },
+        "Step-1:0/TEMP2": {
+          "field_read": 0.011090400003013201,
+          "field_assembly": 0.017021999996359227,
+          "vtu_serialization": 0.21526280000034603
+        },
+        "Step-1:0/TEMP3": {
+          "field_read": 0.011134200000014971,
+          "field_assembly": 0.018234799999845563,
+          "vtu_serialization": 0.21762630000011995
+        },
+        "Step-1:0/U": {
+          "field_read": 0.011375699999916833,
+          "field_assembly": 0.017483200001152,
+          "vtu_serialization": 0.2931356999997661
+        },
+        "Step-1:0/S_Centroid": {
+          "field_read": 0.014087999998082523,
+          "field_assembly": 0.0024513000025763176,
+          "vtu_serialization": 0.040130499999577296
+        },
+        "Step-1:0/S_IntegrationPoints": {
+          "field_read": 0.010923600000751321,
+          "field_assembly": 0.0028050999990227865,
+          "vtu_serialization": 0.039092900000468944
+        },
+        "Step-1:0/Material_Orientation": {
+          "field_read": 0.024432500000330037,
+          "field_assembly": 0.00022820000049250666,
+          "vtu_serialization": 0.03353190000052564
+        },
+        "Step-1:1/RF": {
+          "field_read": 0.012347500003670575,
+          "field_assembly": 0.018304699995496776,
+          "vtu_serialization": 0.2683744999994815
+        },
+        "Step-1:1/TEMP0": {
+          "field_read": 0.011014499999873806,
+          "field_assembly": 0.017181799999889336,
+          "vtu_serialization": 0.21685409999918193
+        },
+        "Step-1:1/TEMP1": {
+          "field_read": 0.011120699999082717,
+          "field_assembly": 0.017244399999981397,
+          "vtu_serialization": 0.20821299999988696
+        },
+        "Step-1:1/TEMP2": {
+          "field_read": 0.011312200000247685,
+          "field_assembly": 0.016894599999432103,
+          "vtu_serialization": 0.20743940000102157
+        },
+        "Step-1:1/TEMP3": {
+          "field_read": 0.010860099999263184,
+          "field_assembly": 0.01730640000096173,
+          "vtu_serialization": 0.21413179999944987
+        },
+        "Step-1:1/U": {
+          "field_read": 0.011725500000466127,
+          "field_assembly": 0.017094299999371287,
+          "vtu_serialization": 0.26313850000042294
+        },
+        "Step-1:1/S_Centroid": {
+          "field_read": 0.01200539999990724,
+          "field_assembly": 0.0024960999999166233,
+          "vtu_serialization": 0.040128599999661674
+        },
+        "Step-1:1/S_IntegrationPoints": {
+          "field_read": 0.009864500001640408,
+          "field_assembly": 0.002782799998385599,
+          "vtu_serialization": 0.037728300001617754
+        },
+        "Step-1:1/Material_Orientation": {
+          "field_read": 0.022996400000920403,
+          "field_assembly": 0.0002612999996927101,
+          "vtu_serialization": 0.028120799999669543
+        },
+        "Step-1:2/RF": {
+          "field_read": 0.012105400001019007,
+          "field_assembly": 0.017553800000314368,
+          "vtu_serialization": 0.26136440000118455
+        },
+        "Step-1:2/TEMP0": {
+          "field_read": 0.010765600001832354,
+          "field_assembly": 0.01597379999839177,
+          "vtu_serialization": 0.20318909999878088
+        },
+        "Step-1:2/TEMP1": {
+          "field_read": 0.010211599999820464,
+          "field_assembly": 0.01675720000093861,
+          "vtu_serialization": 0.20394770000166318
+        },
+        "Step-1:2/TEMP2": {
+          "field_read": 0.010191000001213979,
+          "field_assembly": 0.01708679999865126,
+          "vtu_serialization": 0.20387970000047062
+        },
+        "Step-1:2/TEMP3": {
+          "field_read": 0.009889399998428416,
+          "field_assembly": 0.016286800002490054,
+          "vtu_serialization": 0.21024729999953706
+        },
+        "Step-1:2/U": {
+          "field_read": 0.0123565999983839,
+          "field_assembly": 0.017343200001050718,
+          "vtu_serialization": 0.26713329999984126
+        },
+        "Step-1:2/S_Centroid": {
+          "field_read": 0.01215300000149,
+          "field_assembly": 0.0024647999980516033,
+          "vtu_serialization": 0.040503300000636955
+        },
+        "Step-1:2/S_IntegrationPoints": {
+          "field_read": 0.010477500001798035,
+          "field_assembly": 0.002897299997130176,
+          "vtu_serialization": 0.039267000000108965
+        },
+        "Step-1:2/Material_Orientation": {
+          "field_read": 0.02580589999888616,
+          "field_assembly": 0.00043110000115120783,
+          "vtu_serialization": 0.030107399999906193
+        },
+        "Step-1:3/RF": {
+          "field_read": 0.01161100000172155,
+          "field_assembly": 0.017493999997896026,
+          "vtu_serialization": 0.2649026999988564
+        },
+        "Step-1:3/TEMP0": {
+          "field_read": 0.010984900000039488,
+          "field_assembly": 0.01669919999949343,
+          "vtu_serialization": 0.22253679999994347
+        },
+        "Step-1:3/TEMP1": {
+          "field_read": 0.01031179999881715,
+          "field_assembly": 0.016893600002731546,
+          "vtu_serialization": 0.20991380000123172
+        },
+        "Step-1:3/TEMP2": {
+          "field_read": 0.011370100000931416,
+          "field_assembly": 0.017979799999011448,
+          "vtu_serialization": 0.2007168999989517
+        },
+        "Step-1:3/TEMP3": {
+          "field_read": 0.011149500001920387,
+          "field_assembly": 0.018522599999414524,
+          "vtu_serialization": 0.20913520000067365
+        },
+        "Step-1:3/U": {
+          "field_read": 0.012841899999330053,
+          "field_assembly": 0.017659100001765182,
+          "vtu_serialization": 0.27269709999927727
+        },
+        "Step-1:3/S_Centroid": {
+          "field_read": 0.012746200000037788,
+          "field_assembly": 0.0024861999991117045,
+          "vtu_serialization": 0.04034309999951802
+        },
+        "Step-1:3/S_IntegrationPoints": {
+          "field_read": 0.010319799999706447,
+          "field_assembly": 0.002879699999539298,
+          "vtu_serialization": 0.043684700000085286
+        },
+        "Step-1:3/Material_Orientation": {
+          "field_read": 0.02568040000005567,
+          "field_assembly": 0.0004749999989144271,
+          "vtu_serialization": 0.028960699999515782
+        }
+      },
+      "frame_body_seconds": [
+        {
+          "step": "Step-1",
+          "frame": 0,
+          "seconds": 2.219041300000754
+        },
+        {
+          "step": "Step-1",
+          "frame": 1,
+          "seconds": 2.16528339999968
+        },
+        {
+          "step": "Step-1",
+          "frame": 2,
+          "seconds": 2.150560399999449
+        },
+        {
+          "step": "Step-1",
+          "frame": 3,
+          "seconds": 2.175027000001137
+        }
+      ],
+      "mesh": {
+        "points": 80000,
+        "cells": 10000
+      },
+      "peak_rss_bytes": 134148096,
+      "output_bytes": 52551564,
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_profile_phase-profiles-5bb35423_cprofile.pvd"
+      ],
+      "cprofile": "scaling.prof",
+      "fixture": "scaling",
+      "mode": "cprofile",
+      "repeat": 0,
+      "process_seconds": 10.841455900001165,
+      "outer_timer_bookkeeping_seconds": 2.5000001187436283e-05
+    }
+  ],
+  "summary": [
+    {
+      "fixture": "Job-1",
+      "control_seconds": 0.464031999999861,
+      "profiled_seconds": 0.4629722000008769,
+      "process_seconds": 0.8885956000012811,
+      "representative": {
+        "odb": "Job-1.odb",
+        "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+        "numpy": "1.22.4",
+        "instances": [
+          "L-SHAPE-PART-1"
+        ],
+        "frames": [
+          [
+            "Step-1",
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "history": true,
+        "sdk_and_package_imports_seconds": 0.18151559999932942,
+        "seconds": 0.4629722000008769,
+        "phases_seconds": {
+          "odb_open": 0.013668600000528386,
+          "validation": 0.003930000000764267,
+          "mesh_preparation": 0.12115569999878062,
+          "field_discovery": 0.016265700000076322,
+          "field_read": 0.040125599998646067,
+          "field_assembly": 0.011426799996115733,
+          "vtu_serialization": 0.19299180000416527,
+          "file_publication": 0.006635500001721084,
+          "history": 0.0035552999997889856,
+          "collection": 0.00013609999950858764,
+          "odb_close": 0.04952630000116187,
+          "orchestration": 0.0035547999996197177
+        },
+        "fields_seconds": {
+          "Step-1:0/RF": {
+            "field_read": 0.0017824999995355029,
+            "field_assembly": 0.0009466999999858672,
+            "vtu_serialization": 0.007088400001521222
+          },
+          "Step-1:0/U": {
+            "field_read": 0.0017572999986441573,
+            "field_assembly": 0.0009000000009109499,
+            "vtu_serialization": 0.007023300000582822
+          },
+          "Step-1:0/E_Centroid": {
+            "field_read": 0.003142999996271101,
+            "field_assembly": 0.000621300003331271,
+            "vtu_serialization": 0.0061838000001444016
+          },
+          "Step-1:0/E_IntegrationPoints": {
+            "field_read": 0.0018787000008160248,
+            "field_assembly": 0.0008573999984946568,
+            "vtu_serialization": 0.006191800001033698
+          },
+          "Step-1:0/S_Centroid": {
+            "field_read": 0.0031406999987666495,
+            "field_assembly": 0.0006280000015976839,
+            "vtu_serialization": 0.00623249999989639
+          },
+          "Step-1:0/S_IntegrationPoints": {
+            "field_read": 0.0019200000006094342,
+            "field_assembly": 0.0007385999997495674,
+            "vtu_serialization": 0.006204700001035235
+          },
+          "Step-1:0/Material_Orientation": {
+            "field_read": 0.0062789000003249384,
+            "field_assembly": 0.0007052000000840053,
+            "vtu_serialization": 0.006666499999482767
+          },
+          "Step-1:1/RF": {
+            "field_read": 0.001746100000673323,
+            "field_assembly": 0.0009026999978232197,
+            "vtu_serialization": 0.007948399999804678
+          },
+          "Step-1:1/U": {
+            "field_read": 0.002239499999632244,
+            "field_assembly": 0.0011660000000119908,
+            "vtu_serialization": 0.01242909999928088
+          },
+          "Step-1:1/E_Centroid": {
+            "field_read": 0.003125700000964571,
+            "field_assembly": 0.0006244999985938193,
+            "vtu_serialization": 0.014506700001220452
+          },
+          "Step-1:1/E_IntegrationPoints": {
+            "field_read": 0.0018489999984012684,
+            "field_assembly": 0.0007664000004297122,
+            "vtu_serialization": 0.014060900000913534
+          },
+          "Step-1:1/S_Centroid": {
+            "field_read": 0.0031129000017244834,
+            "field_assembly": 0.0006974999978410779,
+            "vtu_serialization": 0.01272160000007716
+          },
+          "Step-1:1/S_IntegrationPoints": {
+            "field_read": 0.001806700001907302,
+            "field_assembly": 0.0008264999978564447,
+            "vtu_serialization": 0.012614799999937532
+          },
+          "Step-1:1/Material_Orientation": {
+            "field_read": 0.006344600000375067,
+            "field_assembly": 0.001045999999405467,
+            "vtu_serialization": 0.00704070000028878
+          }
+        },
+        "frame_body_seconds": [
+          {
+            "step": "Step-1",
+            "frame": 0,
+            "seconds": 0.11304999999993015
+          },
+          {
+            "step": "Step-1",
+            "frame": 1,
+            "seconds": 0.14783609999904002
+          }
+        ],
+        "mesh": {
+          "points": 3840,
+          "cells": 2604
+        },
+        "peak_rss_bytes": 111407104,
+        "output_bytes": 2884353,
+        "paths": [
+          "Job-1_profile_phase-profiles-5bb35423_phases.csv",
+          "Step-1_0.vtu",
+          "Step-1_1.vtu",
+          "Job-1_profile_phase-profiles-5bb35423_phases.pvd"
+        ],
+        "cprofile": null,
+        "fixture": "Job-1",
+        "mode": "phases",
+        "repeat": 0,
+        "process_seconds": 0.8864976999993814,
+        "outer_timer_bookkeeping_seconds": 1.2900001820526086e-05
+      },
+      "overhead_percent": -0.2283894212003479,
+      "min_seconds": 0.45494460000008985,
+      "max_seconds": 0.4663149000007252
+    },
+    {
+      "fixture": "2d_planar",
+      "control_seconds": 0.11619249999966996,
+      "profiled_seconds": 0.12208579999969515,
+      "process_seconds": 0.5315060000011727,
+      "representative": {
+        "odb": "2d_planar.odb",
+        "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+        "numpy": "1.22.4",
+        "instances": [
+          "PART-1-1"
+        ],
+        "frames": [
+          [
+            "Step-1",
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "history": true,
+        "sdk_and_package_imports_seconds": 0.17711509999935515,
+        "seconds": 0.12208579999969515,
+        "phases_seconds": {
+          "odb_open": 0.013027400000282796,
+          "validation": 0.0031935999995766906,
+          "mesh_preparation": 0.0036467000008997275,
+          "field_discovery": 0.010494599999219645,
+          "field_read": 0.017729099998177844,
+          "field_assembly": 0.0010671999989426695,
+          "vtu_serialization": 0.004721600002085324,
+          "file_publication": 0.00478310000289639,
+          "history": 0.003205500001058681,
+          "collection": 8.119999984046444e-05,
+          "odb_close": 0.057664300000396906,
+          "orchestration": 0.002471499996318016
+        },
+        "fields_seconds": {
+          "Step-1:0/RF": {
+            "field_read": 0.0010528999991947785,
+            "field_assembly": 8.010000055946875e-05,
+            "vtu_serialization": 0.0001799000001483364
+          },
+          "Step-1:0/U": {
+            "field_read": 0.0010261999996146187,
+            "field_assembly": 9.450000106880907e-05,
+            "vtu_serialization": 0.00018979999913426582
+          },
+          "Step-1:0/E_Centroid": {
+            "field_read": 0.0014262000022426946,
+            "field_assembly": 7.219999861263204e-05,
+            "vtu_serialization": 0.0002506000000721542
+          },
+          "Step-1:0/E_IntegrationPoints": {
+            "field_read": 0.0011413000011089025,
+            "field_assembly": 0.00011819999781437218,
+            "vtu_serialization": 0.0002210000002378365
+          },
+          "Step-1:0/S_Centroid": {
+            "field_read": 0.0013434999982564477,
+            "field_assembly": 9.000000136438757e-05,
+            "vtu_serialization": 0.00019600000086938962
+          },
+          "Step-1:0/S_IntegrationPoints": {
+            "field_read": 0.0010874999989027856,
+            "field_assembly": 8.150000212481245e-05,
+            "vtu_serialization": 0.00018140000065614004
+          },
+          "Step-1:0/Material_Orientation": {
+            "field_read": 0.0023847000011301134,
+            "field_assembly": 7.729999924777076e-05,
+            "vtu_serialization": 0.0001810000012483215
+          },
+          "Step-1:1/RF": {
+            "field_read": 0.0009499999996478437,
+            "field_assembly": 6.310000026132911e-05,
+            "vtu_serialization": 0.00016620000133116264
+          },
+          "Step-1:1/U": {
+            "field_read": 0.0009320999997726176,
+            "field_assembly": 6.55999992886791e-05,
+            "vtu_serialization": 0.0002437999992253026
+          },
+          "Step-1:1/E_Centroid": {
+            "field_read": 0.0011770000000979053,
+            "field_assembly": 5.9899999541812576e-05,
+            "vtu_serialization": 0.0002997999999934109
+          },
+          "Step-1:1/E_IntegrationPoints": {
+            "field_read": 0.0010218999996141065,
+            "field_assembly": 7.879999975557439e-05,
+            "vtu_serialization": 0.0003600000000005821
+          },
+          "Step-1:1/S_Centroid": {
+            "field_read": 0.0011515999995026505,
+            "field_assembly": 5.5700000302749686e-05,
+            "vtu_serialization": 0.00029230000109237153
+          },
+          "Step-1:1/S_IntegrationPoints": {
+            "field_read": 0.0009406000008311821,
+            "field_assembly": 7.20999978511827e-05,
+            "vtu_serialization": 0.00029969999923196156
+          },
+          "Step-1:1/Material_Orientation": {
+            "field_read": 0.0020935999982611975,
+            "field_assembly": 5.8200001149089076e-05,
+            "vtu_serialization": 0.000170899998920504
+          }
+        },
+        "frame_body_seconds": [
+          {
+            "step": "Step-1",
+            "frame": 0,
+            "seconds": 0.017386999999871477
+          },
+          {
+            "step": "Step-1",
+            "frame": 1,
+            "seconds": 0.016674300000886433
+          }
+        ],
+        "mesh": {
+          "points": 99,
+          "cells": 80
+        },
+        "peak_rss_bytes": 110231552,
+        "output_bytes": 48444,
+        "paths": [
+          "2d_planar_profile_phase-profiles-5bb35423_phases.csv",
+          "Step-1_0.vtu",
+          "Step-1_1.vtu",
+          "2d_planar_profile_phase-profiles-5bb35423_phases.pvd"
+        ],
+        "cprofile": null,
+        "fixture": "2d_planar",
+        "mode": "phases",
+        "repeat": 1,
+        "process_seconds": 0.5442106999998941,
+        "outer_timer_bookkeeping_seconds": 1.2900000001536682e-05
+      },
+      "overhead_percent": 5.072014114544343,
+      "min_seconds": 0.11631750000015018,
+      "max_seconds": 0.12568850000025122
+    },
+    {
+      "fixture": "scaling",
+      "control_seconds": 7.819557200000418,
+      "profiled_seconds": 7.842269700000543,
+      "process_seconds": 8.245330399999148,
+      "representative": {
+        "odb": "scaling.odb",
+        "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+        "numpy": "1.22.4",
+        "instances": [
+          "PART-1-1"
+        ],
+        "frames": [
+          [
+            "Step-1",
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ]
+        ],
+        "history": false,
+        "sdk_and_package_imports_seconds": 0.2013094000012643,
+        "seconds": 7.842269700000543,
+        "phases_seconds": {
+          "odb_open": 0.011314699999275035,
+          "validation": 0.006209000001035747,
+          "mesh_preparation": 1.3807140000008076,
+          "field_discovery": 0.363537000001088,
+          "field_read": 0.44952769999872544,
+          "field_assembly": 0.4305661999969743,
+          "vtu_serialization": 5.10583680000309,
+          "file_publication": 0.013175100000808015,
+          "history": 0.0,
+          "collection": 0.00011389999963284936,
+          "odb_close": 0.05494639999960782,
+          "orchestration": 0.02632889999949839
+        },
+        "fields_seconds": {
+          "Step-1:0/RF": {
+            "field_read": 0.01325399999950605,
+            "field_assembly": 0.01725299999998242,
+            "vtu_serialization": 0.1852497999989282
+          },
+          "Step-1:0/TEMP0": {
+            "field_read": 0.011163899998791749,
+            "field_assembly": 0.016487200002302416,
+            "vtu_serialization": 0.14674250000098255
+          },
+          "Step-1:0/TEMP1": {
+            "field_read": 0.011007399998561596,
+            "field_assembly": 0.017702700000882032,
+            "vtu_serialization": 0.14708149999933084
+          },
+          "Step-1:0/TEMP2": {
+            "field_read": 0.010541199999352102,
+            "field_assembly": 0.01650350000090839,
+            "vtu_serialization": 0.1474752999984048
+          },
+          "Step-1:0/TEMP3": {
+            "field_read": 0.010281100001520826,
+            "field_assembly": 0.016473599998789723,
+            "vtu_serialization": 0.13870909999968717
+          },
+          "Step-1:0/U": {
+            "field_read": 0.011936799997783964,
+            "field_assembly": 0.01658060000227124,
+            "vtu_serialization": 0.20125869999901624
+          },
+          "Step-1:0/S_Centroid": {
+            "field_read": 0.011837100002594525,
+            "field_assembly": 0.0023416999974870123,
+            "vtu_serialization": 0.026896400000623544
+          },
+          "Step-1:0/S_IntegrationPoints": {
+            "field_read": 0.009780899999896064,
+            "field_assembly": 0.002575799999249284,
+            "vtu_serialization": 0.02620070000011765
+          },
+          "Step-1:0/Material_Orientation": {
+            "field_read": 0.022814599999037455,
+            "field_assembly": 0.0002030000014201505,
+            "vtu_serialization": 0.018034099999567843
+          },
+          "Step-1:1/RF": {
+            "field_read": 0.011515199999848846,
+            "field_assembly": 0.01959739999983867,
+            "vtu_serialization": 0.18109269999877142
+          },
+          "Step-1:1/TEMP0": {
+            "field_read": 0.010533499998928164,
+            "field_assembly": 0.017089600001781946,
+            "vtu_serialization": 0.14742310000110592
+          },
+          "Step-1:1/TEMP1": {
+            "field_read": 0.010010500000134925,
+            "field_assembly": 0.017995199999859324,
+            "vtu_serialization": 0.14710709999963
+          },
+          "Step-1:1/TEMP2": {
+            "field_read": 0.011211000002731453,
+            "field_assembly": 0.017053399997166707,
+            "vtu_serialization": 0.14811449999979232
+          },
+          "Step-1:1/TEMP3": {
+            "field_read": 0.011222100001759827,
+            "field_assembly": 0.01658339999812597,
+            "vtu_serialization": 0.15142799999921408
+          },
+          "Step-1:1/U": {
+            "field_read": 0.011494500002299901,
+            "field_assembly": 0.017141599997557933,
+            "vtu_serialization": 0.18137810000007448
+          },
+          "Step-1:1/S_Centroid": {
+            "field_read": 0.012006900000415044,
+            "field_assembly": 0.0025015999999595806,
+            "vtu_serialization": 0.025662799998826813
+          },
+          "Step-1:1/S_IntegrationPoints": {
+            "field_read": 0.008766499999182997,
+            "field_assembly": 0.0026675000008253846,
+            "vtu_serialization": 0.02544289999968896
+          },
+          "Step-1:1/Material_Orientation": {
+            "field_read": 0.023013000001810724,
+            "field_assembly": 0.00019039999824599363,
+            "vtu_serialization": 0.018586999998660758
+          },
+          "Step-1:2/RF": {
+            "field_read": 0.011886599999343161,
+            "field_assembly": 0.017776499998944928,
+            "vtu_serialization": 0.18122960000073363
+          },
+          "Step-1:2/TEMP0": {
+            "field_read": 0.011958999999478692,
+            "field_assembly": 0.016173699999853852,
+            "vtu_serialization": 0.1464228999993793
+          },
+          "Step-1:2/TEMP1": {
+            "field_read": 0.01088750000053551,
+            "field_assembly": 0.01704809999864665,
+            "vtu_serialization": 0.14611999999942782
+          },
+          "Step-1:2/TEMP2": {
+            "field_read": 0.010521000000153435,
+            "field_assembly": 0.01720469999963825,
+            "vtu_serialization": 0.1518765999990137
+          },
+          "Step-1:2/TEMP3": {
+            "field_read": 0.010587999999188469,
+            "field_assembly": 0.017768000001524342,
+            "vtu_serialization": 0.14159699999981967
+          },
+          "Step-1:2/U": {
+            "field_read": 0.011154499998156098,
+            "field_assembly": 0.01640370000131952,
+            "vtu_serialization": 0.18134310000095866
+          },
+          "Step-1:2/S_Centroid": {
+            "field_read": 0.012127800000598654,
+            "field_assembly": 0.0024678999980096705,
+            "vtu_serialization": 0.02791140000044834
+          },
+          "Step-1:2/S_IntegrationPoints": {
+            "field_read": 0.010034699998868746,
+            "field_assembly": 0.0030166000015015015,
+            "vtu_serialization": 0.026240099999995437
+          },
+          "Step-1:2/Material_Orientation": {
+            "field_read": 0.024005600000236882,
+            "field_assembly": 0.0004977999997208826,
+            "vtu_serialization": 0.019199099999241298
+          },
+          "Step-1:3/RF": {
+            "field_read": 0.011016299999027979,
+            "field_assembly": 0.01765510000041104,
+            "vtu_serialization": 0.1832192000001669
+          },
+          "Step-1:3/TEMP0": {
+            "field_read": 0.010923100000582053,
+            "field_assembly": 0.016707999999198364,
+            "vtu_serialization": 0.1467008999989048
+          },
+          "Step-1:3/TEMP1": {
+            "field_read": 0.010911500001384411,
+            "field_assembly": 0.01664100000016333,
+            "vtu_serialization": 0.14258960000006482
+          },
+          "Step-1:3/TEMP2": {
+            "field_read": 0.01141269999970973,
+            "field_assembly": 0.016584899998633773,
+            "vtu_serialization": 0.13771269999961078
+          },
+          "Step-1:3/TEMP3": {
+            "field_read": 0.010622699999657925,
+            "field_assembly": 0.016303700000207755,
+            "vtu_serialization": 0.14478479999888805
+          },
+          "Step-1:3/U": {
+            "field_read": 0.012172999999165768,
+            "field_assembly": 0.015917099999569473,
+            "vtu_serialization": 0.1790359000005992
+          },
+          "Step-1:3/S_Centroid": {
+            "field_read": 0.013148399999408866,
+            "field_assembly": 0.002517400000215275,
+            "vtu_serialization": 0.030436500001087552
+          },
+          "Step-1:3/S_IntegrationPoints": {
+            "field_read": 0.010219699999652221,
+            "field_assembly": 0.0026578000015433645,
+            "vtu_serialization": 0.025838900000962894
+          },
+          "Step-1:3/Material_Orientation": {
+            "field_read": 0.023545399999420624,
+            "field_assembly": 0.00028300000121816993,
+            "vtu_serialization": 0.02032389999840234
+          }
+        },
+        "frame_body_seconds": [
+          {
+            "step": "Step-1",
+            "frame": 0,
+            "seconds": 1.6017890999992233
+          },
+          {
+            "step": "Step-1",
+            "frame": 1,
+            "seconds": 1.580962100000761
+          },
+          {
+            "step": "Step-1",
+            "frame": 2,
+            "seconds": 1.5863625000001775
+          },
+          {
+            "step": "Step-1",
+            "frame": 3,
+            "seconds": 1.5805359999994835
+          }
+        ],
+        "mesh": {
+          "points": 80000,
+          "cells": 10000
+        },
+        "peak_rss_bytes": 134270976,
+        "output_bytes": 52551564,
+        "paths": [
+          "Step-1_0.vtu",
+          "Step-1_1.vtu",
+          "Step-1_2.vtu",
+          "Step-1_3.vtu",
+          "scaling_profile_phase-profiles-5bb35423_phases.pvd"
+        ],
+        "cprofile": null,
+        "fixture": "scaling",
+        "mode": "phases",
+        "repeat": 2,
+        "process_seconds": 8.417152199999691,
+        "outer_timer_bookkeeping_seconds": 1.5000001440057531e-05
+      },
+      "overhead_percent": 0.2904576233565326,
+      "min_seconds": 7.813889400000335,
+      "max_seconds": 7.9283472999995865
+    }
+  ],
+  "accounting_note": "Outer timer/context setup and teardown (microseconds) assigned to orchestration; measured conversion phase spans unchanged.",
+  "source_commit": "67cb6373ad0d765f8cf3eb782f567468115518c6",
+  "date": "2026-10-26",
+  "platform": "Windows x64, Abaqus 2025 HF1, bundled Python 3.10.5 / NumPy 1.22.4",
+  "method": "Three fresh processes per fixture per mode, sequential alternating order. Representative phase table uses the median-total profiled sample; exclusive phases add to its workflow time. Control and instrumented artifacts compared byte-for-byte.",
+  "scope": "open -> optional history -> frame VTUs -> PVD -> close; imports and launcher startup excluded from workflow time and recorded separately. No cold OS cache guarantee.",
+  "cprofile_hotspots": [
+    {
+      "file": "writers.py",
+      "line": 17,
+      "function": "<genexpr>",
+      "calls": 7120000,
+      "self_seconds": 2.6222285000000003,
+      "cumulative_seconds": 2.6222285000000003
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'write' of '_io.TextIOWrapper' objects>",
+      "calls": 2760282,
+      "self_seconds": 1.3104269000000002,
+      "cumulative_seconds": 2.3921026000000003
+    },
+    {
+      "file": "writers.py",
+      "line": 15,
+      "function": "_write_rows",
+      "calls": 40,
+      "self_seconds": 1.2312798,
+      "cumulative_seconds": 6.9077083
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'join' of 'str' objects>",
+      "calls": 2360419,
+      "self_seconds": 0.9387811,
+      "cumulative_seconds": 3.5610096
+    },
+    {
+      "file": "source.py",
+      "line": 161,
+      "function": "<genexpr>",
+      "calls": 80001,
+      "self_seconds": 0.6240641,
+      "cumulative_seconds": 0.6240641
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method _codecs.charmap_encode>",
+      "calls": 2760282,
+      "self_seconds": 0.5795835,
+      "cumulative_seconds": 0.5795835
+    },
+    {
+      "file": "cp1252.py",
+      "line": 18,
+      "function": "encode",
+      "calls": 2760282,
+      "self_seconds": 0.5020922,
+      "cumulative_seconds": 1.0816757000000001
+    },
+    {
+      "file": "source.py",
+      "line": 153,
+      "function": "<genexpr>",
+      "calls": 80001,
+      "self_seconds": 0.5008631,
+      "cumulative_seconds": 0.5008631
+    },
+    {
+      "file": "source.py",
+      "line": 143,
+      "function": "_frame",
+      "calls": 76,
+      "self_seconds": 0.3588808,
+      "cumulative_seconds": 0.35898090000000005
+    },
+    {
+      "file": "fields.py",
+      "line": 8,
+      "function": "<listcomp>",
+      "calls": 28,
+      "self_seconds": 0.319398,
+      "cumulative_seconds": 0.319398
+    },
+    {
+      "file": "source.py",
+      "line": 171,
+      "function": "_field",
+      "calls": 64,
+      "self_seconds": 0.2718748,
+      "cumulative_seconds": 0.5697995
+    },
+    {
+      "file": "source.py",
+      "line": 162,
+      "function": "<genexpr>",
+      "calls": 10001,
+      "self_seconds": 0.14612440000000002,
+      "cumulative_seconds": 0.15141200000000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'format' of 'str' objects>",
+      "calls": 400501,
+      "self_seconds": 0.14115540000000001,
+      "cumulative_seconds": 0.14115540000000001
+    },
+    {
+      "file": "writers.py",
+      "line": 52,
+      "function": "write_vtu",
+      "calls": 4,
+      "self_seconds": 0.1105324,
+      "cumulative_seconds": 8.3376059
+    },
+    {
+      "file": "source.py",
+      "line": 154,
+      "function": "<genexpr>",
+      "calls": 10001,
+      "self_seconds": 0.1041726,
+      "cumulative_seconds": 0.1041726
+    },
+    {
+      "file": "fields.py",
+      "line": 6,
+      "function": "place_point_data",
+      "calls": 28,
+      "self_seconds": 0.09307320000000001,
+      "cumulative_seconds": 0.41247120000000004
+    },
+    {
+      "file": "source.py",
+      "line": 180,
+      "function": "describe_field",
+      "calls": 28,
+      "self_seconds": 0.088199,
+      "cumulative_seconds": 0.3354708
+    },
+    {
+      "file": "source.py",
+      "line": 223,
+      "function": "_field_blocks",
+      "calls": 64,
+      "self_seconds": 0.054115100000000006,
+      "cumulative_seconds": 0.0687456
+    },
+    {
+      "file": "source.py",
+      "line": 168,
+      "function": "field_names",
+      "calls": 8,
+      "self_seconds": 0.0337415,
+      "cumulative_seconds": 0.0708474
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method numpy.asarray>",
+      "calls": 12,
+      "self_seconds": 0.029072700000000003,
+      "cumulative_seconds": 0.029072700000000003
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.compile>",
+      "calls": 1,
+      "self_seconds": 0.026421200000000002,
+      "cumulative_seconds": 0.026421200000000002
+    },
+    {
+      "file": "source.py",
+      "line": 233,
+      "function": "orientation_blocks",
+      "calls": 4,
+      "self_seconds": 0.0258383,
+      "cumulative_seconds": 0.09871920000000001
+    }
+  ],
+  "cprofile_total_calls": 18530881,
+  "profile_script_sha256": "f970c7c3ae41e317fc51dbaf4a09cae26f76ff5ece74cec37aaaa603ef397120"
+}

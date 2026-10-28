@@ -1,0 +1,298 @@
+{
+  "phase": 3,
+  "date": "2026-10-27",
+  "phase2_commit": "65582ae",
+  "python_reference_commit": "0fe548c",
+  "platform": "Windows x64 Release, MSVC 19.41, Abaqus 2025 HF1, VTK 9.7.1",
+  "native_ctest": {
+    "passed": 5,
+    "total": 5
+  },
+  "sdk_independent_ctest": {
+    "passed": 3,
+    "total": 3
+  },
+  "writer_publication_checks": 122,
+  "numerical_source_checks": 62,
+  "element_mapping_checks": 18,
+  "comparison_control_tests": 7,
+  "comparisons": [
+    {
+      "odb_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "formats": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii",
+          "input_unchanged": true
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary",
+          "input_unchanged": true,
+          "binary_layout": [
+            {
+              "arrays": 11,
+              "payload_bytes": 673960,
+              "exact_layout": true
+            },
+            {
+              "arrays": 11,
+              "payload_bytes": 673960,
+              "exact_layout": true
+            }
+          ]
+        }
+      ],
+      "fixture": "Job-1"
+    },
+    {
+      "odb_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "formats": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii",
+          "input_unchanged": true
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary",
+          "input_unchanged": true,
+          "binary_layout": [
+            {
+              "arrays": 11,
+              "payload_bytes": 13968,
+              "exact_layout": true
+            },
+            {
+              "arrays": 11,
+              "payload_bytes": 13968,
+              "exact_layout": true
+            }
+          ]
+        }
+      ],
+      "fixture": "planar"
+    },
+    {
+      "odb_sha256": "64a6d1b1b2ac79435943586f43c3ae672aeab0bd9d3495e5127f1730016a3a47",
+      "formats": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii",
+          "input_unchanged": true
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary",
+          "input_unchanged": true,
+          "binary_layout": [
+            {
+              "arrays": 11,
+              "payload_bytes": 6840,
+              "exact_layout": true
+            },
+            {
+              "arrays": 11,
+              "payload_bytes": 6840,
+              "exact_layout": true
+            }
+          ]
+        }
+      ],
+      "fixture": "mixed"
+    },
+    {
+      "odb_sha256": "9ab744952516f50d3621144678fc4ed11d67e35c99aad254a13713da3e64ea36",
+      "formats": [
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii",
+          "input_unchanged": true
+        },
+        {
+          "parity": true,
+          "frames_checked": 2,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary",
+          "input_unchanged": true,
+          "binary_layout": [
+            {
+              "arrays": 6,
+              "payload_bytes": 3248,
+              "exact_layout": true
+            },
+            {
+              "arrays": 6,
+              "payload_bytes": 3248,
+              "exact_layout": true
+            }
+          ]
+        }
+      ],
+      "fixture": "no-stress"
+    },
+    {
+      "odb_sha256": "071d5dc7ff4ddc5a1a104685220f072a0731a0d20d59fefba11d59920d518845",
+      "formats": [
+        {
+          "parity": true,
+          "frames_checked": 1,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "ascii",
+          "input_unchanged": true
+        },
+        {
+          "parity": true,
+          "frames_checked": 1,
+          "differences": [],
+          "float32_rounding": [],
+          "float32_ulp_limit": 1,
+          "format": "binary",
+          "input_unchanged": true,
+          "binary_layout": [
+            {
+              "arrays": 12,
+              "payload_bytes": 720048,
+              "exact_layout": true
+            }
+          ]
+        }
+      ],
+      "fixture": "double"
+    }
+  ],
+  "native_vtu_files": 18,
+  "native_field_arrays": 108,
+  "edge_validation": {
+    "passed": true,
+    "fixtures": [
+      {
+        "format": "ascii",
+        "fixture": "special",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 2
+      },
+      {
+        "format": "ascii",
+        "fixture": "empty",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 0
+      },
+      {
+        "format": "binary",
+        "fixture": "special",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 0,
+        "binary_layout": {
+          "arrays": 5,
+          "payload_bytes": 456,
+          "exact_layout": true
+        }
+      },
+      {
+        "format": "binary",
+        "fixture": "empty",
+        "reader_messages": [],
+        "passed": true,
+        "differing_float32_values": 0,
+        "binary_layout": {
+          "arrays": 5,
+          "payload_bytes": 40,
+          "exact_layout": true
+        }
+      }
+    ],
+    "unicode_and_control_escaping": true,
+    "json_schema": true,
+    "csv_quoting": true,
+    "pvd_schema": true,
+    "python_ascii_behavior_matches": true,
+    "ascii_negative_infinity_reader_limitation": true
+  },
+  "legacy_cli_smoke": {
+    "comparison": {
+      "parity": true,
+      "frames_checked": 2,
+      "differences": [],
+      "float32_rounding": [],
+      "float32_ulp_limit": 1
+    },
+    "input_unchanged": true,
+    "history_flag_alignment_pending": true
+  },
+  "publication_failure_checks": [
+    "serialization exception",
+    "invalid field shape",
+    "stream failure",
+    "source failure in second frame",
+    "progress callback failure",
+    "Windows destination lock",
+    "Windows collection lock after two frames"
+  ],
+  "publication_scope": "Atomic per file; no request-wide rollback or fsync guarantee",
+  "binary_chunk_bytes": 65536,
+  "remaining": [
+    "Phase 4 CLI parsing, defaults and statuses",
+    "Phase 5 full integration and performance"
+  ],
+  "unvalidated_platforms": [
+    "POSIX publication branch",
+    "Other Abaqus SDK versions",
+    "Debug builds"
+  ],
+  "code_sha256": {
+    "cpp/CMakeLists.txt": "15acbb05c47854958f3e5d1bf14d71e4067b434c9b0e285efb095f1f15c563ab",
+    "cpp/include/odb2vtk_core/converter.hpp": "3192e4ed5ef9263ee2dd0d7c32b48535a29b97e9ac331341c39ef36c01e822fd",
+    "cpp/main.cpp": "abca231a9e25d94505a7d4ebe96ffdbe9fd464bf0beed1cbb876fcad2e0f6833",
+    "cpp/odb2vtk.cpp": "135f53d90bb8d8656f6366c6fe9bb01196d795233fdbfa011c6b6d11f3c5365b",
+    "cpp/odb2vtk.h": "227076941c5e9dc82bd2316bd2c656ed9d57ab5a3bbba7eecfd211089a7c9af5",
+    "cpp/core/atomic_file.hpp": "96cacad400b11041f25869a539cb28faca4ad0e012a8d28661a530a7a116f34c",
+    "cpp/core/exporter.cpp": "2f74d617e246ac92845e3c08112a66d0a39829d03bf8233a02985df45e277314",
+    "cpp/core/outputs.cpp": "28cb24eeb8403ac9c76d8c336c2220b950206808698dc537dcfd2ea61f4069d7",
+    "cpp/core/writers.cpp": "a46847ad04bd58104f7695cbb2a3db18bfd25c2b26edd99532759f3c33e1f82a",
+    "cpp/include/odb2vtk_core/exporter.hpp": "1b4571d49f11926742134f5b00fadfa8f91cd23fa4f93862684bc941029d1f82",
+    "cpp/include/odb2vtk_core/outputs.hpp": "e6d0758af31c5671dc1293d9eb7f854e2b81ed4344e339b4871bc9244d1eb6c0",
+    "cpp/include/odb2vtk_core/writers.hpp": "3268612798369c1f6ebf3f3ffa9161321c2fbeba7c281b0a5f2783160e51d3ff",
+    "cpp/tests/export_probe.cpp": "3df977bad16c455417429682add5e6d3816fb0648e040d8a28ab668d330db164",
+    "cpp/tests/test_writers.cpp": "aad672c7fcae7962e05889e6117c5a5c9b76f0ea3087bdff68e00b16b31502c8",
+    "cpp/tests/writer_fixture.cpp": "af720392ec089e2a3941b6138f032bab593c370304321a8e3ee01842f8163eff",
+    "cpp/validation/export_reference.py": "fe4aa2bff39832e4b0ed180e97e0bb81ab82f3c57b296d3729d206121737e6bf",
+    "cpp/validation/validate_writer_edges.py": "38557384330dd6d138bd4e9907e38a89b5f534192384025381c5b19eb2c5df24",
+    "cpp/validation/validate_writer_parity.py": "6bf97de126bafa125e603355a0c92c6e733dde3334f04905e46556481de917ca"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "phase": 2,
+  "date": "2026-10-27",
+  "phase1_commit": "2843baa",
+  "python_reference_commit": "0fe548c",
+  "platform": "Windows x64 Release, MSVC 19.41, Abaqus 2025 HF1",
+  "native_ctest": {
+    "passed": 4,
+    "total": 4
+  },
+  "sdk_independent_ctest": {
+    "passed": 2,
+    "total": 2
+  },
+  "numerical_source_checks": 62,
+  "element_mapping_checks": 18,
+  "comparisons": [
+    {
+      "passed": true,
+      "frames": 2,
+      "fields": 14,
+      "geometry_exact": true,
+      "field_values_exact": true,
+      "history_exact": true,
+      "source_closed": true,
+      "retained_owned_records": true,
+      "fixture": "Job-1",
+      "odb_sha256": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+      "input_unchanged": true
+    },
+    {
+      "passed": true,
+      "frames": 2,
+      "fields": 14,
+      "geometry_exact": true,
+      "field_values_exact": true,
+      "history_exact": true,
+      "source_closed": true,
+      "retained_owned_records": true,
+      "fixture": "planar",
+      "odb_sha256": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+      "input_unchanged": true
+    },
+    {
+      "passed": true,
+      "frames": 2,
+      "fields": 14,
+      "geometry_exact": true,
+      "field_values_exact": true,
+      "history_exact": true,
+      "source_closed": true,
+      "retained_owned_records": true,
+      "fixture": "mixed",
+      "odb_sha256": "64a6d1b1b2ac79435943586f43c3ae672aeab0bd9d3495e5127f1730016a3a47",
+      "input_unchanged": true
+    },
+    {
+      "passed": true,
+      "frames": 2,
+      "fields": 4,
+      "geometry_exact": true,
+      "field_values_exact": true,
+      "history_exact": true,
+      "source_closed": true,
+      "retained_owned_records": true,
+      "fixture": "no-stress",
+      "odb_sha256": "9ab744952516f50d3621144678fc4ed11d67e35c99aad254a13713da3e64ea36",
+      "input_unchanged": true
+    }
+  ],
+  "total_frames": 8,
+  "total_field_arrays": 46,
+  "double_precision": {
+    "passed": true,
+    "precision": "DOUBLE_PRECISION",
+    "exact_nonzero_rows": 2,
+    "total_rows": 3840,
+    "zero_padding_exact": true,
+    "input_unchanged": true,
+    "odb_sha256": "071d5dc7ff4ddc5a1a104685220f072a0731a0d20d59fefba11d59920d518845"
+  },
+  "ownership": {
+    "same_physical_file": true,
+    "distinct_planar_file": true,
+    "modified_double_copy": true
+  },
+  "file_parity": false,
+  "remaining": [
+    "Phase 3 writers, schemas and publication",
+    "Phase 4 CLI contract",
+    "Phase 5 complete integration and performance"
+  ]
+}

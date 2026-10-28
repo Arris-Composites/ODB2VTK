@@ -1,0 +1,144 @@
+# C++ build and validation
+
+Tested on 2026-10-27 with CMake 4.0.2, Visual Studio 2022/MSVC 19.41,
+Windows SDK 10.0.22000.0 and Abaqus 2025 HF1. The project requires CMake 3.20+
+and C++17. Other SDK releases/platforms and Debug builds have not been validated.
+
+Use fresh build directories when migrating from the historical CMake files.
+No SDK files, libraries or DLLs are bundled in this repository.
+
+## Build without Abaqus
+
+From the repository root in PowerShell:
+
+```powershell
+cmake -S cpp -B cpp/build/pure -G "Visual Studio 17 2022" -A x64
+cmake --build cpp/build/pure --config Release
+ctest --test-dir cpp/build/pure -C Release --output-on-failure
+```
+
+The default `ODB2VTK_BUILD_NATIVE=OFF` builds the SDK-independent core and its
+tests. SDK discovery is not performed. Five CTest suites cover element-family
+mapping (18 checks), numerical/source behavior (62 checks) and serialization/
+publication (123 checks on Windows), CLI/execution (103 checks) and exclusive
+profiling/session accounting.
+`odb2vtk_writer_fixture` generates files for
+the independent VTK edge checks in the [writer guide](cpp-writers.md).
+
+## Build with Abaqus 2025
+
+Point `ABQ_SDK_ROOT` to the `EstProducts` directory containing `SMAOdb`:
+
+```powershell
+$sdk = "C:/ABAQUS/2025/EstProducts"
+cmake -S cpp -B cpp/build/native -G "Visual Studio 17 2022" -A x64 -DODB2VTK_BUILD_NATIVE=ON "-DABQ_SDK_ROOT=$sdk" "-DODB2VTK_TEST_ODB=C:/temp/Job-1.odb"
+cmake --build cpp/build/native --config Release
+$env:PATH = "$sdk/win_b64/code/bin;$env:PATH"
+ctest --test-dir cpp/build/native -C Release --output-on-failure
+```
+
+`ODB2VTK_TEST_ODB` is optional. Supply an existing ODB compatible with the SDK;
+the checked-in historical fixtures need upgrading for Abaqus 2025. The native
+smoke test is registered only when a fixture is supplied. The target executable
+is still built when native support/testing are enabled without a fixture.
+
+Native targets include `ODB2VTK` (the current exporter), `odb2vtk_sdk_smoke`,
+`odb2vtk_source_probe`, `odb2vtk_source_ownership`, `odb2vtk_double_fixture` and
+`odb2vtk_export_probe` and `odb2vtk_profile_exports`. The probes and fixture creator are validation tools built
+when testing is enabled. With a test
+ODB supplied, CTest registers both native smoke and ownership tests alongside
+the five SDK-independent core tests. See [Phase 2 results](cpp-phase2-results.md)
+for the source contract and [Phase 3 results](cpp-phase3-results.md) for writer
+parity and publication behavior.
+The [performance guide](cpp-performance.md) describes the profiling target and
+alternating Python/native benchmark commands; [Phase 5](cpp-phase5-results.md)
+records final parity, timings and limits.
+Missing required SDK paths/libraries cause configuration to fail with an
+actionable message. For customized installations, the `AbqSDK_INCLUDE_DIR`,
+`AbqSDK_PUBLIC_INCLUDE_DIR` and per-library `AbqSDK_<component>_LIBRARY` cache
+entries can be set explicitly.
+
+The imported target `AbqSDK::Odb` supplies SDK includes, Windows definitions and
+five direct import libraries verified through symbol inspection and linking:
+
+- `ABQSMAOdbApi`
+- `ABQSMAOdbCore`
+- `ABQSMABasCoreUtils`
+- `ABQSMABasAlloc`
+- `ABQSMABasShared`
+
+Runtime DLLs and their transitive dependencies remain in the SDK's `code/bin`
+directory. Add it to the launching process's PATH; copying those DLLs into the
+repo or linking every installation library is unnecessary. Native SDK targets
+were validated in Release with the compiler's dynamic runtime defaults.
+
+The smoke probe opens the ODB read-only, reports instance names and step/frame
+counts as JSON, explicitly closes the database and finalizes the API before
+printing success. RAII guards cover failure cleanup. It returns 2 for missing
+arguments and 1 for a failed ODB open. These statuses describe the probe; the
+normal executable now uses the same 0/2/1 success/argument/runtime status policy;
+see the [CLI guide](cpp-cli.md) for flags, defaults and mode selection.
+
+## Format C++ locally
+
+GitHub's [style workflow](../.github/workflows/style-checks.yml) checks `.cpp`,
+`.h` and `.hpp` files with clang-format 14. The root `.clang-format` selects LLVM
+style; the executable version is selected separately.
+
+With Make and `uv` installed, run from the repository root:
+
+```text
+make format
+make format-check
+```
+
+`format` applies formatting; `format-check` checks without modifying files and
+returns a nonzero status on violations. Plain `make` defaults to the check.
+The wrapper pins clang-format 14.0.6 and selects tracked files, excluding
+generated build files. Git must also be available on PATH.
+
+On Windows without Make, invoke the same wrapper directly:
+
+```powershell
+uv run --no-project python tools/format_cpp.py
+uv run --no-project python tools/format_cpp.py --check
+```
+
+With Python and `uvx` already on PATH, `python tools/format_cpp.py --check` also
+works. The wrapper locates the repository independently of the working directory.
+
+## Compare Python and C++ output
+
+Use compatible fixture copies and distinct output directories. The maintained
+export interface now supports both formats, JSON/CSV/PVD and safe per-file
+publication. Run the complete format comparison from the [writer guide](cpp-writers.md).
+The normal executable's serial argument/default/status alignment is validated
+in [Phase 4](cpp-phase4-results.md). Normal frame mode writes no PVD; use
+`--writePVD 1` to index existing VTUs after conversion.
+
+Generate a Python reference report with `python/validation/profile_exports.py`,
+then run the C++ executable on the matching instance/step/frame selection.
+Current output names follow Python: `Job-1/Step-1_0.vtu`, a collection under
+the run directory and the adjacent `Job-1.json` header. The validation probe also
+exports history through the maintained interface.
+
+In an ordinary Python environment with NumPy and VTK:
+
+```text
+python cpp/validation/compare_exports.py --python-report C:/temp/python.json --cpp-vtu C:/temp/cpp/Job-1/Step-1_0.vtu C:/temp/cpp/Job-1/Step-1_1.vtu --reference-header C:/temp/python-header.json --cpp-header C:/temp/cpp/Job-1.json --cpp-history C:/temp/cpp/Job-1/Job-1.csv --cpp-pvd C:/temp/cpp/Job-1/Job-1.pvd --report C:/temp/parity.json --strict
+python -m unittest discover -s cpp/validation/tests -v
+```
+
+Pass `--cpp-history` and `--cpp-pvd` when those outputs become available. History
+tables are compared by decoded header/numeric cells, and collection metadata by
+attributes/times/parts/references, rather than XML layout. Numeric mesh/topology
+checks are exact; Float32 fields permit at most one ULP, recorded explicitly.
+
+Default exit 0 means the inventory was written, **not** that parity passed.
+Use `--strict` to return 1 when `parity` is false. The seven comparison-tool tests
+cover matching data, numerical/label differences, explicit one-ULP recording,
+missing files, strict status, auxiliary schemas/layout and malformed XML.
+
+See [Phase 1 results](cpp-phase1-results.md) for the native fixture results,
+read-only safety fix and remaining gaps, and the [alignment plan](cpp-parity-plan.md)
+for the subsequent phases.

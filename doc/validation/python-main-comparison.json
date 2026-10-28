@@ -1,0 +1,827 @@
+{
+  "runs": [
+    {
+      "version": "main",
+      "odb": "Job-1.odb",
+      "instance": "L-SHAPE-PART-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.5743273999978555,
+      "peak_rss_bytes": 103145472,
+      "start_peak_rss_bytes": 78622720,
+      "imports_seconds": 0.20556020000003628,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 2898678,
+      "fixture": "Job-1",
+      "repeat": 0,
+      "process_seconds": 1.1557561999979953
+    },
+    {
+      "version": "optimized",
+      "odb": "Job-1.odb",
+      "instance": "L-SHAPE-PART-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.40573310000036145,
+      "peak_rss_bytes": 105431040,
+      "start_peak_rss_bytes": 79253504,
+      "imports_seconds": 0.21246570000221254,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 2883142,
+      "fixture": "Job-1",
+      "repeat": 0,
+      "process_seconds": 0.7886886000014783
+    },
+    {
+      "version": "optimized",
+      "odb": "Job-1.odb",
+      "instance": "L-SHAPE-PART-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.42083759999877657,
+      "peak_rss_bytes": 105644032,
+      "start_peak_rss_bytes": 79126528,
+      "imports_seconds": 0.23390289999952074,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 2883142,
+      "fixture": "Job-1",
+      "repeat": 1,
+      "process_seconds": 0.8677047999990464
+    },
+    {
+      "version": "main",
+      "odb": "Job-1.odb",
+      "instance": "L-SHAPE-PART-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.5787129000018467,
+      "peak_rss_bytes": 105213952,
+      "start_peak_rss_bytes": 76947456,
+      "imports_seconds": 0.19132879999961006,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 2898678,
+      "fixture": "Job-1",
+      "repeat": 1,
+      "process_seconds": 0.9666021000011824
+    },
+    {
+      "version": "main",
+      "odb": "Job-1.odb",
+      "instance": "L-SHAPE-PART-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.5763512999983504,
+      "peak_rss_bytes": 105054208,
+      "start_peak_rss_bytes": 77131776,
+      "imports_seconds": 0.1779437000004691,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 2898678,
+      "fixture": "Job-1",
+      "repeat": 2,
+      "process_seconds": 0.9359101000009105
+    },
+    {
+      "version": "optimized",
+      "odb": "Job-1.odb",
+      "instance": "L-SHAPE-PART-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.41948950000005425,
+      "peak_rss_bytes": 105406464,
+      "start_peak_rss_bytes": 79020032,
+      "imports_seconds": 0.20543980000002193,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Job-1_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 2883142,
+      "fixture": "Job-1",
+      "repeat": 2,
+      "process_seconds": 0.8008029000011447
+    },
+    {
+      "version": "main",
+      "odb": "2d_planar.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.10620660000131465,
+      "peak_rss_bytes": 101105664,
+      "start_peak_rss_bytes": 76595200,
+      "imports_seconds": 0.18437139999878127,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 48475,
+      "fixture": "2d_planar",
+      "repeat": 0,
+      "process_seconds": 0.45904419999715174
+    },
+    {
+      "version": "optimized",
+      "odb": "2d_planar.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.10998140000083367,
+      "peak_rss_bytes": 104034304,
+      "start_peak_rss_bytes": 79458304,
+      "imports_seconds": 0.20353310000064084,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 47237,
+      "fixture": "2d_planar",
+      "repeat": 0,
+      "process_seconds": 0.48505650000151945
+    },
+    {
+      "version": "optimized",
+      "odb": "2d_planar.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.11521549999815761,
+      "peak_rss_bytes": 104738816,
+      "start_peak_rss_bytes": 79519744,
+      "imports_seconds": 0.21937130000151228,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 47237,
+      "fixture": "2d_planar",
+      "repeat": 1,
+      "process_seconds": 0.5028580000034708
+    },
+    {
+      "version": "main",
+      "odb": "2d_planar.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.10277180000048247,
+      "peak_rss_bytes": 101519360,
+      "start_peak_rss_bytes": 76857344,
+      "imports_seconds": 0.18192410000119708,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 48475,
+      "fixture": "2d_planar",
+      "repeat": 1,
+      "process_seconds": 0.45841910000308417
+    },
+    {
+      "version": "main",
+      "odb": "2d_planar.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.1057446999984677,
+      "peak_rss_bytes": 101208064,
+      "start_peak_rss_bytes": 76918784,
+      "imports_seconds": 0.17822760000126436,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 48475,
+      "fixture": "2d_planar",
+      "repeat": 2,
+      "process_seconds": 0.4575948999990942
+    },
+    {
+      "version": "optimized",
+      "odb": "2d_planar.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1
+      ],
+      "seconds": 0.1113139000008232,
+      "peak_rss_bytes": 104595456,
+      "start_peak_rss_bytes": 78974976,
+      "imports_seconds": 0.20566460000191,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "2d_planar_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 47237,
+      "fixture": "2d_planar",
+      "repeat": 2,
+      "process_seconds": 0.49733349999951315
+    },
+    {
+      "version": "main",
+      "odb": "scaling.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seconds": 11.591758200000186,
+      "peak_rss_bytes": 188608512,
+      "start_peak_rss_bytes": 76824576,
+      "imports_seconds": 0.1756693000024825,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 54391880,
+      "fixture": "scaling",
+      "repeat": 0,
+      "process_seconds": 11.940177000000403
+    },
+    {
+      "version": "optimized",
+      "odb": "scaling.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seconds": 6.400251600000047,
+      "peak_rss_bytes": 130666496,
+      "start_peak_rss_bytes": 79028224,
+      "imports_seconds": 0.20914290000291658,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 52551564,
+      "fixture": "scaling",
+      "repeat": 0,
+      "process_seconds": 6.895821399997658
+    },
+    {
+      "version": "optimized",
+      "odb": "scaling.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seconds": 6.471873099999357,
+      "peak_rss_bytes": 130650112,
+      "start_peak_rss_bytes": 79298560,
+      "imports_seconds": 0.20195739999689977,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 52551564,
+      "fixture": "scaling",
+      "repeat": 1,
+      "process_seconds": 6.8470209000006435
+    },
+    {
+      "version": "main",
+      "odb": "scaling.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seconds": 11.63611149999997,
+      "peak_rss_bytes": 188542976,
+      "start_peak_rss_bytes": 76685312,
+      "imports_seconds": 0.20198009999876376,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 54391880,
+      "fixture": "scaling",
+      "repeat": 1,
+      "process_seconds": 12.025765400001546
+    },
+    {
+      "version": "main",
+      "odb": "scaling.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seconds": 11.674851600000693,
+      "peak_rss_bytes": 188477440,
+      "start_peak_rss_bytes": 76648448,
+      "imports_seconds": 0.18589309999879333,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_vs_main_afefeb83_main.pvd"
+      ],
+      "output_bytes": 54391880,
+      "fixture": "scaling",
+      "repeat": 2,
+      "process_seconds": 12.054567999999563
+    },
+    {
+      "version": "optimized",
+      "odb": "scaling.odb",
+      "instance": "PART-1-1",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seconds": 6.416531999999279,
+      "peak_rss_bytes": 131231744,
+      "start_peak_rss_bytes": 79151104,
+      "imports_seconds": 0.21249149999857764,
+      "python": "3.10.5 (main, Jul 27 2024, 04:26:12) [MSC v.1934 64 bit (AMD64)]",
+      "numpy": "1.22.4",
+      "paths": [
+        "Step-1_0.vtu",
+        "Step-1_1.vtu",
+        "Step-1_2.vtu",
+        "Step-1_3.vtu",
+        "scaling_vs_main_afefeb83_optimized.pvd"
+      ],
+      "output_bytes": 52551564,
+      "fixture": "scaling",
+      "repeat": 2,
+      "process_seconds": 6.8104266000009375
+    }
+  ],
+  "summary": [
+    {
+      "fixture": "Job-1",
+      "main": {
+        "seconds": 0.5763512999983504,
+        "peak_mib": 100.1875,
+        "min_seconds": 0.5743273999978555,
+        "max_seconds": 0.5787129000018467
+      },
+      "optimized": {
+        "seconds": 0.41948950000005425,
+        "peak_mib": 100.546875,
+        "min_seconds": 0.40573310000036145,
+        "max_seconds": 0.42083759999877657
+      },
+      "less_time_percent": 27.21635224883593,
+      "speedup": 1.373934985257738,
+      "less_peak_memory_percent": -0.35870243293825155
+    },
+    {
+      "fixture": "2d_planar",
+      "main": {
+        "seconds": 0.1057446999984677,
+        "peak_mib": 96.51953125,
+        "min_seconds": 0.10277180000048247,
+        "max_seconds": 0.10620660000131465
+      },
+      "optimized": {
+        "seconds": 0.1113139000008232,
+        "peak_mib": 99.75,
+        "min_seconds": 0.10998140000083367,
+        "max_seconds": 0.11521549999815761
+      },
+      "less_time_percent": -5.266646935909036,
+      "speedup": 0.949968512447104,
+      "less_peak_memory_percent": -3.346958598081673
+    },
+    {
+      "fixture": "scaling",
+      "main": {
+        "seconds": 11.63611149999997,
+        "peak_mib": 179.80859375,
+        "min_seconds": 11.591758200000186,
+        "max_seconds": 11.674851600000693
+      },
+      "optimized": {
+        "seconds": 6.416531999999279,
+        "peak_mib": 124.61328125,
+        "min_seconds": 6.400251600000047,
+        "max_seconds": 6.471873099999357
+      },
+      "less_time_percent": 44.85673328242604,
+      "speedup": 1.813458033093465,
+      "less_peak_memory_percent": 30.696704394864327
+    }
+  ],
+  "fixture_sha256": {
+    "Job-1.odb": "2bf88c7c0ae6abfcf19da9e31cc108d47232c70dded2b344a33aa4ad033a72a1",
+    "2d_planar.odb": "4f9b353d2560147bd443e31e99e29711028de96366452f8485d13082a9e266cf",
+    "scaling.odb": "f0ec42d6d8021efab3b688e917b4d5bc978c9eda8e139e61b011c5e5788c496a"
+  },
+  "date": "2026-10-26",
+  "platform": "Windows x64, Abaqus 2025 HF1, Python 3.10.5 / NumPy 1.22.4",
+  "main_commit": "061c777",
+  "optimized_base_commit": "67cb637",
+  "optimized_uncommitted_changes": "ASCII writes batched in 4096-row chunks; profiling/validation tooling",
+  "scope": "Local main checked out unchanged in separate worktree; current optimized working tree preserved on ai-refactor. Same ODB bytes, instances, frames and SDK for both versions. Open, selection/setup, mesh preparation, VTUs, PVD and explicit ODB close are timed; imports and launcher startup excluded. No CSV/header export, parallelism, or cold-cache guarantee.",
+  "method": "Three fresh Abaqus processes per version per fixture, sequential alternating order. Each run uses the public interface belonging to that version. Original main received no correctness fixes or performance patches. Input SHA256 verified unchanged after all runs.",
+  "export_comparisons": [
+    {
+      "fixture": "Job-1",
+      "file": "Step-1_0.vtu",
+      "arrays": 11,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": "RF"
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'E_Centroid','E_IntegrationPoints','S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 3840,
+      "cells": 2604,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "Job-1",
+      "file": "Step-1_1.vtu",
+      "arrays": 11,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": "RF"
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'E_Centroid','E_IntegrationPoints','S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 3840,
+      "cells": 2604,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "Job-1",
+      "file": "Job-1_vs_main_afefeb83_optimized.pvd",
+      "arrays": 0,
+      "expected_metadata_corrections": [],
+      "unexpected_differences": []
+    },
+    {
+      "fixture": "2d_planar",
+      "file": "Step-1_0.vtu",
+      "arrays": 11,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": null
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'E_Centroid','E_IntegrationPoints','S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 99,
+      "cells": 80,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "2d_planar",
+      "file": "Step-1_1.vtu",
+      "arrays": 11,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": null
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'E_Centroid','E_IntegrationPoints','S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 99,
+      "cells": 80,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "2d_planar",
+      "file": "2d_planar_vs_main_afefeb83_optimized.pvd",
+      "arrays": 0,
+      "expected_metadata_corrections": [],
+      "unexpected_differences": []
+    },
+    {
+      "fixture": "scaling",
+      "file": "Step-1_0.vtu",
+      "arrays": 13,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Scalars",
+          "main": "'TEMP0','TEMP1','TEMP2','TEMP3'",
+          "optimized": "TEMP0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": "RF"
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 80000,
+      "cells": 10000,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "scaling",
+      "file": "Step-1_1.vtu",
+      "arrays": 13,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Scalars",
+          "main": "'TEMP0','TEMP1','TEMP2','TEMP3'",
+          "optimized": "TEMP0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": "RF"
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 80000,
+      "cells": 10000,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "scaling",
+      "file": "Step-1_2.vtu",
+      "arrays": 13,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Scalars",
+          "main": "'TEMP0','TEMP1','TEMP2','TEMP3'",
+          "optimized": "TEMP0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": "RF"
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 80000,
+      "cells": 10000,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "scaling",
+      "file": "Step-1_3.vtu",
+      "arrays": 13,
+      "expected_metadata_corrections": [
+        {
+          "kind": "VTU version",
+          "main": "1,0",
+          "optimized": "1.0"
+        },
+        {
+          "kind": "PointData Scalars",
+          "main": "'TEMP0','TEMP1','TEMP2','TEMP3'",
+          "optimized": "TEMP0"
+        },
+        {
+          "kind": "PointData Vectors",
+          "main": "'RF','U'",
+          "optimized": "RF"
+        },
+        {
+          "kind": "CellData Vectors",
+          "main": "'Material_Orientation'",
+          "optimized": "Material_Orientation"
+        },
+        {
+          "kind": "CellData Tensors",
+          "main": "'S_Centroid','S_IntegrationPoints'",
+          "optimized": null
+        }
+      ],
+      "unexpected_differences": [],
+      "points": 80000,
+      "cells": 10000,
+      "vtk_arrays_match": true
+    },
+    {
+      "fixture": "scaling",
+      "file": "scaling_vs_main_afefeb83_optimized.pvd",
+      "arrays": 0,
+      "expected_metadata_corrections": [],
+      "unexpected_differences": []
+    }
+  ],
+  "code_sha256": {
+    "main_odb2vtk.py": "4305452d731a5f8584376fd28add55a46a927e6e2720285628af993a6236c6bb",
+    "main_utilities.py": "2e36d71e66adcef72b4d9dfde8e1fa9a352278249aa174627862699d24bef910",
+    "optimized_writers.py": "09836bf436914e3d13ed6ba84e96bf964ad53913df025145a847188f6a9b5a99",
+    "optimized_converter.py": "6d706984e2e04cf24092dea98425b2668026efab8566595e841664ef0c293e43",
+    "optimized_source.py": "cfbc72dd80c3d3dcb4edbde63be238a34c88bb554465efd4bdd4ab0a936fad21",
+    "benchmark_version.py": "039d1afb51f34864c66b777e0c538454eece8a36c07c285a18e6340e78c96b2f"
+  }
+}
