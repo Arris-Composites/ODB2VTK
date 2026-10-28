@@ -10,6 +10,8 @@ If you want to know more about the design of ODB2VTK, checkout this [article](ht
 
 ## Agent skill
 
+[Watch the odb2vtk_core skills video](res/odb2vtk_core%20skills%202026-10-27%20232500.mp4)
+
 The shared [odb2vtk skill](skills/odb2vtk/SKILL.md) lets Claude Code and Codex
 inspect and convert ODBs using `odb2vtk_core`. Keep `skills/odb2vtk` as the source
 package and copy the complete folder to the desired project's skill location:
@@ -41,6 +43,8 @@ explains package discovery. For example: "Use odb2vtk to export Part-1, Step-1
 frames 0 and 1 from C:/work/Job-1.odb in binary format."
 
 ## Usage Python
+
+![odb2vtk_core demo](res/odb2vtk_core%20demo%202026-10-27%20231221.gif)
 
 Run the following commands from the repository's `python` directory (`cd python`
 from the repository root). ODB access requires Abaqus Python.
